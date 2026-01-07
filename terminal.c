@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/07 13:55:33 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/07 14:34:19 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-int	main()
+int	main(void)
 {
 	char	*line;
 
 	while (1)
 	{
-		line = readline("minishell >");
-		if (line)
+		line = readline("minishell> ");
+		if (line && *line)
 		{
 			add_history(line);
 			free(line);
