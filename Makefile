@@ -6,7 +6,7 @@
 #    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/07 17:18:28 by mgarnier         ###   ########.fr        #
+#    Updated: 2026/01/07 17:25:54 by mgarnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ DIR			= sources/
 
 # MINISHELL
 NAME		= minishell
-#HEADER		= -I includes
+HEADER		= -I includes
 
 SRC			= $(DIR)main.c
 
@@ -31,11 +31,11 @@ OBJ			= $(SRC:.c=.o)
 all :		$(NAME)
 
 $(NAME):	$(OBJ)
-			@$(CC) $(CFLAGS) $(OBJ) -lreadline -o $(NAME)
+			@$(CC) $(CFLAGS) $(HEADER) $(OBJ) -lreadline -o $(NAME)
 			@echo "${GREEN}====   $(NAME)   ==== : >>>>>SUCCESS<<<<<${RESET}"
 
 %.o: %.c
-			@$(CC) -c $(CFLAGS) $< -o $@
+			@$(CC) -c $(CFLAGS) $(HEADER) $< -o $@
 
 clean:
 			@if ls $(OBJ) >/dev/null 2>&1; then \

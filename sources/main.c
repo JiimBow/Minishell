@@ -6,16 +6,11 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/07 17:09:24 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/07 17:25:29 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
-#include <unistd.h>
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "../includes/minishell.h"
 
 void	handle_sigint(int sig)
 {
