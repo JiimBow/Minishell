@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminal.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/07 15:45:29 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/07 15:56:37 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,17 @@ int	main(void)
 	while (1)
 	{
 		line = readline("minishell> ");
+		if (!line || strcmp(line, "exit") == 0)
+		{
+			if (line)
+				free(line);
+			exit(0);
+		}
 		if (line && *line)
 		{
 			add_history(line);
 			free(line);
 		}
-		else if(!line)
-			break ;
 	}
 	return (0);
 }
