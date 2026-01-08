@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/08 10:03:22 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/08 10:53:54 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ int	main(int argc, char **argv, char **envp)
 			rl_clear_history();
 			exit(0);
 		}
+		parse_line(line);
 		if (line && *line)
 		{
 			add_history(line);
 			free(line);
 		}
 	}
-	// test git
 	return (0);
 }

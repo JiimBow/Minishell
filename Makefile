@@ -6,7 +6,7 @@
 #    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/07 17:25:54 by mgarnier         ###   ########.fr        #
+#    Updated: 2026/01/08 10:49:20 by mgarnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,12 @@ DIR			= sources/
 NAME		= minishell
 HEADER		= -I includes
 
-SRC			= $(DIR)main.c
+SRC			= $(DIR)main.c \
+				$(DIR)ft_split_line.c \
+				$(DIR)ft_strlen.c \
+				$(DIR)ft_strlcpy.c \
+				$(DIR)ft_substr.c \
+				$(DIR)parse_line.c
 
 OBJ			= $(SRC:.c=.o)
 
