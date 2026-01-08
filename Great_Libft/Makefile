@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
+#    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/06 10:31:35 by jodone            #+#    #+#              #
-#    Updated: 2025/11/06 15:08:20 by jodone           ###   ########.fr        #
+#    Updated: 2026/01/08 22:32:27 by mgarnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=g_libft.a
 CFLAGS=-Wall -Wextra -Werror
-INCLUDES=-I 
+INCLUDES=
 CC=cc
 FILES= 	
 

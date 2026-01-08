@@ -6,11 +6,11 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/08 17:25:04 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/08 22:16:58 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static char	**ft_free_tab(char **tab, int line)
 {
@@ -39,7 +39,7 @@ static char	**ft_add_lines(char **tab, char const *s, char c, int line)
 		if (i > 0)
 		{
 			*(tab + line) = ft_substr(s - i, 0, i);
-			if (!(*tab + line))
+			if (*(tab + line) == NULL)
 				ft_free_tab(tab, line);
 			if (!tab)
 				return (NULL);

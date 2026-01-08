@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 16:01:02 by jodone            #+#    #+#             */
-/*   Updated: 2025/10/22 11:48:02 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/08 22:35:22 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 	char			*result;
 	unsigned long	len;
 	unsigned long	start;
-	int				j;
 
 	if (!s1 || !set)
 		return (NULL);
@@ -60,7 +59,6 @@ char	*ft_strtrim(char const *s1, char const *set)
 	result = malloc(((len - start) + 1) * sizeof(char));
 	if (!result)
 		return (NULL);
-	j = 0;
 	ft_strlcpy(result, (s1 + start), ((len + 1) - start));
 	return (result);
 }

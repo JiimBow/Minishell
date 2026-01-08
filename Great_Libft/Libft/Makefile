@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
+#    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/13 12:44:35 by jodone            #+#    #+#              #
-#    Updated: 2025/11/06 11:16:15 by jodone           ###   ########.fr        #
+#    Updated: 2026/01/08 22:32:04 by mgarnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=libft.a
-INCLUDES=-I libft.h
+INCLUDES=-I .
 CC=cc
 FILES= 	ft_bzero.c \
 		ft_isalnum.c \

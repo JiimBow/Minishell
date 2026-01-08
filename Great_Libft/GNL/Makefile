@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
+#    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/06 11:13:17 by jodone            #+#    #+#              #
-#    Updated: 2025/11/06 11:15:01 by jodone           ###   ########.fr        #
+#    Updated: 2026/01/08 22:31:55 by mgarnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=GNL.a
-INCLUDES=-I get_next_line.h
+INCLUDES=-I .
 CC=cc
 FILES= 	get_next_line.c \
 		get_next_line_utils.c

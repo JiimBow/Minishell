@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
+#    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/08 17:18:52 by jodone           ###   ########.fr        #
+#    Updated: 2026/01/08 22:17:41 by mgarnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,8 @@ RESET		:= \033[0m
 
 # DIR
 DIR			= sources/
+BUILT-IN	= $(DIR)built-in/
+PARSING		= $(DIR)parsing/
 
 # MINISHELL
 NAME		= minishell
@@ -28,11 +30,11 @@ HEADER		= -I includes \
 			-I Great_Libft/GNL
 
 SRC			= $(DIR)main.c \
-			$(DIR)ft_split_line.c \
-			$(DIR)parse_line.c \
+			$(PARSING)ft_split_line.c \
+			$(PARSING)parse_line.c \
 			$(DIR)find_path.c \
 			$(DIR)cmd_process.c \
-			$(DIR)built-in/ft_pwd.c
+			$(BUILT-IN)ft_pwd.c
 
 OBJ			= $(SRC:.c=.o)
 

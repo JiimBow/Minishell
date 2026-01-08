@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
+#    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/22 14:03:28 by jodone            #+#    #+#              #
-#    Updated: 2025/11/06 11:16:32 by jodone           ###   ########.fr        #
+#    Updated: 2026/01/08 22:31:38 by mgarnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=libftprintf.a
-INCLUDES=-I ft_printf.h
+INCLUDES=-I .
 CC=cc
 FILES= 	ft_bzero.c \
 		ft_strlen.c \
