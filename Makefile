@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
+#    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/07 17:25:54 by mgarnier         ###   ########.fr        #
+#    Updated: 2026/01/08 10:39:45 by jodone           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,17 +22,25 @@ DIR			= sources/
 
 # MINISHELL
 NAME		= minishell
-HEADER		= -I includes
+HEADER		= -I includes \
+			-I Great_Libft/Libft \
+			-I Great_Libft/ft_printf \
+			-I Great_Libft/GNL
 
 SRC			= $(DIR)main.c
 
 OBJ			= $(SRC:.c=.o)
 
+LIBFT= ./Great_Libft/g_libft.a
+
 all :		$(NAME)
 
-$(NAME):	$(OBJ)
-			@$(CC) $(CFLAGS) $(HEADER) $(OBJ) -lreadline -o $(NAME)
+$(NAME):	$(OBJ) $(LIBFT)
+			@$(CC) $(CFLAGS) $(HEADER) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
 			@echo "${GREEN}====   $(NAME)   ==== : >>>>>SUCCESS<<<<<${RESET}"
+
+$(LIBFT):
+		@$(MAKE) -C Great_Libft --no-print-directory
 
 %.o: %.c
 			@$(CC) -c $(CFLAGS) $(HEADER) $< -o $@
@@ -42,12 +50,14 @@ clean:
 			echo "${GREEN}====   $(NAME)   ==== : >>>OBJ CLEANED<<<${RESET}"; \
 			fi
 			@rm -f $(OBJ)
+			@$(MAKE) -C Great_Libft clean --no-print-directory
 
 fclean:		clean
 			@if ls $(NAME) >/dev/null 2>&1; then \
 			echo "${GREEN}====   $(NAME)   ==== : >>>ALL CLEANED<<<${RESET}"; \
 			fi
 			@rm -f $(NAME)
+			@$(MAKE) -C Great_Libft fclean --no-print-directory
 
 re:			fclean all
 
