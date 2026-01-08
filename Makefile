@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
+#    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/08 12:06:35 by jodone           ###   ########.fr        #
+#    Updated: 2026/01/08 14:29:29 by mgarnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,8 @@ HEADER		= -I includes \
 			-I Great_Libft/GNL
 
 SRC			= $(DIR)main.c \
+			$(DIR)ft_split_line.c \
+			$(DIR)parse_line.c \
 			$(DIR)find_path.c \
 			$(DIR)cmd_process.c
 

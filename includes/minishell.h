@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/08 12:09:12 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/08 14:31:10 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <signal.h>
+# include <stddef.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/types.h>
@@ -34,5 +35,7 @@ typedef struct s_cmd
 void	process(char *cmd, char **envp);
 void	pointer_free(char **str);
 char	*find_path(char *cmd, char **envp, int i, char *full_path);
+void	parse_line(char *line);
+char	**ft_split_line(char const *s, char c);
 
 #endif
