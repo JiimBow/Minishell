@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/08 17:36:07 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/08 17:57:31 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,22 @@
 # include <dirent.h>
 # include <linux/limits.h>
 
-typedef struct s_cmd
+enum token
 {
-	char	*cmd;
-	char	**envp;
-}	t_cmd;
+	BUILT_IN,
+	COMMAND,
+	OPTION,
+	FILE,
+	DIRECTORY,
+	PONCTUATION
+};
+
+typedef struct s_arg
+{
+	int			index;
+	char		*content;
+	enum  token group;
+}	t_arg;
 
 void	process(char **cmd, char **envp);
 void	pointer_free(char **str);
