@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/08 15:58:10 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/08 17:25:04 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,38 +35,27 @@ static char	**ft_add_lines(char **tab, char const *s, char c, int line)
 			c = *s;
 		i = 0;
 		while (*s && *s != c)
-		{
-			s++;
-			i++;
-		}
+			s += (i++ >= 0);
 		if (i > 0)
 		{
 			*(tab + line) = ft_substr(s - i, 0, i);
+			if (!(*tab + line))
+				ft_free_tab(tab, line);
+			if (!tab)
+				return (NULL);
 			line++;
 			while (*s && *s == c)
 				s++;
 			c = ' ';
 		}
-		if (i > 0 && !*(tab + line - 1))
-		{
-			ft_free_tab(tab, line);
-			return (NULL);
-		}
 	}
-	*(tab + line) = NULL;
 	return (tab);
 }
 
-char	**ft_split_line(char const *s, char c)
+char	**ft_split_line(char const *s, char c, unsigned int line, int i)
 {
 	char			**tab;
-	int				i;
-	unsigned int	line;
 
-	i = 0;
-	line = 0;
-	if (!s)
-		return (NULL);
 	while (s[i])
 	{
 		if ((s[i] == '"' || s[i] == '\'') && c == ' ')
