@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/08 10:03:22 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/08 10:46:18 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -44,10 +43,11 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (line && *line)
 		{
+			if (strcmp(line, "ls") == 0)
+				process(line, envp);
 			add_history(line);
 			free(line);
 		}
 	}
-	// test git
 	return (0);
 }

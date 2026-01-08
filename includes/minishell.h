@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/08 10:48:15 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/08 11:15:06 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ typedef struct s_cmd
 }	t_cmd;
 
 void	process(char *cmd, char **envp);
+void	pointer_free(char **str);
 
 #endif
