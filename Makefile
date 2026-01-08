@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
+#    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/08 14:29:29 by mgarnier         ###   ########.fr        #
+#    Updated: 2026/01/08 17:18:52 by jodone           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ SRC			= $(DIR)main.c \
 			$(DIR)ft_split_line.c \
 			$(DIR)parse_line.c \
 			$(DIR)find_path.c \
-			$(DIR)cmd_process.c
+			$(DIR)cmd_process.c \
+			$(DIR)built-in/ft_pwd.c
 
 OBJ			= $(SRC:.c=.o)
 
