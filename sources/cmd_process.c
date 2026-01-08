@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/08 12:00:53 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/08 16:27:29 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,34 +28,23 @@ void	pointer_free(char **str)
 	}
 }
 
-void	exec_process(char *cmd, char **envp)
+void	exec_process(char **cmd, char **envp)
 {
 	char	*path_cmd;
 	char	*full_path;
-	char	**arg_cmd;
 
 	full_path = NULL;
-	arg_cmd = ft_split(cmd, ' ');
-	printf("%s\n", arg_cmd[0]);
-	printf("%s\n", arg_cmd[1]);
-	if (!arg_cmd || !arg_cmd[0])
+	path_cmd = find_path(cmd[0], envp, 0, full_path);
+	if (!path_cmd || execve(path_cmd, cmd, envp) == -1)
 	{
-		perror(cmd);
-		if (arg_cmd)
-			pointer_free(arg_cmd);
-		exit(127);
-	}
-	path_cmd = find_path(arg_cmd[0], envp, 0, full_path);
-	if (!path_cmd || execve(path_cmd, arg_cmd, envp) == -1)
-	{
-		perror(arg_cmd[0]);
-		pointer_free(arg_cmd);
+		perror(cmd[0]);
+		pointer_free(cmd);
 		free(path_cmd);
 		exit(127);
 	}
 }
 
-void	process(char *cmd, char **envp)
+void	process(char **cmd, char **envp)
 {
 	__pid_t	pid;
 	int		status;

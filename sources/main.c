@@ -6,11 +6,27 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/08 16:30:06 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/08 16:31:24 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	free_double_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (!tab || !*tab)
+		return ;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+	tab = NULL;
+}
 
 void	handle_sigint(int sig)
 {
@@ -26,6 +42,7 @@ void	handle_sigint(int sig)
 int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
+	char	**args;
 
 	(void)argc;
 	(void)argv;
@@ -41,12 +58,11 @@ int	main(int argc, char **argv, char **envp)
 			rl_clear_history();
 			exit(0);
 		}
-		if (line && *line)
-		{
-			process(line, envp);
-			add_history(line);
-			free(line);
-		}
+		args = parse_line(line);
+		process(args, envp);
+		add_history(line);
+		free(line);
+		free_double_tab(args);
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/08 14:12:43 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/08 15:58:10 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static char	**ft_add_lines(char **tab, char const *s, char c, int line)
 
 	while (*s)
 	{
-		printf("c = '%c'", c);
 		while (*s && *s == c)
 			s++;
 		if ((*s == '"' || *s == '\'') && c == ' ')
@@ -72,16 +71,16 @@ char	**ft_split_line(char const *s, char c)
 	{
 		if ((s[i] == '"' || s[i] == '\'') && c == ' ')
 			c = s[i];
-		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
+		if (s[i] != c)
 		{
 			line++;
+			while (s[i] && s[i] != c)
+				i++;
 			c = ' ';
-			i++;
 		}
-		if (s[i])
+		else
 			i++;
 	}
-	printf("line = %d\n", line);
 	tab = (char **)malloc(sizeof(char *) * (line + 1));
 	if (!tab)
 		return (NULL);
