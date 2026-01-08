@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:53:10 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/08 11:18:46 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/08 12:04:18 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*join_path(char *dir, char *cmd)
 	return (result);
 }
 
-int cmd_check(char *cmd)
+int	cmd_check(char *cmd)
 {
 	int	i;
 
@@ -43,7 +43,7 @@ int cmd_check(char *cmd)
 	return (0);
 }
 
-char *find_path(char *cmd, char *envp, int i, char *full_path)
+char	*find_path(char *cmd, char **envp, int i, char *full_path)
 {
 	char	**paths;
 
