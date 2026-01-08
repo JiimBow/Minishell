@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/08 10:03:22 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/08 12:03:41 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,12 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline("minishell> ");
-		if (!line || strcmp(line, "exit") == 0) //à modifier avec libft
+		if (!line || ft_strncmp(line, "exit", 5) == 0)
 		{
 			free(line);
 			printf("exit\n");
@@ -44,10 +43,10 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (line && *line)
 		{
+			process(line, envp);
 			add_history(line);
 			free(line);
 		}
 	}
-	// test git
 	return (0);
 }

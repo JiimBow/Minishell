@@ -6,7 +6,7 @@
 #    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/08 10:39:45 by jodone           ###   ########.fr        #
+#    Updated: 2026/01/08 12:06:35 by jodone           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,9 @@ HEADER		= -I includes \
 			-I Great_Libft/ft_printf \
 			-I Great_Libft/GNL
 
-SRC			= $(DIR)main.c
+SRC			= $(DIR)main.c \
+			$(DIR)find_path.c \
+			$(DIR)cmd_process.c
 
 OBJ			= $(SRC:.c=.o)
 
