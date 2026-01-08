@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/07 17:25:29 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/07 20:40:44 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,19 @@ void	handle_sigint(int sig)
 	}
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 
+	(void)argc;
+	(void)argv;
+	(void)envp;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		line = readline("minishell> ");
-		if (!line || strcmp(line, "exit") == 0)
+		if (!line || strcmp(line, "exit") == 0) //à modifier avec libft
 		{
 			free(line);
 			printf("exit\n");
