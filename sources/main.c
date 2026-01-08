@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/08 16:34:45 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/08 17:31:41 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,16 @@ int	main(int argc, char **argv, char **envp)
 			rl_clear_history();
 			exit(0);
 		}
-		args = parse_line(line);
-		process(args, envp);
+		else if (ft_strncmp(line, "pwd", 4) == 0)
+			ft_pwd();
+		else
+		{
+			args = parse_line(line);
+			process(args, envp);
+			free_double_tab(args);
+		}
 		add_history(line);
 		free(line);
-		free_double_tab(args);
 	}
 	return (0);
 }
