@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/08 11:52:00 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/08 14:12:43 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ static char	**ft_add_lines(char **tab, char const *s, char c, int line)
 
 	while (*s)
 	{
-		if (*s == '"' || *s == '\'')
-			c = *s;
+		printf("c = '%c'", c);
 		while (*s && *s == c)
 			s++;
+		if ((*s == '"' || *s == '\'') && c == ' ')
+			c = *s;
 		i = 0;
 		while (*s && *s != c)
 		{
@@ -43,6 +44,8 @@ static char	**ft_add_lines(char **tab, char const *s, char c, int line)
 		{
 			*(tab + line) = ft_substr(s - i, 0, i);
 			line++;
+			while (*s && *s == c)
+				s++;
 			c = ' ';
 		}
 		if (i > 0 && !*(tab + line - 1))
@@ -67,14 +70,22 @@ char	**ft_split_line(char const *s, char c)
 		return (NULL);
 	while (s[i])
 	{
+		if ((s[i] == '"' || s[i] == '\'') && c == ' ')
+			c = s[i];
 		if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
+		{
 			line++;
-		i++;
+			c = ' ';
+			i++;
+		}
+		if (s[i])
+			i++;
 	}
+	printf("line = %d\n", line);
 	tab = (char **)malloc(sizeof(char *) * (line + 1));
 	if (!tab)
 		return (NULL);
-	tab = ft_add_lines(tab, s, c, 0);
+	tab = ft_add_lines(tab, s, ' ', 0);
 	if (!tab)
 		return (NULL);
 	*(tab + line) = NULL;
