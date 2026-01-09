@@ -6,12 +6,11 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:44:39 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/08 18:50:34 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/09 10:48:45 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-
+//#include "../../includes/minishell.h"
 char	*get_path(char *str, char **envp)
 {
 	int	i;

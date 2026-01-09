@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/08 17:31:41 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/08 23:32:09 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	char	**args;
+	t_arg	*data;
 
 	(void)argc;
 	(void)argv;
+	data = NULL;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -62,9 +64,10 @@ int	main(int argc, char **argv, char **envp)
 			ft_pwd();
 		else
 		{
-			args = parse_line(line);
+			args = parse_line(data, line);
 			process(args, envp);
 			free_double_tab(args);
+			free(data);
 		}
 		add_history(line);
 		free(line);
