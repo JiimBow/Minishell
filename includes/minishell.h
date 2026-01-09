@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/08 23:53:18 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/09 11:23:46 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ enum e_token
 	OPTIONS,
 	FILES,
 	DIRECTORIES,
-	PUNCTUATION
+	OPERATORS
 };
 
 typedef struct s_arg

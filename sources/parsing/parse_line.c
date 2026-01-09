@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:37:21 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/09 11:03:54 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/09 13:11:06 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ char	**parse_line(t_arg *data, char *line)
 		is_file_or_dir(data, args[i], i); // int retour pour erreurs?
 		i++;
 	}
+	free(data);
 	return (args);
 }
