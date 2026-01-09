@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/09 11:23:46 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/09 14:27:20 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char	**ft_split_line(char const *s, char c, unsigned int line, int i);
 
 // EXECUTING
 int		ft_pwd(void);
+int		ft_cd(char **argv, char **envp);
 void	process(char **cmd, char **envp);
 
 // MEMORY MANAGEMENT

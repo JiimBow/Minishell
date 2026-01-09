@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:37:21 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/09 13:11:06 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/09 14:28:16 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <minishell.h>
 
 static int	is_file_or_dir(t_arg *data, char *s, int i)
 {
