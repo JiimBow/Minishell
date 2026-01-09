@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/08 23:32:09 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/09 11:47:18 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include <minishell.h>
 
 void	free_double_tab(char **tab)
 {
@@ -65,7 +65,10 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			args = parse_line(data, line);
-			process(args, envp);
+			if (ft_strncmp(args[0], "cd", 3) == 0) 
+				ft_cd(args, envp);
+			else
+				process(args, envp);
 			free_double_tab(args);
 			free(data);
 		}

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/08 22:16:58 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/09 11:06:01 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include <minishell.h>
 
 static char	**ft_free_tab(char **tab, int line)
 {

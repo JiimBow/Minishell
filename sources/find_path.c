@@ -6,11 +6,11 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:53:10 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/08 12:04:18 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/09 11:06:10 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include <minishell.h>
 
 char	*join_path(char *dir, char *cmd)
 {
