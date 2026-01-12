@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 13:41:42 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 14:45:12 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 18:29:59 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**ft_copy_env(char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	env = ft_calloc((i + 1), sizeof(char*));
+	env = ft_calloc((i + 1), sizeof(char *));
 	i = 0;
 	while (envp[i])
 	{
@@ -33,7 +33,7 @@ char	**ft_copy_env(char **envp)
 
 t_env	*ft_get_env(char **envp)
 {
-	t_env *env;
+	t_env	*env;
 
 	env = malloc(sizeof(env));
 	env->env = ft_copy_env(envp);

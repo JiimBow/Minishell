@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 11:41:39 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/12 15:59:04 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/12 18:30:42 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,26 @@ static int	is_dir(char *s)
 
 static int	is_built_in(char *args)
 {
-	const char	*cmd[] = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
+	const char	*cmd[] = {"echo", "cd", "pwd", "export",
+		"unset", "env", "exit", NULL};
 	int			i;
 
-	i = 0;
 	if (!args)
 		return (0);
+	i = 0;
 	while (cmd[i])
 	{
-		if (ft_strncmp(args, cmd[i], ft_strlen(cmd[i])) == 0)
+		if (ft_strncmp(args, cmd[i], ft_strlen(cmd[i]) + 1) == 0)
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-t_arg	*tokenisation(t_arg *data, char **args, int i)
+t_arg	*tokenisation(char **args, int i)
 {
+	t_arg	*data;
+
 	if (!args || !*args)
 		return (NULL);
 	while (args[i])
@@ -52,10 +55,14 @@ t_arg	*tokenisation(t_arg *data, char **args, int i)
 	data = (t_arg *)malloc(sizeof(t_arg) * (i + 1));
 	if (!data)
 		return (NULL);
+	data[i].group = END;
+	data[i].content = NULL;
 	i = 0;
 	while (args[i])
 	{
-		if (args[i][0] == '<' || args[i][0] == '>' || ft_strncmp(args[i], "|", 2))
+		data[i].content = ft_strdup(args[i]);
+		if (args[i][0] == '<' || args[i][0] == '>'
+			|| ft_strncmp(args[i], "|", 2) == 0)
 			data[i].group = OPERATORS;
 		else if (args[i][0] == '-')
 			data[i].group = OPTIONS;
