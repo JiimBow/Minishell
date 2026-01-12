@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 15:06:11 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:35:54 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	main(int argc, char **argv, char **envp)
 				ft_pwd();
 			else if (ft_strncmp(args[0], "env", 4) == 0)
 				ft_env(env->env);
+			else if (ft_strncmp(args[0], "echo", 5) == 0)
+				ft_echo(args);
 			else
 				process(args, env->env);
 			free_double_tab(args);
@@ -81,7 +83,5 @@ int	main(int argc, char **argv, char **envp)
 		add_history(line);
 		free(line);
 	}
-	free_double_tab(env->env);
-	free(env);
 	return (0);
 }

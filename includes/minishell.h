@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 15:05:55 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:35:05 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ char	**ft_split_line(char const *s, char c, unsigned int line, int i);
 int		ft_pwd(void);
 int		ft_cd(char **argv, char **envp);
 void	ft_env(char	**envp);
+void	ft_echo(char **args);
 void	process(char **cmd, char **envp);
 
 // MEMORY MANAGEMENT

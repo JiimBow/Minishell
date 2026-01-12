@@ -6,7 +6,7 @@
 #    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/12 15:06:43 by jodone           ###   ########.fr        #
+#    Updated: 2026/01/12 15:34:28 by jodone           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,8 @@ SRC			= $(DIR)main.c \
 			$(DIR)get_env.c \
 			$(BUILT-IN)ft_pwd.c \
 			$(BUILT-IN)ft_cd.c \
-			$(BUILT-IN)ft_env.c
+			$(BUILT-IN)ft_env.c \
+			$(BUILT-IN)ft_echo.c
 
 OBJ			= $(SRC:.c=.o)
 
