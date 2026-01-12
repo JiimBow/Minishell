@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 16:27:44 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/12 16:33:10 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	main(int argc, char **argv, char **envp)
 			else if (args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
 				ft_echo(args);
 			else
-				process(args, env->env);
+				process(args, env);
 			free_double_tab(args);
 			free(data);
 		}

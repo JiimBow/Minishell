@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 16:25:31 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/12 16:33:00 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int		ft_pwd(void);
 int		ft_cd(char **argv, char **envp);
 void	ft_env(char	**envp);
 void	ft_echo(char **args);
-void	process(char **cmd, char **envp);
+void	process(char **cmd, t_env *env);
 
 // MEMORY MANAGEMENT
 void	pointer_free(char **str);

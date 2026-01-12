@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 11:00:29 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/12 16:33:06 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,25 @@ void	pointer_free(char **str)
 	}
 }
 
-void	exec_process(char **cmd, char **envp)
+void	exec_process(char **cmd, t_env *env)
 {
 	char	*path_cmd;
 	char	*full_path;
 
 	full_path = NULL;
-	path_cmd = find_path(cmd[0], envp, 0, full_path);
-	if (!path_cmd || execve(path_cmd, cmd, envp) == -1)
+	path_cmd = find_path(cmd[0], env->env, 0, full_path);
+	if (!path_cmd || execve(path_cmd, cmd, env->env) == -1)
 	{
 		perror(cmd[0]);
 		pointer_free(cmd);
 		free(path_cmd);
+		free_double_tab(env->env);
+		free(env);
 		exit(127);
 	}
 }
 
-void	process(char **cmd, char **envp)
+void	process(char **cmd, t_env *env)
 {
 	__pid_t	pid;
 	int		status;
@@ -55,6 +57,6 @@ void	process(char **cmd, char **envp)
 	if (pid < 0)
 		exit(EXIT_FAILURE);
 	if (pid == 0)
-		exec_process(cmd, envp);
+		exec_process(cmd, env);
 	waitpid(-1, &status, 0);
 }
