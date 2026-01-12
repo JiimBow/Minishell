@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/09 11:35:52 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 13:47:28 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,14 @@ typedef struct s_arg
 	char			*content;
 	enum e_token	group;
 }	t_arg;
+
+typedef struct s_env
+{
+	char	**env;
+}	t_env;
+
+// INITIALIZATION
+char	**ft_get_env(char **envp);
 
 // PARSING
 char	**parse_line(t_arg *data, char *line);

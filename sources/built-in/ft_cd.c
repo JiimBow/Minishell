@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:44:39 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/09 14:14:35 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 13:49:03 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,34 +26,34 @@ char	*get_path(char *str, char **envp, int *i)
 	return (NULL);
 }
 
-// void	update_path(char **envp, int *i, int is_old)
-// {
-// 	char	curr_path[PATH_MAX];
-// 	char	*new_path;
-// 	int		path_len;
+void	update_path(char **envp, int *i, int is_old)
+{
+	char	curr_path[PATH_MAX];
+	char	*new_path;
+	int		path_len;
 
-// 	(*i) = 0;
-// 	getcwd(curr_path, sizeof(curr_path));
-// 	path_len = ft_strlen(curr_path);
-// 	if (is_old == 1)
-// 	{
-// 		get_path("OLDPWD", envp, i);
-// 		new_path = malloc((7 + ft_strlen(curr_path) + 1) * sizeof(char));
-// 		ft_strlcpy(new_path, "OLDPWD=", 8);
-// 		ft_strlcat(new_path, curr_path, path_len + 1);
-// 		free(envp[(*i)]);
-// 		envp[(*i)] = new_path;
-// 	}
-// 	else
-// 	{
-// 		get_path("PWD", envp, i);
-// 		new_path = malloc((4 + ft_strlen(curr_path) + 1) * sizeof(char));
-// 		ft_strlcpy(new_path, "PWD=", 5);
-// 		ft_strlcat(new_path, curr_path, path_len + 1);
-// 		free(envp[(*i)]);
-// 		envp[(*i)] = new_path;
-// 	}
-// }
+	(*i) = 0;
+	getcwd(curr_path, sizeof(curr_path));
+	path_len = ft_strlen(curr_path);
+	if (is_old == 1)
+	{
+		get_path("OLDPWD", envp, i);
+		new_path = malloc((7 + ft_strlen(curr_path) + 1) * sizeof(char));
+		ft_strlcpy(new_path, "OLDPWD=", 8);
+		ft_strlcat(new_path, curr_path, path_len + 1);
+		free(envp[(*i)]);
+		envp[(*i)] = new_path;
+	}
+	else
+	{
+		get_path("PWD", envp, i);
+		new_path = malloc((4 + ft_strlen(curr_path) + 1) * sizeof(char));
+		ft_strlcpy(new_path, "PWD=", 5);
+		ft_strlcat(new_path, curr_path, path_len + 1);
+		free(envp[(*i)]);
+		envp[(*i)] = new_path;
+	}
+}
 
 int	ft_cd(char **argv, char **envp)
 {
@@ -65,12 +65,12 @@ int	ft_cd(char **argv, char **envp)
 		path = get_path("HOME", envp, &i);
 	else
 		path = argv[1];
-	// update_path(envp, &i, 1); a refaire avec une copie env
+	update_path(envp, &i, 1);
 	if (chdir(path) == -1)
 	{
 		perror(path);
 		return (1);
 	}
-	// update_path(envp, &i, 0);
+	update_path(envp, &i, 0);
 	return (0);
 }

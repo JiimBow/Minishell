@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/09 11:47:18 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 14:02:31 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,13 @@ int	main(int argc, char **argv, char **envp)
 	char	*line;
 	char	**args;
 	t_arg	*data;
+	t_env	*env;
 
 	(void)argc;
 	(void)argv;
 	data = NULL;
+	env = NULL;
+	env->env = ft_get_env(envp);
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -66,14 +69,15 @@ int	main(int argc, char **argv, char **envp)
 		{
 			args = parse_line(data, line);
 			if (ft_strncmp(args[0], "cd", 3) == 0) 
-				ft_cd(args, envp);
+				ft_cd(args, env->env);
 			else
-				process(args, envp);
+				process(args, env->env);
 			free_double_tab(args);
 			free(data);
 		}
 		add_history(line);
 		free(line);
 	}
+	free_double_tab(env->env);
 	return (0);
 }

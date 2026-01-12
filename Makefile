@@ -6,7 +6,7 @@
 #    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/09 11:36:44 by jodone           ###   ########.fr        #
+#    Updated: 2026/01/12 13:48:08 by jodone           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC			= $(DIR)main.c \
 			$(PARSING)parse_line.c \
 			$(DIR)find_path.c \
 			$(DIR)cmd_process.c \
+			$(DIR)get_env.c \
 			$(BUILT-IN)ft_pwd.c \
 			$(BUILT-IN)ft_cd.c
 
