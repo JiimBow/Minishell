@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/09 14:28:07 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 16:01:40 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char	**ft_add_lines(char **tab, char const *s, char c, int line)
 
 char	**ft_split_line(char const *s, char c, unsigned int line, int i)
 {
-	char			**tab;
+	char	**tab;
 
 	while (s[i])
 	{

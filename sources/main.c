@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 14:42:27 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/12 16:11:34 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	char	**args;
-	//t_arg	*data;
+	t_arg	*data;
 
 	(void)argc;
 	(void)argv;
 	args = NULL;
-	//data = NULL;
+	data = NULL;
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -65,15 +65,14 @@ int	main(int argc, char **argv, char **envp)
 			ft_pwd();
 		else
 		{
-			// args = parse_line(data, line);
 			args = ft_split_line(line, ' ', 0, 0);
-			//data = tokenisation(data, args);
-			if (args && ft_strncmp(args[0], "cd", 3) == 0) 
+			data = tokenisation(data, args, 0);
+			if (args && args[0] && ft_strncmp(args[0], "cd", 3) == 0) 
 				ft_cd(args, envp);
 			else
 				process(args, envp);
 			free_double_tab(args);
-			//free(data);
+			free(data);
 		}
 		add_history(line);
 		free(line);
