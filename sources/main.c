@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 14:09:11 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 14:51:21 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	data = NULL;
-	env = NULL;
-	env->env = ft_get_env(envp);
+	env = ft_get_env(envp);
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -61,6 +60,8 @@ int	main(int argc, char **argv, char **envp)
 			free(line);
 			printf("exit\n");
 			rl_clear_history();
+			free_double_tab(env->env);
+			free(env);
 			exit(0);
 		}
 		else if (ft_strncmp(line, "pwd", 4) == 0)
@@ -79,5 +80,6 @@ int	main(int argc, char **argv, char **envp)
 		free(line);
 	}
 	free_double_tab(env->env);
+	free(env);
 	return (0);
 }

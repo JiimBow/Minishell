@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:44:39 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 14:09:17 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 14:52:26 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,20 @@ void	update_path(char **envp, int *i, int is_old)
 		get_path("OLDPWD", envp, i);
 		new_path = malloc((7 + ft_strlen(curr_path) + 1) * sizeof(char));
 		ft_strlcpy(new_path, "OLDPWD=", 8);
-		ft_strlcat(new_path, curr_path, path_len + 1);
+		ft_strlcat(new_path, curr_path, path_len + 9);
 		free(envp[(*i)]);
-		envp[(*i)] = new_path;
+		envp[(*i)] = ft_strdup(new_path);
+		free(new_path);
 	}
 	else
 	{
 		get_path("PWD", envp, i);
 		new_path = malloc((4 + ft_strlen(curr_path) + 1) * sizeof(char));
 		ft_strlcpy(new_path, "PWD=", 5);
-		ft_strlcat(new_path, curr_path, path_len + 1);
+		ft_strlcat(new_path, curr_path, path_len + 6);
 		free(envp[(*i)]);
-		envp[(*i)] = new_path;
+		envp[(*i)] = ft_strdup(new_path);
+		free(new_path);
 	}
 }
 

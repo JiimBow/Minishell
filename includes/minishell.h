@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 14:09:04 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 14:45:20 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_env
 }	t_env;
 
 // INITIALIZATION
-char	**ft_get_env(char **envp);
+t_env	*ft_get_env(char **envp);
 
 // PARSING
 char	**parse_line(t_arg *data, char *line);

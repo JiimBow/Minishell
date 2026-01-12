@@ -6,14 +6,15 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 13:41:42 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 14:08:15 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 14:45:12 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_env	*ft_get_env(t_env *env, char **envp)
+char	**ft_copy_env(char **envp)
 {
+	char	**env;
 	int		i;
 
 	i = 0;
@@ -23,9 +24,18 @@ t_env	*ft_get_env(t_env *env, char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		env->env[i] = ft_strdup(envp[i]);
+		env[i] = ft_strdup(envp[i]);
 		i++;
 	}
-	env->env[i] = NULL;
+	env[i] = NULL;
+	return (env);
+}
+
+t_env	*ft_get_env(char **envp)
+{
+	t_env *env;
+
+	env = malloc(sizeof(env));
+	env->env = ft_copy_env(envp);
 	return (env);
 }
