@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 15:35:05 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 16:25:31 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_env
 t_env	*ft_get_env(char **envp);
 
 // PARSING
-char	**parse_line(t_arg *data, char *line);
+t_arg	*tokenisation(t_arg *data, char **args, int i);
 char	*find_path(char *cmd, char **envp, int i, char *full_path);
 char	**ft_split_line(char const *s, char c, unsigned int line, int i);
 

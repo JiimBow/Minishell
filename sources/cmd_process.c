@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/09 14:27:36 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 11:00:29 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	process(char **cmd, char **envp)
 	__pid_t	pid;
 	int		status;
 
+	if (!cmd || !*cmd)
+		return ;
 	pid = fork();
 	if (pid < 0)
 		exit(EXIT_FAILURE);

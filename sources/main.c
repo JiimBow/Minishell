@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 15:35:54 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 16:27:44 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	args = NULL;
 	data = NULL;
 	env = ft_get_env(envp);
 	signal(SIGINT, handle_sigint);
@@ -66,14 +67,15 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else
 		{
-			args = parse_line(data, line);
-			if (ft_strncmp(args[0], "cd", 3) == 0) 
+			args = ft_split_line(line, ' ', 0, 0);
+			data = tokenisation(data, args, 0);
+			if (args && args[0] && ft_strncmp(args[0], "cd", 3) == 0) 
 				ft_cd(args, env->env);
-			else if (ft_strncmp(args[0], "pwd", 4) == 0)
+			else if (args && args[0] && ft_strncmp(args[0], "pwd", 4) == 0)
 				ft_pwd();
-			else if (ft_strncmp(args[0], "env", 4) == 0)
+			else if (args && args[0] && ft_strncmp(args[0], "env", 4) == 0)
 				ft_env(env->env);
-			else if (ft_strncmp(args[0], "echo", 5) == 0)
+			else if (args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
 				ft_echo(args);
 			else
 				process(args, env->env);
