@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 16:33:10 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 16:57:48 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(int argc, char **argv, char **envp)
 				ft_cd(args, env->env);
 			else if (args && args[0] && ft_strncmp(args[0], "pwd", 4) == 0)
 				ft_pwd();
-			else if (args && args[0] && ft_strncmp(args[0], "env", 4) == 0)
+			else if (args && args[0] && !args[1] && ft_strncmp(args[0], "env", 4) == 0)
 				ft_env(env->env);
 			else if (args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
 				ft_echo(args);
