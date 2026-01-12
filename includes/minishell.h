@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 13:47:28 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 14:09:04 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ enum e_token
 	OPTIONS,
 	FILES,
 	DIRECTORIES,
-	PUNCTUATION
+	OPERATORS
 };
 
 typedef struct s_arg

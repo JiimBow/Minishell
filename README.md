@@ -19,13 +19,30 @@ On regarde si c'est une commande :
 	S_ISSOCK(st.st_mode)  // socket
 
 	
-
-
-
-
 5. Parsing
 6. AST -> Abstract Syntaxic Tree (a = (5 + 3) * 8) gerer l'ordre des executions.
 
 7. Compter le nombre de quotes et doubles : si c'est pair ok, sinon on part direct en quote? avant parsing
 
 8. l'exeprocess recevra direcment arg_cmd[0] et l'arg + option. le split se fera avant.
+
+CHAT:
+
+ARBRE
+cmd + option
+cmd + option + fichier
+cmd + option + vide -> si cmd besoin d'un fichier, ouvre le STDIN.
+cmd + option + dossier (built-in)
+cmd + (option) + < + fichier + (option) == < + fichier + cmd + option
+cmd + (option) + > + fichier + (option)
+cmd + ... + pipe
+
+OPERATOR=
+
+redirections:
+'<'  + fichier (message d'erreur le cas échéant)
+'>'  + fichier (le créer si n'existe pas)
+'<<' + mot (peut être collé au << et donc être suivi d'autre chose après)
+'>>' + fichier (le créer si n'existe pas)
+
+'$' + mot collé et valide (lettre ou _ au 1er caractère sinon erreur OU '?' seul)

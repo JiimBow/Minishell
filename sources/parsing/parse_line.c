@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:37:21 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/09 11:06:03 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/09 14:28:16 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ char	**parse_line(t_arg *data, char *line)
 		is_file_or_dir(data, args[i], i); // int retour pour erreurs?
 		i++;
 	}
+	free(data);
 	return (args);
 }
