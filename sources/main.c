@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 14:51:21 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 15:06:11 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,15 @@ int	main(int argc, char **argv, char **envp)
 			free(env);
 			exit(0);
 		}
-		else if (ft_strncmp(line, "pwd", 4) == 0)
-			ft_pwd();
 		else
 		{
 			args = parse_line(data, line);
 			if (ft_strncmp(args[0], "cd", 3) == 0) 
 				ft_cd(args, env->env);
+			else if (ft_strncmp(args[0], "pwd", 4) == 0)
+				ft_pwd();
+			else if (ft_strncmp(args[0], "env", 4) == 0)
+				ft_env(env->env);
 			else
 				process(args, env->env);
 			free_double_tab(args);
