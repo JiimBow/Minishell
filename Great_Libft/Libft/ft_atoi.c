@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:12:36 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/13 14:47:14 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/13 18:17:51 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	ft_atoi(const char *nptr)
 	sign = 1;
 	result = 0;
 	i = 0;
+	if (!nptr || !*nptr)
+		return (0);
 	while (nptr && (nptr[i] == 32 || (nptr[i] >= 9 && nptr[i] <= 13)))
 		i++;
 	if (nptr && (nptr[i] == '-' || nptr[i] == '+'))
