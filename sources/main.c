@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/13 13:41:52 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/13 18:05:49 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		else
 		{
-			args = ft_split_line(line, ' ', 0, 0);
+			args = ft_split_line(env->env, line, ' ', 0, 0);
 			data = tokenisation(args, 0);
 			if (args && args[0] && ft_strncmp(args[0], "cd", 3) == 0)
 				ft_cd(args, env->env);
