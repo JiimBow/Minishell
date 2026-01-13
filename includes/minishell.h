@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/13 18:05:00 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/13 18:10:00 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ typedef struct s_env
 	char	**env;
 }	t_env;
 
+typedef struct s_line
+{
+	char	*line;
+	char	**args;
+}	t_line;
+
 // INITIALIZATION
 t_env	*ft_get_env(char **envp);
 
@@ -64,12 +70,14 @@ int		ft_pwd(void);
 int		ft_cd(char **argv, char **envp);
 void	ft_env(char	**envp);
 void	ft_echo(char **args);
-int		process(char **cmd, t_env *env);
 void	ft_unset(t_env *env, char **args);
+void	free_before_exit(t_line *line, t_env *env, t_arg *data, int sig_return);
+int		process(char **cmd, t_env *env);
 char	*get_env_path(char *str, char **envp, int *i);
 
 // MEMORY MANAGEMENT
 void	pointer_free(char **str);
 void	free_double_tab(char **tab);
+void	free_struct(t_arg *data);
 
 #endif

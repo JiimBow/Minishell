@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 13:41:42 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/13 11:45:26 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/13 16:48:52 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	**ft_copy_env(char **envp)
 	while (envp[i])
 		i++;
 	env = ft_calloc((i + 1), sizeof(char *));
+	if (!env)
+		return (NULL);
 	i = 0;
 	while (envp[i])
 	{
@@ -35,7 +37,9 @@ t_env	*ft_get_env(char **envp)
 {
 	t_env	*env;
 
-	env = malloc(sizeof(env));
+	env = malloc(sizeof(t_env));
+	if (!env)
+		return (NULL);
 	env->env = ft_copy_env(envp);
 	return (env);
 }
