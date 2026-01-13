@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/13 18:10:00 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/13 19:02:13 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ t_env	*ft_get_env(char **envp);
 // PARSING
 t_arg	*tokenisation(char **args, int i);
 char	*find_cmd_path(char *cmd, char **envp, int i, char *full_path);
-char	**ft_split_line(char **env, char const *s, char c, unsigned int line, int i);
+char	**ft_split_line(char **env, char const *s, char c, int line);
+char	*ft_substr_variable(char **env, char const *s, int i, int end);
 
 // EXECUTING
 int		ft_pwd(void);
