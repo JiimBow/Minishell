@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:03:16 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 15:04:31 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/13 13:43:08 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_env(char	**envp)
 	int	i;
 
 	i = 0;
-	while (envp[i])
+	while (envp && envp[i])
 	{
 		printf("%s\n", envp[i]);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/13 11:45:18 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/13 13:40:10 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int		ft_cd(char **argv, char **envp);
 void	ft_env(char	**envp);
 void	ft_echo(char **args);
 int		process(char **cmd, t_env *env);
+void	ft_unset(t_env *env, char **args);
 char	*get_env_path(char *str, char **envp, int *i);
 
 // MEMORY MANAGEMENT

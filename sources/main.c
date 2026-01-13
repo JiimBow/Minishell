@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/13 11:46:38 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/13 13:41:52 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	args = NULL;
-	data = NULL;
 	env = ft_get_env(envp);
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
@@ -97,6 +96,8 @@ int	main(int argc, char **argv, char **envp)
 				ft_env(env->env);
 			else if (args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
 				ft_echo(args);
+			else if (args && args[0] && ft_strncmp(args[0], "unset", 6) == 0)
+				ft_unset(env, args);
 			else
 				sig_return = process(args, env);
 			free_double_tab(args);

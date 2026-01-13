@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
+#    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/12 16:27:57 by mgarnier         ###   ########.fr        #
+#    Updated: 2026/01/13 13:42:13 by jodone           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ SRC			= $(DIR)main.c \
 			$(BUILT-IN)ft_pwd.c \
 			$(BUILT-IN)ft_cd.c \
 			$(BUILT-IN)ft_env.c \
-			$(BUILT-IN)ft_echo.c
+			$(BUILT-IN)ft_echo.c \
+			$(BUILT-IN)ft_unset.c
 
 OBJ			= $(SRC:.c=.o)
 
