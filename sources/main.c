@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 16:57:48 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/13 11:40:30 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*line;
 	char	**args;
+	int		sig_return;
 	t_arg	*data;
 	t_env	*env;
 
@@ -69,16 +70,17 @@ int	main(int argc, char **argv, char **envp)
 		{
 			args = ft_split_line(line, ' ', 0, 0);
 			data = tokenisation(data, args, 0);
-			if (args && args[0] && ft_strncmp(args[0], "cd", 3) == 0) 
+			if (args && args[0] && ft_strncmp(args[0], "cd", 3) == 0)
 				ft_cd(args, env->env);
 			else if (args && args[0] && ft_strncmp(args[0], "pwd", 4) == 0)
 				ft_pwd();
-			else if (args && args[0] && !args[1] && ft_strncmp(args[0], "env", 4) == 0)
+			else if (args && args[0] && !args[1]
+					&& ft_strncmp(args[0], "env", 4) == 0)
 				ft_env(env->env);
 			else if (args && args[0] && ft_strncmp(args[0], "echo", 5) == 0)
 				ft_echo(args);
 			else
-				process(args, env);
+				sig_return = process(args, env);
 			free_double_tab(args);
 			free(data);
 		}

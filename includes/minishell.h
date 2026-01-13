@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 16:33:00 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/13 11:09:02 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_env	*ft_get_env(char **envp);
 
 // PARSING
 t_arg	*tokenisation(t_arg *data, char **args, int i);
-char	*find_path(char *cmd, char **envp, int i, char *full_path);
+char	*find_cmd_path(char *cmd, char **envp, int i, char *full_path);
 char	**ft_split_line(char const *s, char c, unsigned int line, int i);
 
 // EXECUTING
@@ -64,7 +64,8 @@ int		ft_pwd(void);
 int		ft_cd(char **argv, char **envp);
 void	ft_env(char	**envp);
 void	ft_echo(char **args);
-void	process(char **cmd, t_env *env);
+int		process(char **cmd, t_env *env);
+char	*get_env_path(char *str, char **envp, int *i);
 
 // MEMORY MANAGEMENT
 void	pointer_free(char **str);

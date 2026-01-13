@@ -6,13 +6,13 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:44:39 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 14:52:26 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/12 17:16:25 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*get_path(char *str, char **envp, int *i)
+char	*get_env_path(char *str, char **envp, int *i)
 {
 	int	path_len;
 
@@ -37,7 +37,7 @@ void	update_path(char **envp, int *i, int is_old)
 	path_len = ft_strlen(curr_path);
 	if (is_old == 1)
 	{
-		get_path("OLDPWD", envp, i);
+		get_env_path("OLDPWD", envp, i);
 		new_path = malloc((7 + ft_strlen(curr_path) + 1) * sizeof(char));
 		ft_strlcpy(new_path, "OLDPWD=", 8);
 		ft_strlcat(new_path, curr_path, path_len + 9);
@@ -47,7 +47,7 @@ void	update_path(char **envp, int *i, int is_old)
 	}
 	else
 	{
-		get_path("PWD", envp, i);
+		get_env_path("PWD", envp, i);
 		new_path = malloc((4 + ft_strlen(curr_path) + 1) * sizeof(char));
 		ft_strlcpy(new_path, "PWD=", 5);
 		ft_strlcat(new_path, curr_path, path_len + 6);
@@ -64,7 +64,7 @@ int	ft_cd(char **argv, char **envp)
 
 	i = 0;
 	if (!argv[1] || ft_strncmp(argv[1], "~", 2) == 0)
-		path = get_path("HOME", envp, &i);
+		path = get_env_path("HOME", envp, &i);
 	else
 		path = argv[1];
 	update_path(envp, &i, 1);

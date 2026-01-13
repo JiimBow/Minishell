@@ -1,41 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env.c                                          :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/12 13:41:42 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/13 11:43:09 by jodone           ###   ########.fr       */
+/*   Created: 2026/01/12 17:06:53 by jodone            #+#    #+#             */
+/*   Updated: 2026/01/13 11:40:42 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	**ft_copy_env(char **envp)
+char	**new_env(char **env)
 {
-	char	**env;
-	int		i;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	env = ft_calloc((i + 1), sizeof(char *));
-	i = 0;
-	while (envp[i])
-	{
-		env[i] = ft_strdup(envp[i]);
-		i++;
-	}
-	env[i] = NULL;
-	return (env);
+	
 }
 
-t_env	*ft_get_env(char **envp)
+void	ft_unset(t_env *env, char **args)
 {
-	t_env	*env;
+	int	i;
+	int	env_index;
 
-	env = malloc(sizeof(env));
-	env->env = ft_copy_env(envp);
-	return (env);
+	i = 1;
+	while (args[i])
+	{
+		env_index = 0;
+		if (get_env_path(args[i], env->env, &env_index))
+			free(env->env[env_index]);
+		i++;
+	}
 }
