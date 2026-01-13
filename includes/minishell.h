@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/13 11:09:02 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/13 11:45:18 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,21 @@
 # include <linux/limits.h>
 # include <sys/stat.h>
 
-enum e_token
+typedef enum e_token
 {
 	BUILT_IN,
 	COMMANDS,
 	OPTIONS,
 	FILES,
 	DIRECTORIES,
-	OPERATORS
-};
+	OPERATORS,
+	END
+}	t_token;
 
 typedef struct s_arg
 {
-	int				index;
-	char			*content;
-	enum e_token	group;
+	char	*content;
+	t_token	group;
 }	t_arg;
 
 typedef struct s_env
@@ -55,7 +55,7 @@ typedef struct s_env
 t_env	*ft_get_env(char **envp);
 
 // PARSING
-t_arg	*tokenisation(t_arg *data, char **args, int i);
+t_arg	*tokenisation(char **args, int i);
 char	*find_cmd_path(char *cmd, char **envp, int i, char *full_path);
 char	**ft_split_line(char const *s, char c, unsigned int line, int i);
 
