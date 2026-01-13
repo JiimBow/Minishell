@@ -26,6 +26,9 @@ On regarde si c'est une commande :
 
 8. l'exeprocess recevra direcment arg_cmd[0] et l'arg + option. le split se fera avant.
 
+pour valgrind:
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes --suppressions=readline.supp ./minishell
+
 CHAT:
 
 ARBRE
