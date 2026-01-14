@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 14:20:54 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/14 23:33:24 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	free_double_tab(char **tab)
 	tab = NULL;
 }
 
-void	handle_sigint(int signal)
+static void	handle_sigint(int signal)
 {
 	if (signal == SIGINT)
 	{
@@ -84,7 +84,7 @@ int	main(int argc, char **argv, char **envp)
 			free_before_exit(line, env, NULL, sig);
 		else
 		{
-			line->args = ft_split_line(env->env, line->line, ' ', 0);
+			line->args = ft_split_line(env->env, line->line);
 			data = NULL;//tokenisation(line->args, 0);
 			if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "cd", 3) == 0)

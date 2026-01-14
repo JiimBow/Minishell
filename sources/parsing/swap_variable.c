@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:59:24 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/14 12:31:30 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/14 23:45:37 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,27 +109,38 @@ static int	fill_tab(char **env, const char *s, char *tab, int *j)
 	return (n);
 }
 
-char	*ft_substr_variable(char **env, char const *s, int i, int end)
+static int	add_variable(char **env, const char *s, int *i, int count)
+{
+	char	*tmp;
+
+	if (s[*i + 1] == '?')
+	{
+		tmp = ft_itoa(sig);
+		count = ft_strlen(tmp);
+		free(tmp);
+		(*i)++;
+	}
+	else if (s[*i + 1] == '_' || ft_isalpha(s[*i + 1]))
+		count = get_count(env, s + *i + 1, i);
+	else
+		count = 1;
+	return (count);
+}
+
+char	*ft_substr_variable(char **env, char const *s, int i, int n)
 {
 	char	*tab;
 	char	*tmp;
 	int		count;
 	int		j;
 
-	if (!env || !*env | !s)
+	if (!env || !*env || !s)
 		return (NULL);
 	count = 0;
-	while (i < end)
+	while (i < n)
 	{
-		if (s[i] == '$' && s[i + 1] == '?')
-		{
-			tmp = ft_itoa(sig);
-			count += ft_strlen(tmp);
-			free(tmp);
-			i++;
-		}
-		else if (s[i] == '$' && (s[i + 1] == '_' || ft_isalpha(s[i + 1])))
-			count += get_count(env, s + i + 1, &i);
+		if (s[i] == '$' && s[i + 1])
+			count += add_variable(env, s, &i, 0);
 		else
 			count++;
 		i++;
@@ -139,9 +150,9 @@ char	*ft_substr_variable(char **env, char const *s, int i, int end)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (i < end)
+	while (i < n)
 	{
-		if (s[i] == '$' && s[i + 1] == '?')
+		if (s[i] == '$' && s[i + 1] && s[i + 1] == '?')
 		{
 			tmp = ft_itoa(sig);
 			count = 0;
@@ -150,8 +161,10 @@ char	*ft_substr_variable(char **env, char const *s, int i, int end)
 			i += 2;
 			free(tmp);
 		}
-		else if (s[i] == '$' && (s[i + 1] == '_' || ft_isalpha(s[i + 1])))
+		else if (s[i] == '$' && s[i + 1] && (s[i + 1] == '_' || ft_isalpha(s[i + 1])))
 			i += fill_tab(env, s + i + 1, tab, &j) + 1;
+		else if (s[i] == '\'' || s[i] == '"')
+			i++;
 		else
 			tab[j++] = s[i++];
 	}

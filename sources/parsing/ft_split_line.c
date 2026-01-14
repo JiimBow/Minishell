@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/14 11:42:14 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/14 23:38:15 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,78 +23,98 @@ static char	**ft_free_tab(char **tab, int line)
 	return (NULL);
 }
 
-static char	**ft_add_lines(char **env, char **tab, char const *s, char c)
+static int	is_spaces(char c)
 {
-	int	i;
-	int	line;
+	if (c == ' ' || c == '\t' || c == '\n')
+		return (1);
+	return (0);
+}
 
+static int	is_quote(char c)
+{
+	if (c == '"' || c == '\'')
+		return (1);
+	return (0);
+}
+
+static char	**ft_add_lines(char **env, char const *reader, int line)
+{
+	char	**tab;
+	char	quote;
+	int		start;
+	int		i;
+
+	tab = (char **)malloc(sizeof(char *) * (line + 1));
+	if (!tab)
+		return (NULL);
+	tab[line] = NULL;
+	i = 0;
 	line = 0;
-	while (*s)
+	while (reader[i])
 	{
-		while (*s && (*s == ' ' || *s == '\t' || *s == '\n'))
-			s++;
-		if (*s == '"' || *s == '\'')
-			c = *s++;
-		i = 0;
-		while (*s && *s != c)
+		while (reader[i] && is_spaces(reader[i]))
+			i++;
+		start = i;
+		while (reader[i] && !is_spaces(reader[i]))
 		{
-			if (c == ' ' && (*s == '\t' || *s == '\n'))
-				break ;
-			s += (i++ >= 0);
+			while (reader[i] && !is_spaces(reader[i]) && !is_quote(reader[i]))
+				i++;
+			if (is_quote(reader[i]))
+			{
+				quote = reader[i++];
+				while (reader[i++] != quote)
+					;
+			}
 		}
-		if (i > 0)
+		if (i > start)
 		{
-			if (c != '\'')
-				*(tab + line) = ft_substr_variable(env, s - i, 0, i);
-			else
-				*(tab + line) = ft_substr(s - i, 0, i);
-			if (*(tab + line) == NULL)
+			tab[line] = ft_substr_variable(env, reader + start, 0, i - start);
+			if (!tab[line])
+			{
 				ft_free_tab(tab, line);
-			if (!tab)
 				return (NULL);
+			}
 			line++;
-			while (*s && *s == c)
-				s++;
-			c = ' ';
 		}
 	}
 	return (tab);
 }
 
-char	**ft_split_line(char **env, char const *s, char c, int line)
+char	**ft_split_line(char **env, char const *reader)
 {
 	char	**tab;
+	char	quote;
+	int		check;
+	int		line;
 	int		i;
 
 	i = 0;
-	while (s[i])
+	line = 0;
+	while (reader[i])
 	{
-		while (s[i] && (s[i] == ' ' || s[i] == '\t' || s[i] == '\n'))
+		check = 0;
+		while (reader[i] && is_spaces(reader[i]))
 			i++;
-		if (s[i] == '"' || s[i] == '\'')
-			c = s[i++];
-		if (s[i] != c)
+		while (reader[i] && !is_spaces(reader[i]))
 		{
-			line++;
-			while (s[i] && s[i] != c)
+			while (reader[i] && !is_spaces(reader[i]) && !is_quote(reader[i]))
 			{
-				if (c == ' ' && (s[i] == '\t' || s[i] == '\n'))
-					break ;
+				check = 1;
 				i++;
 			}
-			if (s[i] != '\0')
-				i++;
-			c = ' ';
+			if (is_quote(reader[i]))
+			{
+				check = 1;
+				quote = reader[i++];
+				while (reader[i++] != quote)
+					;
+			}
 		}
-		else
-			i++;
+		if (check == 1)
+			line++;
 	}
-	tab = (char **)malloc(sizeof(char *) * (line + 1));
+	tab = ft_add_lines(env, reader, line);
 	if (!tab)
 		return (NULL);
-	tab = ft_add_lines(env, tab, s, ' ');
-	if (!tab)
-		return (NULL);
-	*(tab + line) = NULL;
 	return (tab);
 }
