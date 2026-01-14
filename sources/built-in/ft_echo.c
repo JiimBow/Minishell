@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:20:54 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 10:17:52 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/14 12:07:07 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,18 @@ int	skip_option(char **args, int i)
 	return (i);
 }
 
-void	write_args(char **args, int i)
+void	write_args(char **args, int i, int sig)
 {
 	while (args[i])
 	{
 		if (args[i][0] == '\0')
 		{
+			i++;
+			continue ;
+		}
+		if (ft_strncmp(args[i], "$?", 3) == 0)	
+		{
+			printf("%i", sig);
 			i++;
 			continue ;
 		}
@@ -52,7 +58,7 @@ void	write_args(char **args, int i)
 	}
 }
 
-void	ft_echo(char **args)
+int	ft_echo(char **args, int sig)
 {
 	int	i;
 
@@ -60,12 +66,13 @@ void	ft_echo(char **args)
 		printf("\n");
 	else if (ft_strncmp("-n", args[1], 2) != 0)
 	{
-		write_args(args, 1);
+		write_args(args, 1, sig);
 		printf("\n");
 	}
 	else
 	{
 		i = skip_option(args, 1);
-		write_args(args, i);
+		write_args(args, i, sig);
 	}
+	return (0);
 }

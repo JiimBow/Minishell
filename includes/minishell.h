@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/13 19:02:13 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/14 12:07:15 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_arg
 typedef struct s_env
 {
 	char	**env;
+	int		sig;
 }	t_env;
 
 typedef struct s_line
@@ -67,11 +68,11 @@ char	**ft_split_line(char **env, char const *s, char c, int line);
 char	*ft_substr_variable(char **env, char const *s, int i, int end);
 
 // EXECUTING
-int		ft_pwd(void);
+int		ft_pwd(t_env *env);
 int		ft_cd(char **argv, char **envp);
-void	ft_env(char	**envp);
-void	ft_echo(char **args);
-void	ft_unset(t_env *env, char **args);
+int		ft_env(char	**envp);
+int		ft_echo(char **args, int sig);
+int		ft_unset(t_env *env, char **args);
 void	free_before_exit(t_line *line, t_env *env, t_arg *data, int sig_return);
 int		process(char **cmd, t_env *env);
 char	*get_env_path(char *str, char **envp, int *i);
