@@ -6,13 +6,13 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 17:06:53 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 10:57:38 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/14 16:49:53 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	env_size(char **env)
+static int	env_size(char **env)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ int	env_size(char **env)
 	return (i);
 }
 
-char	**new_env(char **env, int index_supp)
+static char	**new_env(char **env, int index_supp)
 {
 	char	**n_env;
 	int		env_len;

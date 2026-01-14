@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:44:39 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 15:33:28 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/14 16:44:22 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*get_env_path(char *str, char **envp, int *i)
 	return (NULL);
 }
 
-void	update_path(char **envp, int *i, int is_old)
+static void	update_path(char **envp, int *i, int is_old)
 {
 	char	curr_path[PATH_MAX];
 	char	*new_path;

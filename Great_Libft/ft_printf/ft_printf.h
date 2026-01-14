@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 09:42:11 by jodone            #+#    #+#             */
-/*   Updated: 2025/10/28 09:36:11 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/14 16:47:37 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <stdarg.h>
 
 //functions
-void	ft_bzero(void *s, size_t n);
-size_t	ft_strlen(const char *str);
+void	print_bzero(void *s, size_t n);
+size_t	print_strlen(const char *str);
 void	ft_putnbr_base(int nbr, char *base, int *count);
 void	ft_uputnbr_base(unsigned int nbr, char *base, int *count);
 char	*ft_itoax(unsigned long nb, int is_low, int *count);

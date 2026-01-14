@@ -6,13 +6,13 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:20:54 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 14:37:19 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/14 16:48:30 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	skip_option(char **args, int i)
+static int	skip_option(char **args, int i)
 {
 	int	j;
 	int	is_option;
@@ -37,7 +37,7 @@ int	skip_option(char **args, int i)
 	return (i);
 }
 
-void	write_args(char **args, int i)
+static void	write_args(char **args, int i)
 {
 	while (args[i])
 	{

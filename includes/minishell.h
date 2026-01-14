@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 13:10:36 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/14 19:15:23 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,19 @@ typedef struct s_line
 	char	**args;
 }	t_line;
 
-extern int	sig;
+typedef struct s_var
+{
+	char			*name;
+	char			*content;
+	int				rank;
+	struct s_var	*next;
+}	t_var;
+
+extern int	g_sig;
 
 // INITIALIZATION
-t_env	*ft_get_env(char **envp);
+t_env	*ft_get_env(t_var **lst_var);
+void	get_var(t_var **lst_var, char **envp);
 
 // PARSING
 t_arg	*tokenisation(char **args, int i);
@@ -69,19 +78,25 @@ char	*find_cmd_path(char *cmd, char **envp, int i, char *full_path);
 char	**ft_split_line(char **env, char const *s, char c, int line);
 char	*ft_substr_variable(char **env, char const *s, int i, int end);
 
+// UTILITIES
+char	*get_env_path(char *str, char **envp, int *i);
+t_var	*ft_lst_new_var(char *name, char *content);
+void	ft_lstadd_back_var(t_var **lst, t_var *new);
+void	ft_lstclear_var(t_var **lst, void (*del)(void *));
+int		ft_lstsize_var(t_var *lst);
+
 // EXECUTING
 int		ft_pwd(t_env *env);
 int		ft_cd(char **argv, char **envp);
 int		ft_env(char	**envp);
 int		ft_echo(char **args);
 int		ft_unset(t_env *env, char **args);
-void	free_before_exit(t_line *line, t_env *env, t_arg *data, int sig_return);
 int		process(char **cmd, t_env *env);
-char	*get_env_path(char *str, char **envp, int *i);
 
 // MEMORY MANAGEMENT
 void	pointer_free(char **str);
 void	free_double_tab(char **tab);
 void	free_struct(t_arg *data);
+int		free_before_exit(t_line *line, t_env *env, t_arg *data, t_var *lst_var);
 
 #endif

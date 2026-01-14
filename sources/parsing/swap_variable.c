@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   swap_variable.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:59:24 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/14 12:31:30 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/14 18:20:25 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ char	*ft_substr_variable(char **env, char const *s, int i, int end)
 	{
 		if (s[i] == '$' && s[i + 1] == '?')
 		{
-			tmp = ft_itoa(sig);
+			tmp = ft_itoa(g_sig);
 			count += ft_strlen(tmp);
 			free(tmp);
 			i++;
@@ -143,7 +143,7 @@ char	*ft_substr_variable(char **env, char const *s, int i, int end)
 	{
 		if (s[i] == '$' && s[i + 1] == '?')
 		{
-			tmp = ft_itoa(sig);
+			tmp = ft_itoa(g_sig);
 			count = 0;
 			while (tmp[count])
 				tab[j++] = tmp[count++];
