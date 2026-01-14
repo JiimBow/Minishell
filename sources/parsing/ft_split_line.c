@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/13 19:01:24 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/14 11:42:14 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,17 @@ static char	**ft_add_lines(char **env, char **tab, char const *s, char c)
 	line = 0;
 	while (*s)
 	{
-		while (*s && *s == c)
+		while (*s && (*s == ' ' || *s == '\t' || *s == '\n'))
 			s++;
-		if ((*s == '"' || *s == '\'') && c == ' ')
-			c = *s;
+		if (*s == '"' || *s == '\'')
+			c = *s++;
 		i = 0;
 		while (*s && *s != c)
+		{
+			if (c == ' ' && (*s == '\t' || *s == '\n'))
+				break ;
 			s += (i++ >= 0);
+		}
 		if (i > 0)
 		{
 			if (c != '\'')
@@ -65,15 +69,25 @@ char	**ft_split_line(char **env, char const *s, char c, int line)
 	i = 0;
 	while (s[i])
 	{
-		if ((s[i] == '"' || s[i] == '\'') && c == ' ')
-			c = s[i];
-		if (s[i++] != c)
+		while (s[i] && (s[i] == ' ' || s[i] == '\t' || s[i] == '\n'))
+			i++;
+		if (s[i] == '"' || s[i] == '\'')
+			c = s[i++];
+		if (s[i] != c)
 		{
 			line++;
 			while (s[i] && s[i] != c)
+			{
+				if (c == ' ' && (s[i] == '\t' || s[i] == '\n'))
+					break ;
+				i++;
+			}
+			if (s[i] != '\0')
 				i++;
 			c = ' ';
 		}
+		else
+			i++;
 	}
 	tab = (char **)malloc(sizeof(char *) * (line + 1));
 	if (!tab)

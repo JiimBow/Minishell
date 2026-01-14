@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/13 18:55:34 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/14 10:47:39 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			line->args = ft_split_line(env->env, line->line, ' ', 0);
-			data = tokenisation(line->args, 0);
+			data = NULL;//tokenisation(line->args, 0);
 			if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "cd", 3) == 0)
 				ft_cd(line->args, env->env);
