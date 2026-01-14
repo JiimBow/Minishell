@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 13:10:22 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/14 14:20:54 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	handle_sigint(int signal)
 		rl_on_new_line();
 		printf("\n");
 		rl_redisplay();
-		sig = 130;
+		if (WIFSIGNALED(signal))
+			sig = WTERMSIG(signal) + 128;
 	}
 }
 
