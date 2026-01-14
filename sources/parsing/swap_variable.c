@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:59:24 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/13 19:11:56 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/14 11:57:50 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,9 @@ char	*ft_substr_variable(char **env, char const *s, int i, int end)
 	count = 0;
 	while (i < end)
 	{
-		if (s[i] == '$' && (s[i + 1] == '_' || ft_isalpha(s[i + 1])))
+		if (s[i] == '$' && s[i + 1] == '?')
+			count += 1;
+		else if (s[i] == '$' && (s[i + 1] == '_' || ft_isalpha(s[i + 1])))
 			count += get_count(env, s + i + 1, &i);
 		else
 			count++;
@@ -133,7 +135,9 @@ char	*ft_substr_variable(char **env, char const *s, int i, int end)
 	j = 0;
 	while (i < end)
 	{
-		if (s[i] == '$' && (s[i + 1] == '_' || ft_isalpha(s[i + 1])))
+		if (s[i] == '$' && s[i + 1] == '?')
+			i += 1;
+		else if (s[i] == '$' && (s[i + 1] == '_' || ft_isalpha(s[i + 1])))
 			i += fill_tab(env, s + i + 1, tab, &j) + 1;
 		else
 			tab[j++] = s[i++];
