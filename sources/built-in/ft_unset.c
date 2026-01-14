@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 17:06:53 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/13 13:53:06 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/14 10:57:38 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**new_env(char **env, int index_supp)
 	return (n_env);
 }
 
-void	ft_unset(t_env *env, char **args)
+int	ft_unset(t_env *env, char **args)
 {
 	int	i;
 	int	env_index;
@@ -58,8 +58,9 @@ void	ft_unset(t_env *env, char **args)
 		if (get_env_path(args[i], env->env, &env_index))
 		{
 			env->env = new_env(env->env, env_index);
-			break ;
+			return (0);
 		}
 		i++;
 	}
+	return (0);
 }
