@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:53:51 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/13 18:06:14 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/14 15:44:48 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	arg_isnum(char *args)
 	int	i;
 
 	i = 0;
+	if (args && (args[0] == '-' || args[0] == '+'))
+		i++;
 	while (args && args[i])
 	{
 		if (!ft_isdigit(args[i]))
@@ -45,7 +47,7 @@ void	free_before_exit(t_line *line, t_env *env, t_arg *data, int sig_return)
 	printf("exit\n");
 	if (line->args && line->args[1] && line->args[2])
 	{
-		printf("minishell: exit: too many arguments\n");
+		write(2, "minishell: exit: too many arguments\n", 37);
 		return ;
 	}
 	rl_clear_history();
@@ -53,8 +55,11 @@ void	free_before_exit(t_line *line, t_env *env, t_arg *data, int sig_return)
 	if (env)
 		free(env);
 	if (line->args && !arg_isnum(line->args[1]))
-		printf("minishell: exit: %s: numeric argument required\n",
-			line->args[1]);
+	{
+		write(2, "minishell: exit: ", 17);
+		write(2, line->args[1], ft_strlen(line->args[1]));
+		write(2, ": numeric argument required\n", 29);
+	}
 	else if (line->args && !sig_return)
 		sig_return = ft_atoi(line->args[1]);
 	free_struct(data);

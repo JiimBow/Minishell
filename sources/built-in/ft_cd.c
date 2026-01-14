@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:44:39 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 17:16:25 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/14 15:33:28 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,11 @@ int	ft_cd(char **argv, char **envp)
 	int		i;
 
 	i = 0;
+	if (argv[2])
+	{
+		write(2, "minishell: cd: too many arguments\n", 34);
+		return (1);
+	}
 	if (!argv[1] || ft_strncmp(argv[1], "~", 2) == 0)
 		path = get_env_path("HOME", envp, &i);
 	else
@@ -70,6 +75,7 @@ int	ft_cd(char **argv, char **envp)
 	update_path(envp, &i, 1);
 	if (chdir(path) == -1)
 	{
+		write(2, "minishell: cd: ", 15);
 		perror(path);
 		return (1);
 	}
