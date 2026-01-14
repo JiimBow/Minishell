@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:20:54 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 12:07:07 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/14 13:10:12 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,12 @@ int	skip_option(char **args, int i)
 	return (i);
 }
 
-void	write_args(char **args, int i, int sig)
+void	write_args(char **args, int i)
 {
 	while (args[i])
 	{
 		if (args[i][0] == '\0')
 		{
-			i++;
-			continue ;
-		}
-		if (ft_strncmp(args[i], "$?", 3) == 0)	
-		{
-			printf("%i", sig);
 			i++;
 			continue ;
 		}
@@ -58,7 +52,7 @@ void	write_args(char **args, int i, int sig)
 	}
 }
 
-int	ft_echo(char **args, int sig)
+int	ft_echo(char **args)
 {
 	int	i;
 
@@ -66,13 +60,13 @@ int	ft_echo(char **args, int sig)
 		printf("\n");
 	else if (ft_strncmp("-n", args[1], 2) != 0)
 	{
-		write_args(args, 1, sig);
+		write_args(args, 1);
 		printf("\n");
 	}
 	else
 	{
 		i = skip_option(args, 1);
-		write_args(args, i, sig);
+		write_args(args, i);
 	}
 	return (0);
 }

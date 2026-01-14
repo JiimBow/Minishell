@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 12:07:15 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/14 13:10:36 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ typedef struct s_line
 	char	**args;
 }	t_line;
 
+extern int	sig;
+
 // INITIALIZATION
 t_env	*ft_get_env(char **envp);
 
@@ -71,7 +73,7 @@ char	*ft_substr_variable(char **env, char const *s, int i, int end);
 int		ft_pwd(t_env *env);
 int		ft_cd(char **argv, char **envp);
 int		ft_env(char	**envp);
-int		ft_echo(char **args, int sig);
+int		ft_echo(char **args);
 int		ft_unset(t_env *env, char **args);
 void	free_before_exit(t_line *line, t_env *env, t_arg *data, int sig_return);
 int		process(char **cmd, t_env *env);

@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:59:24 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/14 11:57:50 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/14 12:31:30 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,9 @@ static int	fill_tab(char **env, const char *s, char *tab, int *j)
 
 char	*ft_substr_variable(char **env, char const *s, int i, int end)
 {
-	int		count;
 	char	*tab;
+	char	*tmp;
+	int		count;
 	int		j;
 
 	if (!env || !*env | !s)
@@ -121,7 +122,12 @@ char	*ft_substr_variable(char **env, char const *s, int i, int end)
 	while (i < end)
 	{
 		if (s[i] == '$' && s[i + 1] == '?')
-			count += 1;
+		{
+			tmp = ft_itoa(sig);
+			count += ft_strlen(tmp);
+			free(tmp);
+			i++;
+		}
 		else if (s[i] == '$' && (s[i + 1] == '_' || ft_isalpha(s[i + 1])))
 			count += get_count(env, s + i + 1, &i);
 		else
@@ -136,7 +142,14 @@ char	*ft_substr_variable(char **env, char const *s, int i, int end)
 	while (i < end)
 	{
 		if (s[i] == '$' && s[i + 1] == '?')
-			i += 1;
+		{
+			tmp = ft_itoa(sig);
+			count = 0;
+			while (tmp[count])
+				tab[j++] = tmp[count++];
+			i += 2;
+			free(tmp);
+		}
 		else if (s[i] == '$' && (s[i + 1] == '_' || ft_isalpha(s[i + 1])))
 			i += fill_tab(env, s + i + 1, tab, &j) + 1;
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 12:10:36 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/14 13:10:22 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,15 @@ void	free_double_tab(char **tab)
 	tab = NULL;
 }
 
-void	handle_sigint(int sig)
+void	handle_sigint(int signal)
 {
-	if (sig == SIGINT)
+	if (signal == SIGINT)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		printf("\n");
 		rl_redisplay();
+		sig = 130;
 	}
 }
 
@@ -68,7 +69,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	line = malloc(sizeof(t_line));
+	line = (t_line *)malloc(sizeof(t_line));
 	if (!line)
 		return (1);
 	env = ft_get_env(envp);
@@ -76,7 +77,6 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		line->line = NULL;
 		line->args = NULL;
 		line->line = readline("minishell> ");
 		if (!line->line)
@@ -96,7 +96,7 @@ int	main(int argc, char **argv, char **envp)
 				sig = ft_env(env->env);
 			else if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "echo", 5) == 0)
-				sig = ft_echo(line->args, sig);
+				sig = ft_echo(line->args);
 			else if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "unset", 6) == 0)
 				sig = ft_unset(env, line->args);
@@ -110,10 +110,10 @@ int	main(int argc, char **argv, char **envp)
 				sig = process(line->args, env);
 			free_double_tab(line->args);
 			free_struct(data);
+			add_history(line->line);
+			free(line->line);
+			line->line = NULL;
 		}
-		add_history(line->line);
-		free(line->line);
-		line->line = NULL;
 	}
 	return (0);
 }
