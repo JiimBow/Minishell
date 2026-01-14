@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:59:24 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/14 12:31:30 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/14 15:55:13 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +109,19 @@ static int	fill_tab(char **env, const char *s, char *tab, int *j)
 	return (n);
 }
 
-char	*ft_substr_variable(char **env, char const *s, int i, int end)
+char	*ft_substr_variable(char **env, char const *s, int end, char sep)
 {
 	char	*tab;
 	char	*tmp;
 	int		count;
+	int		i;
 	int		j;
 
+	(void)sep;
 	if (!env || !*env | !s)
 		return (NULL);
 	count = 0;
+	i = 0;
 	while (i < end)
 	{
 		if (s[i] == '$' && s[i + 1] == '?')

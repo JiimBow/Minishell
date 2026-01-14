@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 13:10:36 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/14 15:54:57 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ t_env	*ft_get_env(char **envp);
 t_arg	*tokenisation(char **args, int i);
 char	*find_cmd_path(char *cmd, char **envp, int i, char *full_path);
 char	**ft_split_line(char **env, char const *s, char c, int line);
-char	*ft_substr_variable(char **env, char const *s, int i, int end);
+char	*ft_substr_variable(char **env, char const *s, int end, char sep);
 
 // EXECUTING
 int		ft_pwd(t_env *env);

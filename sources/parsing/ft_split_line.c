@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/14 11:42:14 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/14 15:54:04 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	**ft_free_tab(char **tab, int line)
 	return (NULL);
 }
 
-static char	**ft_add_lines(char **env, char **tab, char const *s, char c)
+static char	**ft_add_lines(char **env, char **tab, char const *s, char sep)
 {
 	int	i;
 	int	line;
@@ -34,34 +34,40 @@ static char	**ft_add_lines(char **env, char **tab, char const *s, char c)
 		while (*s && (*s == ' ' || *s == '\t' || *s == '\n'))
 			s++;
 		if (*s == '"' || *s == '\'')
-			c = *s++;
+			sep = *s++;
 		i = 0;
-		while (*s && *s != c)
+		while (*s && *s != sep)
 		{
-			if (c == ' ' && (*s == '\t' || *s == '\n'))
+			if (sep == ' ' && (*s == '\t' || *s == '\n'))
 				break ;
-			s += (i++ >= 0);
+			if (*s == '"' || *s == '\'')
+			{
+				sep = *s++;
+				while (*s && *s != sep)
+					s += (i++ >= 0);
+				sep = ' ';
+			}
+			else
+				s += (i++ >= 0);
 		}
 		if (i > 0)
 		{
-			if (c != '\'')
-				*(tab + line) = ft_substr_variable(env, s - i, 0, i);
-			else
-				*(tab + line) = ft_substr(s - i, 0, i);
-			if (*(tab + line) == NULL)
+			tab[line] = ft_substr_variable(env, s - i, i, sep);
+			if (!tab[line])
+			{
 				ft_free_tab(tab, line);
-			if (!tab)
 				return (NULL);
+			}
 			line++;
-			while (*s && *s == c)
+			if (*s)
 				s++;
-			c = ' ';
+			sep = ' ';
 		}
 	}
 	return (tab);
 }
 
-char	**ft_split_line(char **env, char const *s, char c, int line)
+char	**ft_split_line(char **env, char const *s, char sep, int line)
 {
 	char	**tab;
 	int		i;
@@ -72,19 +78,26 @@ char	**ft_split_line(char **env, char const *s, char c, int line)
 		while (s[i] && (s[i] == ' ' || s[i] == '\t' || s[i] == '\n'))
 			i++;
 		if (s[i] == '"' || s[i] == '\'')
-			c = s[i++];
-		if (s[i] != c)
+			sep = s[i++];
+		if (s[i] != sep)
 		{
 			line++;
-			while (s[i] && s[i] != c)
+			while (s[i] && s[i] != sep)
 			{
-				if (c == ' ' && (s[i] == '\t' || s[i] == '\n'))
+				if (sep == ' ' && (s[i] == '\t' || s[i] == '\n'))
 					break ;
+				if (s[i] == '"' || s[i] == '\'')
+				{
+					sep = s[i++];
+					while (s[i] && s[i] != sep)
+						i++;
+					sep = ' ';
+				}
 				i++;
 			}
 			if (s[i] != '\0')
 				i++;
-			c = ' ';
+			sep = ' ';
 		}
 		else
 			i++;
