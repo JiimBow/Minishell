@@ -6,13 +6,13 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:03:16 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/13 13:43:08 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/14 11:26:40 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	ft_env(char	**envp)
+int	ft_env(char	**envp)
 {
 	int	i;
 
@@ -22,4 +22,5 @@ void	ft_env(char	**envp)
 		printf("%s\n", envp[i]);
 		i++;
 	}
+	return (0);
 }
