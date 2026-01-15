@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:30:58 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 19:15:15 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 10:35:54 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ t_var	*ft_lst_new_var(char *name, char *content)
 		return (NULL);
 	newnode->name = ft_strdup(name);
 	newnode->content = ft_strdup(content);
+	newnode->rank = -1;
 	newnode->next = NULL;
 	return (newnode);
 }

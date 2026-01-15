@@ -6,23 +6,54 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:10:11 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 10:20:57 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 12:26:01 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static void	rank_var(t_var **lst_var)
+static void	manage_display(char *name, char *content)
+{
+	if (content)
+		printf("declare -x %s=\"%s\"\n", name, content);
+	else
+		printf("declare -x %s\n", name);
+}
+
+static void	display_export(t_var **lst_var)
 {
 	t_var	*tmp;
-	int		rank;
 	int		lst_size;
+	int		count;
 
-	lst_size = ft_lstsize_var(lst_var);
-	rank = 0;
-	while (rank < lst_size)
+	lst_size = ft_lstsize_var(*lst_var);
+	count = 0;
+	while (count < lst_size)
 	{
 		tmp = *lst_var;
-		
+		while (tmp)
+		{
+			if (tmp->rank == count)
+			{
+				manage_display(tmp->name, tmp->content);
+				count++;
+				break ;
+			}
+			tmp = tmp->next;
+		}
 	}
+}
+
+int	ft_export(t_var **lst_var, char **args)
+{
+	if (!args[1])
+	{
+		if (!already_sorted(lst_var))
+		{
+			reset_rank(lst_var);
+			rank_var(lst_var);
+		}
+		display_export(lst_var);
+	}
+	return (0);
 }
