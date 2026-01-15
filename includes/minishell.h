@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 17:00:18 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 18:33:22 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_env
 typedef struct s_line
 {
 	char	*line;
+	char	*new;
 	char	**args;
 }	t_line;
 
@@ -81,6 +82,7 @@ char	**ft_free_tab(char **tab, int line);
 int		is_spaces(char c);
 int		is_quote(char c);
 char	*substr_var(char **env, char const *s, int end);
+char	*parse_line(t_env *env, t_line *line);
 
 // UTILITIES
 char	*get_env_path(char *str, char **envp, int *i);
