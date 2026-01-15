@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 20:11:06 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 20:45:55 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_arg
 typedef struct s_line
 {
 	char	*line;
+	char	*new;
 	char	**args;
 	char	**env;
 	int		sig;
@@ -77,6 +78,7 @@ char	**ft_free_tab(char **tab, int line);
 int		is_spaces(char c);
 int		is_quote(char c);
 char	*substr_var(char **env, char const *s, int end);
+char	*parse_line(t_line *line);
 int		parse_export(char *args);
 
 // UTILITIES
