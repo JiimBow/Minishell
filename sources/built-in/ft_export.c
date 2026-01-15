@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:10:11 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 19:18:24 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 20:11:24 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,11 @@ int	ft_export(t_var **lst_var, char **args)
 	int		i;
 	char	*name;
 
+	g_sig = 0;
 	if (!args[1])
 	{
 		if (!already_sorted(lst_var))
-		{
-			reset_rank(lst_var);
 			rank_var(lst_var);
-		}
 		display_export(lst_var);
 	}
 	else
@@ -75,10 +73,11 @@ int	ft_export(t_var **lst_var, char **args)
 		while (args[i])
 		{
 			name = get_env_name(args[i]);
-			parse_export(name);
+			if (!parse_export(name))
+				g_sig = 1;
 			add_var(lst_var, args[i++], name);
 			free(name);
 		}
 	}
-	return (0);
+	return (g_sig);
 }

@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 19:40:50 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 20:07:47 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	main(int argc, char **argv, char **envp)
 				&& ft_strncmp(line->args[0], "export", 7) == 0)
 				g_sig = ft_export(&lst_var, line->args);
 			else if (line->args)
-				g_sig = process(line);
+				g_sig = process(line, lst_var);
 			free_double_tab(line->args);
 			free_struct(data);
 			free_double_tab(line->env);

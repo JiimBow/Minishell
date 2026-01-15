@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 19:40:39 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 20:11:06 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int		ft_lstsize_var(t_var *lst);
 
 // RANKING
 int		already_sorted(t_var **lst_var);
-void	reset_rank(t_var **lst_var);
 void	rank_var(t_var **lst_var);
 
 // EXECUTING
@@ -100,7 +99,7 @@ int		ft_echo(char **args);
 int		ft_unset(t_line *line);
 int		ft_export(t_var **lst_var, char **args);
 void	display_export(t_var **lst_var);
-int		process(t_line *line);
+int		process(t_line *line, t_var *lst_var);
 
 // MEMORY MANAGEMENT
 void	pointer_free(char **str);

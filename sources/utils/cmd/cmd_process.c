@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 19:40:31 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 19:57:31 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	pointer_free(char **str)
 	}
 }
 
-static void	exec_process(t_line *line)
+static void	exec_process(t_line *line, t_var *lst_var)
 {
 	char	*path_cmd;
 	char	*full_path;
@@ -53,14 +53,16 @@ static void	exec_process(t_line *line)
 	{
 		perror(line->args[0]);
 		pointer_free(line->args);
-		free(path_cmd);
 		free_double_tab(line->env);
+		free(line->line);
 		free(line);
+		ft_lstclear_var(&lst_var, free);
+		free(path_cmd);
 		exit(127);
 	}
 }
 
-int	process(t_line *line)
+int	process(t_line *line, t_var *lst_var)
 {
 	__pid_t	pid;
 	int		status;
@@ -72,7 +74,7 @@ int	process(t_line *line)
 	if (pid < 0)
 		exit(EXIT_FAILURE);
 	if (pid == 0)
-		exec_process(line);
+		exec_process(line, lst_var);
 	waitpid(-1, &status, 0);
 	sig_return = return_value(status);
 	return (sig_return);
