@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:59:24 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/15 12:13:55 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/15 15:05:18 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,35 +38,23 @@ static char	*get_name(const char *s)
 static char	*get_content(char **env, char *tab)
 {
 	char	*content;
-	int		size_content;
 	int		size_tab;
 	int		i;
-	int		j;
 
-	if (!env || !*env || !tab)
+	if (!env || !tab)
 		return (NULL);
-	content = NULL;
 	size_tab = ft_strlen(tab);
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], tab, size_tab) == 0)
+		if (ft_strncmp(env[i], tab, size_tab) == 0 && env[i][size_tab] == '=')
 		{
-			j = 0;
-			while (env[i][j] && tab[j] && env[i][j] != '=')
-				j++;
-			if (env[i][j] != '=')
-				return (NULL);
-			size_content = ft_strlen(env[i]) - (size_tab + 1);
-			content = ft_calloc(sizeof(char), size_content + 1);
-			if (!content)
-				return (NULL);
-			ft_strlcpy(content, env[i] + size_tab + 1, size_content + 1);
-			break ;
+			content = ft_strdup(env[i] + size_tab + 1);
+			return (content);
 		}
-		i++;
+		i++ ;
 	}
-	return (content);
+	return (NULL);
 }
 
 static int	get_count(char **env, const char *s, int *i)
@@ -109,7 +97,7 @@ static int	fill_tab(char **env, const char *s, char *tab, int *j)
 	return (n);
 }
 
-static int	add_variable(char **env, const char *s, int *i, int count)
+static int	variable_size(char **env, const char *s, int *i, int count)
 {
 	char	*tmp;
 
@@ -127,33 +115,35 @@ static int	add_variable(char **env, const char *s, int *i, int count)
 	return (count);
 }
 
-char	*ft_substr_variable(char **env, char const *s, int i, int n)
+char	*substr_var(char **env, char const *s, int n)
 {
 	char	*tab;
 	char	*tmp;
 	char	quote;
 	int		count;
 	int		j;
+	int		i;
 
 	if (!env || !*env || !s)
 		return (NULL);
 	count = 0;
+	i = 0;
 	while (i < n)
 	{
 		if (s[i] == '\'' || s[i] == '"')
 		{
 			quote = s[i++];
-			while (i < n && s[i] != quote)
+			while (s[i] != quote)
 			{
 				if (quote == '"' && s[i] == '$' && s[i + 1])
-					count += add_variable(env, s, &i, 0);
+					count += variable_size(env, s, &i, 0);
 				else
 					count++;
 				i++;
 			}
 		}
-		else if (i < n && s[i] == '$' && s[i + 1])
-			count += add_variable(env, s, &i, 0);
+		else if (s[i] == '$' && s[i + 1])
+			count += variable_size(env, s, &i, 0);
 		else
 			count++;
 		i++;
@@ -168,7 +158,7 @@ char	*ft_substr_variable(char **env, char const *s, int i, int n)
 		if (s[i] == '\'' || s[i] == '"')
 		{
 			quote = s[i++];
-			while (i < n && s[i] != quote)
+			while (s[i] != quote)
 			{
 				if (quote == '"' && s[i] == '$' && s[i + 1] && s[i + 1] == '?')
 				{
@@ -184,6 +174,7 @@ char	*ft_substr_variable(char **env, char const *s, int i, int n)
 				else
 					tab[j++] = s[i++];
 			}
+			i++;
 		}
 		else if (s[i] == '$' && s[i + 1] && s[i + 1] == '?')
 		{
