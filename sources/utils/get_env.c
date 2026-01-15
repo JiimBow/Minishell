@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 13:41:42 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 10:06:14 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 11:02:28 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ char	**ft_copy_env(t_var **lst_var)
 	env = ft_calloc(ft_lstsize_var(tmp) + 1, sizeof(char *));
 	while (tmp)
 	{
-		env[i] = fill_env(tmp->name, tmp->content);
-		i++;
+		if (tmp->name && tmp->content)
+		{
+			env[i] = fill_env(tmp->name, tmp->content);
+			i++;	
+		}
 		tmp = tmp->next;
 	}
 	env[i] = NULL;

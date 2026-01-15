@@ -6,7 +6,7 @@
 #    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/14 17:31:18 by jodone           ###   ########.fr        #
+#    Updated: 2026/01/15 12:02:28 by jodone           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ RESET		:= \033[0m
 DIR			= sources/
 BUILT-IN	= $(DIR)built-in/
 PARSING		= $(DIR)parsing/
+UTILS		= $(DIR)utils/
 
 # MINISHELL
 NAME		= minishell
@@ -33,17 +34,19 @@ SRC			= $(DIR)main.c \
 			$(PARSING)ft_split_line.c \
 			$(PARSING)swap_variable.c \
 			$(PARSING)tokenisation.c \
-			$(DIR)find_path.c \
-			$(DIR)cmd_process.c \
-			$(DIR)get_env.c \
-			$(DIR)get_var.c \
-			$(DIR)lst_utils.c \
+			$(UTILS)find_path.c \
+			$(UTILS)cmd_process.c \
+			$(UTILS)get_env.c \
+			$(UTILS)get_var.c \
+			$(UTILS)lst_utils.c \
+			$(UTILS)ranking_var.c \
 			$(BUILT-IN)ft_pwd.c \
 			$(BUILT-IN)ft_cd.c \
 			$(BUILT-IN)ft_env.c \
 			$(BUILT-IN)ft_echo.c \
 			$(BUILT-IN)ft_unset.c \
-			$(BUILT-IN)ft_exit.c
+			$(BUILT-IN)ft_exit.c \
+			$(BUILT-IN)ft_export.c
 
 OBJ			= $(SRC:.c=.o)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 10:54:39 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/15 12:29:32 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,18 @@ void	ft_lstadd_back_var(t_var **lst, t_var *new);
 void	ft_lstclear_var(t_var **lst, void (*del)(void *));
 int		ft_lstsize_var(t_var *lst);
 
+// RANKING
+int		already_sorted(t_var **lst_var);
+void	reset_rank(t_var **lst_var);
+void	rank_var(t_var **lst_var);
+
 // EXECUTING
 int		ft_pwd(t_env *env);
 int		ft_cd(char **argv, char **envp);
 int		ft_env(char	**envp);
 int		ft_echo(char **args);
 int		ft_unset(t_env *env, char **args);
+int		ft_export(t_var **lst_var, char **args);
 int		process(char **cmd, t_env *env);
 
 // MEMORY MANAGEMENT
