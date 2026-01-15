@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:38:33 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 17:34:33 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 09:58:05 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static char	*get_env_content(char *line)
 	while (line[i] && line[i] != '=')
 		i++;
 	len_content = 0;
-	start = i;
+	start = i + 1;
 	while (line[++i])
 		len_content++;
 	content = ft_calloc(len_content + 1, sizeof(char));

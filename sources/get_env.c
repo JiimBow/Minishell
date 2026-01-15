@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 13:41:42 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 19:17:57 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 10:06:14 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,15 @@ static char	*fill_env(char *name, char *content)
 	return (env);
 }
 
-static char	**ft_copy_env(t_var **lst_var)
+char	**ft_copy_env(t_var **lst_var)
 {
 	char	**env;
 	int		i;
 	t_var	*tmp;
 
-	// while (envp[i])
-	// 	i++;
-	// env = ft_calloc((i + 1), sizeof(char *));
-	// if (!env)
-	// 	return (NULL);
-	// i = 0;
-	// while (envp[i])
-	// {
-	// 	env[i] = ft_strdup(envp[i]);
-	// 	i++;
-	// }
 	i = 0;
 	tmp = *lst_var;
-	env = ft_calloc(ft_lstsize_var(tmp), sizeof(char *));
+	env = ft_calloc(ft_lstsize_var(tmp) + 1, sizeof(char *));
 	while (tmp)
 	{
 		env[i] = fill_env(tmp->name, tmp->content);
@@ -57,13 +46,13 @@ static char	**ft_copy_env(t_var **lst_var)
 	return (env);
 }
 
-t_env	*ft_get_env(t_var **lst_var)
+t_env	*ft_get_env(void)
 {
 	t_env	*env;
 
 	env = malloc(sizeof(t_env));
 	if (!env)
 		return (NULL);
-	env->env = ft_copy_env(lst_var);
+	env->env = NULL;
 	return (env);
 }

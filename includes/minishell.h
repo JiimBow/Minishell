@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 09:32:24 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 10:19:28 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ typedef struct s_var
 extern int	g_sig;
 
 // INITIALIZATION
-t_env	*ft_get_env(t_var **lst_var);
+t_env	*ft_get_env(void);
+char	**ft_copy_env(t_var **lst_var);
 void	get_var(t_var **lst_var, char **envp);
 
 // PARSING

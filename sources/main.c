@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 09:32:30 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 10:06:29 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,12 @@ int	main(int argc, char **argv, char **envp)
 		return (1);
 	lst_var = NULL;
 	get_var(&lst_var, envp);
-	env = ft_get_env(&lst_var);
+	env = ft_get_env();
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
+		env->env = ft_copy_env(&lst_var);
 		line->args = NULL;
 		line->line = readline("minishell> ");
 		if (!line->line)
@@ -111,6 +112,7 @@ int	main(int argc, char **argv, char **envp)
 				g_sig = process(line->args, env);
 			free_double_tab(line->args);
 			free_struct(data);
+			free_double_tab(env->env);
 			add_history(line->line);
 			free(line->line);
 			line->line = NULL;

@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:59:24 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/15 09:33:04 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 09:33:29 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ static int	add_variable(char **env, const char *s, int *i, int count)
 
 	if (s[*i + 1] == '?')
 	{
-		tmp = ft_itoa(sig);
+		tmp = ft_itoa(g_sig);
 		count = ft_strlen(tmp);
 		free(tmp);
 		(*i)++;
