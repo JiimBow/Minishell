@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:10:11 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 12:26:01 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 15:34:54 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ static void	display_export(t_var **lst_var)
 			if (tmp->rank == count)
 			{
 				manage_display(tmp->name, tmp->content);
-				count++;
 				break ;
 			}
 			tmp = tmp->next;
 		}
+		count++;
 	}
 }
 

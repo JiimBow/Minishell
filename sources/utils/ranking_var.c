@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 11:33:43 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 12:13:55 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 15:47:24 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,16 @@ static char	*get_first_name(t_var **lst_var)
 	char	*low;
 
 	tmp = *lst_var;
-	low = ft_strdup(tmp->name);
+	while (tmp)
+	{
+		if (tmp->rank == -1)
+		{
+			low = ft_strdup(tmp->name);
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	tmp = *lst_var;
 	while (tmp)
 	{
 		if (tmp->rank == -1 && ft_strncmp(low, tmp->name, ft_strlen(low)) > 0)
