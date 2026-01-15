@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 17:42:21 by jodone            #+#    #+#             */
-/*   Updated: 2025/10/30 09:20:29 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/14 16:45:56 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_itoax(unsigned long nb, int is_low, int *count)
 	char	*hex;
 	char	*result;
 
-	ft_bzero(array, 17);
+	print_bzero(array, 17);
 	hex = "0123456789ABCDEF";
 	if (is_low == 1)
 		hex = "0123456789abcdef";

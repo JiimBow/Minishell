@@ -6,13 +6,13 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 10:22:49 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/15 10:24:36 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	sig = 0;
+int	g_sig = 0;
 
 void	free_struct(t_arg *data)
 {
@@ -58,7 +58,7 @@ static void	handle_sigint(int signal)
 		printf("\n");
 		rl_redisplay();
 		if (WIFSIGNALED(signal))
-			sig = WTERMSIG(signal) + 128;
+			g_sig = WTERMSIG(signal) + 128;
 	}
 }
 
@@ -67,50 +67,52 @@ int	main(int argc, char **argv, char **envp)
 	t_arg	*data;
 	t_env	*env;
 	t_line	*line;
+	t_var	*lst_var;
 
 	(void)argc;
 	(void)argv;
 	line = (t_line *)malloc(sizeof(t_line));
 	if (!line)
 		return (1);
-	env = ft_get_env(envp);
+	lst_var = NULL;
+	get_var(&lst_var, envp);
+	env = ft_get_env();
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
+		env->env = ft_copy_env(&lst_var);
 		line->args = NULL;
 		line->line = readline("minishell> ");
 		if (!line->line)
-			free_before_exit(line, env, NULL, sig);
+			free_before_exit(line, env, NULL, lst_var);
 		else
 		{
 			line->args = ft_split_line(env->env, line->line);
 			data = NULL;//tokenisation(line->args, 0);
 			if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "cd", 3) == 0)
-				sig = ft_cd(line->args, env->env);
+				g_sig = ft_cd(line->args, env->env);
 			else if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "pwd", 4) == 0)
-				sig = ft_pwd(env);
+				g_sig = ft_pwd(env);
 			else if (line->args && line->args[0] && !line->args[1]
 				&& ft_strncmp(line->args[0], "env", 4) == 0)
-				sig = ft_env(env->env);
+				g_sig = ft_env(env->env);
 			else if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "echo", 5) == 0)
-				sig = ft_echo(line->args);
+				g_sig = ft_echo(line->args);
 			else if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "unset", 6) == 0)
-				sig = ft_unset(env, line->args);
+				g_sig = ft_unset(env, line->args);
 			else if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "exit", 5) == 0)
-			{
-				free_before_exit(line, env, data, sig);
-				sig = 1;
-			}
+				g_sig = free_before_exit(line, env, data, lst_var);
 			else
-				sig = process(line->args, env);
+				g_sig = process(line->args, env);
 			free_double_tab(line->args);
 			free_struct(data);
+			free_double_tab(env->env);
 			add_history(line->line);
 			free(line->line);
 			line->line = NULL;

@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_print.c                                  :+:      :+:    :+:   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/23 15:05:31 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 16:47:37 by jodone           ###   ########.fr       */
+/*   Created: 2026/01/15 10:10:11 by jodone            #+#    #+#             */
+/*   Updated: 2026/01/15 10:20:57 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include <minishell.h>
 
-void	ft_putstr_print(char *s, int fd, int *count)
+static void	rank_var(t_var **lst_var)
 {
-	if (!s)
+	t_var	*tmp;
+	int		rank;
+	int		lst_size;
+
+	lst_size = ft_lstsize_var(lst_var);
+	rank = 0;
+	while (rank < lst_size)
 	{
-		if (write(fd, "(null)", 6) != -1)
-			(*count) += 6;
-	}
-	else
-	{
-		if (write(fd, s, print_strlen(s)) != -1)
-			(*count) += print_strlen(s);
+		tmp = *lst_var;
+		
 	}
 }

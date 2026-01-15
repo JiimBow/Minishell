@@ -6,13 +6,13 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/13 11:39:56 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/14 16:50:14 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	return_value(int status)
+static int	return_value(int status)
 {
 	int	result;
 
@@ -42,7 +42,7 @@ void	pointer_free(char **str)
 	}
 }
 
-void	exec_process(char **cmd, t_env *env)
+static void	exec_process(char **cmd, t_env *env)
 {
 	char	*path_cmd;
 	char	*full_path;

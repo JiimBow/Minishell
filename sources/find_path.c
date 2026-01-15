@@ -6,13 +6,13 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:53:10 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/12 17:15:55 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/14 16:50:25 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-char	*join_path(char *dir, char *cmd)
+static char	*join_path(char *dir, char *cmd)
 {
 	char	*result;
 	int		len_dir;
@@ -29,7 +29,7 @@ char	*join_path(char *dir, char *cmd)
 	return (result);
 }
 
-int	cmd_check(char *cmd)
+static int	cmd_check(char *cmd)
 {
 	int	i;
 

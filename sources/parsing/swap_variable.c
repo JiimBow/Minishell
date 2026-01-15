@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:59:24 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/15 09:52:08 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/15 10:25:06 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ static int	add_variable(char **env, const char *s, int *i, int count)
 
 	if (s[*i + 1] == '?')
 	{
-		tmp = ft_itoa(sig);
+		tmp = ft_itoa(g_sig);
 		count = ft_strlen(tmp);
 		free(tmp);
 		(*i)++;
@@ -154,7 +154,7 @@ char	*ft_substr_variable(char **env, char const *s, int i, int n)
 	{
 		if (s[i] == '$' && s[i + 1] && s[i + 1] == '?')
 		{
-			tmp = ft_itoa(sig);
+			tmp = ft_itoa(g_sig);
 			count = 0;
 			while (tmp[count])
 				tab[j++] = tmp[count++];
