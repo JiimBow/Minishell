@@ -1,44 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   parsing_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/08 16:59:27 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 19:25:42 by jodone           ###   ########.fr       */
+/*   Created: 2026/01/15 18:51:07 by jodone            #+#    #+#             */
+/*   Updated: 2026/01/15 19:05:04 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static int	if_no_path(void)
+static int	check_car(char *arg)
 {
-	char	cwd[PATH_MAX];
+	int	i;
 
-	if (getcwd(cwd, sizeof(cwd)) == NULL)
+	i = 1;
+	while (arg[i])
 	{
-		perror(NULL);
-		return (1);
+		if (!ft_isalnum(arg[i]) && arg[i] != '_')
+			return (0);
+		i++;
 	}
-	printf("%s\n", cwd);
-	return (0);
+	return (1);
 }
 
-int	ft_pwd(t_line *env)
+int	parse_export(char *args)
 {
-	char	*path;
-	int		i;
+	int	i;
 
 	i = 0;
-	path = get_env_path("PWD", env->env, &i);
-	if (!path)
+	if ((!ft_isalpha(args[0]) && args[0] != '_')
+		|| !check_car(args))
 	{
-		if (if_no_path() == 0)
-			return (0);
-		return (1);
+		write(2, "minishell: export: ", 19);
+		write(2, args, ft_strlen(args));
+		write(2, ": not a valid identifier\n", 26);
+		return (0);
 	}
-	else
-		printf("%s\n", path);
-	return (0);
+	return (1);
 }

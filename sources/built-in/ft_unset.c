@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 17:06:53 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 16:49:53 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 19:37:00 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,18 @@ static char	**new_env(char **env, int index_supp)
 	return (n_env);
 }
 
-int	ft_unset(t_env *env, char **args)
+int	ft_unset(t_line *line)
 {
 	int	i;
 	int	env_index;
 
 	i = 1;
-	while (args[i])
+	while (line->args[i])
 	{
 		env_index = 0;
-		if (get_env_path(args[i], env->env, &env_index))
+		if (get_env_path(line->args[i], line->env, &env_index))
 		{
-			env->env = new_env(env->env, env_index);
+			line->env = new_env(line->env, env_index);
 			return (0);
 		}
 		i++;

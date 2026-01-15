@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/15 14:58:57 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/15 19:34:26 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	parse_word(char *line, int i)
 	return (i);
 }
 
-static char	**ft_add_lines(t_env *env, t_line *line, int row)
+static char	**ft_add_lines(t_line *line, int row)
 {
 	char	**tab;
 	int		save_i;
@@ -58,7 +58,7 @@ static char	**ft_add_lines(t_env *env, t_line *line, int row)
 		i = parse_word(line->line, i);
 		if (i > save_i)
 		{
-			tab[row] = substr_var(env->env, line->line + save_i, i - save_i);
+			tab[row] = substr_var(line->env, line->line + save_i, i - save_i);
 			if (!tab[row])
 			{
 				ft_free_tab(tab, row);
@@ -70,7 +70,7 @@ static char	**ft_add_lines(t_env *env, t_line *line, int row)
 	return (tab);
 }
 
-char	**split_line(t_env *env, t_line *line)
+char	**split_line(t_line *line)
 {
 	char	**tab;
 	int		save_i;
@@ -90,7 +90,7 @@ char	**split_line(t_env *env, t_line *line)
 		if (i > save_i)
 			row++;
 	}
-	tab = ft_add_lines(env, line, row);
+	tab = ft_add_lines(line, row);
 	if (!tab)
 		return (NULL);
 	return (tab);
