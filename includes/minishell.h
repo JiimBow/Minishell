@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 10:19:28 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 10:54:39 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	get_var(t_var **lst_var, char **envp);
 // PARSING
 t_arg	*tokenisation(char **args, int i);
 char	*find_cmd_path(char *cmd, char **envp, int i, char *full_path);
-char	**ft_split_line(char **env, char const *s);
+char	**ft_split_line(t_env *env, t_line *line);
 char	*ft_substr_variable(char **env, char const *s, int i, int end);
 
 // UTILITIES

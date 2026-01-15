@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 10:24:36 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/15 10:57:03 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 			free_before_exit(line, env, NULL, lst_var);
 		else
 		{
-			line->args = ft_split_line(env->env, line->line);
+			line->args = ft_split_line(env, line);
 			data = NULL;//tokenisation(line->args, 0);
 			if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "cd", 3) == 0)
@@ -108,7 +108,7 @@ int	main(int argc, char **argv, char **envp)
 			else if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "exit", 5) == 0)
 				g_sig = free_before_exit(line, env, data, lst_var);
-			else
+			else if (line->args)
 				g_sig = process(line->args, env);
 			free_double_tab(line->args);
 			free_struct(data);

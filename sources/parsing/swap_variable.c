@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:59:24 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/15 10:25:06 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/15 12:13:55 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ char	*ft_substr_variable(char **env, char const *s, int i, int n)
 {
 	char	*tab;
 	char	*tmp;
+	char	quote;
 	int		count;
 	int		j;
 
@@ -139,7 +140,19 @@ char	*ft_substr_variable(char **env, char const *s, int i, int n)
 	count = 0;
 	while (i < n)
 	{
-		if (s[i] == '$' && s[i + 1])
+		if (s[i] == '\'' || s[i] == '"')
+		{
+			quote = s[i++];
+			while (i < n && s[i] != quote)
+			{
+				if (quote == '"' && s[i] == '$' && s[i + 1])
+					count += add_variable(env, s, &i, 0);
+				else
+					count++;
+				i++;
+			}
+		}
+		else if (i < n && s[i] == '$' && s[i + 1])
 			count += add_variable(env, s, &i, 0);
 		else
 			count++;
@@ -152,7 +165,27 @@ char	*ft_substr_variable(char **env, char const *s, int i, int n)
 	j = 0;
 	while (i < n)
 	{
-		if (s[i] == '$' && s[i + 1] && s[i + 1] == '?')
+		if (s[i] == '\'' || s[i] == '"')
+		{
+			quote = s[i++];
+			while (i < n && s[i] != quote)
+			{
+				if (quote == '"' && s[i] == '$' && s[i + 1] && s[i + 1] == '?')
+				{
+					tmp = ft_itoa(g_sig);
+					count = 0;
+					while (tmp[count])
+						tab[j++] = tmp[count++];
+					i += 2;
+					free(tmp);
+				}
+				else if (quote == '"' && s[i] == '$' && s[i + 1] && (s[i + 1] == '_' || ft_isalpha(s[i + 1])))
+					i += fill_tab(env, s + i + 1, tab, &j) + 1;
+				else
+					tab[j++] = s[i++];
+			}
+		}
+		else if (s[i] == '$' && s[i + 1] && s[i + 1] == '?')
 		{
 			tmp = ft_itoa(g_sig);
 			count = 0;
@@ -163,8 +196,6 @@ char	*ft_substr_variable(char **env, char const *s, int i, int n)
 		}
 		else if (s[i] == '$' && s[i + 1] && (s[i + 1] == '_' || ft_isalpha(s[i + 1])))
 			i += fill_tab(env, s + i + 1, tab, &j) + 1;
-		else if (s[i] == '\'' || s[i] == '"')
-			i++;
 		else
 			tab[j++] = s[i++];
 	}

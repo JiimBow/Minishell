@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:53:51 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 18:20:25 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 10:50:00 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	free_and_exit(t_line *line, int sig_exit)
 {
 	free(line->line);
-	if (sig_exit || !line->args[1])
+	if (sig_exit || (line->args && !line->args[1]))
 	{
 		free_double_tab(line->args);
 		free(line);

@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/15 10:20:50 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/15 11:04:30 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,89 +37,91 @@ static int	is_quote(char c)
 	return (0);
 }
 
-static char	**ft_add_lines(char **env, char const *reader, int line)
+static char	**ft_add_lines(t_env *env, t_line *line, int n)
 {
 	char	**tab;
 	char	quote;
 	int		start;
 	int		i;
 
-	tab = (char **)malloc(sizeof(char *) * (line + 1));
+	tab = (char **)malloc(sizeof(char *) * (n + 1));
 	if (!tab)
 		return (NULL);
-	tab[line] = NULL;
+	tab[n] = NULL;
 	i = 0;
-	line = 0;
-	while (reader[i])
+	n = 0;
+	while (line->line[i])
 	{
-		while (reader[i] && is_spaces(reader[i]))
+		while (line->line[i] && is_spaces(line->line[i]))
 			i++;
 		start = i;
-		while (reader[i] && !is_spaces(reader[i]))
+		while (line->line[i] && !is_spaces(line->line[i]))
 		{
-			while (reader[i] && !is_spaces(reader[i]) && !is_quote(reader[i]))
+			while (line->line[i] && !is_spaces(line->line[i]) && !is_quote(line->line[i]))
 				i++;
-			if (is_quote(reader[i]))
+			if (is_quote(line->line[i]))
 			{
-				quote = reader[i++];
-				while (reader[i] && reader[i] != quote)
-					i++;
-				if (reader[i] && reader[i] == quote)
-					i++;
+				quote = line->line[i++];
+				while (line->line[i++] != quote)
+					;
 			}
 		}
 		if (i > start)
 		{
-			tab[line] = ft_substr_variable(env, reader + start, 0, i - start);
-			if (!tab[line])
+			tab[n] = ft_substr_variable(env->env, line->line + start, 0, i - start);
+			if (!tab[n])
 			{
-				ft_free_tab(tab, line);
+				ft_free_tab(tab, n);
 				return (NULL);
 			}
-			line++;
+			n++;
 		}
 	}
 	return (tab);
 }
 
-char	**ft_split_line(char **env, char const *reader)
+char	**ft_split_line(t_env *env, t_line *line)
 {
 	char	**tab;
 	char	quote;
 	int		check;
-	int		line;
+	int		n;
 	int		i;
 
 	i = 0;
-	line = 0;
-	while (reader[i])
+	n = 0;
+	while (line->line[i])
 	{
 		check = 0;
-		while (reader[i] && is_spaces(reader[i]))
+		while (line->line[i] && is_spaces(line->line[i]))
 			i++;
-		while (reader[i] && !is_spaces(reader[i]))
+		while (line->line[i] && !is_spaces(line->line[i]))
 		{
-			while (reader[i] && !is_spaces(reader[i]) && !is_quote(reader[i]))
+			while (line->line[i] && !is_spaces(line->line[i]) && !is_quote(line->line[i]))
 			{
-				check++;
+				check = 1;
 				i++;
 			}
-			if (is_quote(reader[i]))
+			if (is_quote(line->line[i]))
 			{
-				check++;
-				quote = reader[i++];
-				while (reader[i] && reader[i] != quote)
+				check = 1;
+				quote = line->line[i++];
+				while (line->line[i] && line->line[i] != quote)
 					i++;
-				if (reader[i] && reader[i] == quote)
+				if (line->line[i] && line->line[i] == quote)
 					i++;
 				else
-					free_before_exit();
+				{
+					write(2, "minishell: syntax error\n", 24);
+					g_sig = 2;
+					return (NULL);
+				}
 			}
 		}
-		if (check > 0)
-			line++;
+		if (check == 1)
+			n++;
 	}
-	tab = ft_add_lines(env, reader, line);
+	tab = ft_add_lines(env, line, n);
 	if (!tab)
 		return (NULL);
 	return (tab);
