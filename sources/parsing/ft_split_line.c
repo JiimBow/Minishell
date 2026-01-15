@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/14 23:38:15 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/15 10:20:50 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,10 @@ static char	**ft_add_lines(char **env, char const *reader, int line)
 			if (is_quote(reader[i]))
 			{
 				quote = reader[i++];
-				while (reader[i++] != quote)
-					;
+				while (reader[i] && reader[i] != quote)
+					i++;
+				if (reader[i] && reader[i] == quote)
+					i++;
 			}
 		}
 		if (i > start)
@@ -99,18 +101,22 @@ char	**ft_split_line(char **env, char const *reader)
 		{
 			while (reader[i] && !is_spaces(reader[i]) && !is_quote(reader[i]))
 			{
-				check = 1;
+				check++;
 				i++;
 			}
 			if (is_quote(reader[i]))
 			{
-				check = 1;
+				check++;
 				quote = reader[i++];
-				while (reader[i++] != quote)
-					;
+				while (reader[i] && reader[i] != quote)
+					i++;
+				if (reader[i] && reader[i] == quote)
+					i++;
+				else
+					free_before_exit();
 			}
 		}
-		if (check == 1)
+		if (check > 0)
 			line++;
 	}
 	tab = ft_add_lines(env, reader, line);
