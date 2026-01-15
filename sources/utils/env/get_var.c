@@ -6,13 +6,13 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:38:33 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 09:58:05 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 19:14:09 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-static char	*get_env_name(char *line)
+char	*get_env_name(char *line)
 {
 	int		len_name;
 	char	*name;

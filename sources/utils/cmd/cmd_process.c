@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 16:50:14 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 19:40:31 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,37 +42,37 @@ void	pointer_free(char **str)
 	}
 }
 
-static void	exec_process(char **cmd, t_env *env)
+static void	exec_process(t_line *line)
 {
 	char	*path_cmd;
 	char	*full_path;
 
 	full_path = NULL;
-	path_cmd = find_cmd_path(cmd[0], env->env, 0, full_path);
-	if (!path_cmd || execve(path_cmd, cmd, env->env) == -1)
+	path_cmd = find_cmd_path(line->args[0], line->env, 0, full_path);
+	if (!path_cmd || execve(path_cmd, line->args, line->env) == -1)
 	{
-		perror(cmd[0]);
-		pointer_free(cmd);
+		perror(line->args[0]);
+		pointer_free(line->args);
 		free(path_cmd);
-		free_double_tab(env->env);
-		free(env);
+		free_double_tab(line->env);
+		free(line);
 		exit(127);
 	}
 }
 
-int	process(char **cmd, t_env *env)
+int	process(t_line *line)
 {
 	__pid_t	pid;
 	int		status;
 	int		sig_return;
 
-	if (!cmd || !*cmd)
+	if (!line->args || !*line->args)
 		return (127);
 	pid = fork();
 	if (pid < 0)
 		exit(EXIT_FAILURE);
 	if (pid == 0)
-		exec_process(cmd, env);
+		exec_process(line);
 	waitpid(-1, &status, 0);
 	sig_return = return_value(status);
 	return (sig_return);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 13:41:42 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 14:56:34 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/15 19:31:10 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ char	**ft_copy_env(t_var **lst_var)
 	return (env);
 }
 
-t_env	*ft_get_env(void)
+t_line	*ft_get_env(void)
 {
-	t_env	*env;
+	t_line	*env;
 
-	env = malloc(sizeof(t_env));
+	env = malloc(sizeof(t_line));
 	if (!env)
 		return (NULL);
 	env->env = NULL;

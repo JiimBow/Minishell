@@ -6,7 +6,7 @@
 #    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/15 18:34:21 by mgarnier         ###   ########.fr        #
+#    Updated: 2026/01/15 19:43:44 by mgarnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRC			= $(DIR)main.c \
 			$(ENV)lst_utils.c \
 			$(EXPORT)ranking_var.c \
 			$(EXPORT)display.c \
+			$(EXPORT)parsing_export.c \
 			$(BUILT-IN)ft_pwd.c \
 			$(BUILT-IN)ft_cd.c \
 			$(BUILT-IN)ft_env.c \

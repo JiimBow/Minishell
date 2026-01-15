@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:53:51 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 10:50:00 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/15 19:32:51 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	arg_isnum(char *args)
 	return (1);
 }
 
-int	free_before_exit(t_line *line, t_env *env, t_arg *data, t_var *lst_var)
+int	free_before_exit(t_line *line, t_arg *data, t_var *lst_var)
 {
 	printf("exit\n");
 	if (line->args && line->args[1] && line->args[2])
@@ -52,9 +52,7 @@ int	free_before_exit(t_line *line, t_env *env, t_arg *data, t_var *lst_var)
 	}
 	rl_clear_history();
 	ft_lstclear_var(&lst_var, free);
-	free_double_tab(env->env);
-	if (env)
-		free(env);
+	free_double_tab(line->env);
 	if (line->args && !arg_isnum(line->args[1]))
 	{
 		write(2, "minishell: exit: ", 17);
