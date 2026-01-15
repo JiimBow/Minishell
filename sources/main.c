@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/14 19:07:23 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 09:32:30 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	main(int argc, char **argv, char **envp)
 			free_before_exit(line, env, NULL, lst_var);
 		else
 		{
-			line->args = ft_split_line(env->env, line->line, ' ', 0);
+			line->args = ft_split_line(env->env, line->line);
 			data = NULL;//tokenisation(line->args, 0);
 			if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "cd", 3) == 0)
