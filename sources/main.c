@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 19:43:26 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/15 20:44:36 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ int	main(int argc, char **argv, char **envp)
 			free_before_exit(line, NULL, lst_var);
 		else
 		{
-			//line->new = parse_line(env, line);
-			//free(line->new);
+			// line->new = parse_line(line);
+			// free(line->new);
 			line->args = split_line(line);
 			data = NULL;//tokenisation(line->args, 0);
 			if (line->args && line->args[0]
