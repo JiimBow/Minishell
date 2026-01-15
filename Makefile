@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
+#    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/15 15:04:08 by mgarnier         ###   ########.fr        #
+#    Updated: 2026/01/15 17:02:28 by jodone           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,9 @@ DIR			= sources/
 BUILT-IN	= $(DIR)built-in/
 PARSING		= $(DIR)parsing/
 UTILS		= $(DIR)utils/
+CMD			= $(UTILS)cmd/
+ENV			= $(UTILS)env/
+EXPORT		= $(UTILS)export/
 
 # MINISHELL
 NAME		= minishell
@@ -35,12 +38,13 @@ SRC			= $(DIR)main.c \
 			$(PARSING)split_utils.c \
 			$(PARSING)swap_variable.c \
 			$(PARSING)tokenisation.c \
-			$(UTILS)find_path.c \
-			$(UTILS)cmd_process.c \
-			$(UTILS)get_env.c \
-			$(UTILS)get_var.c \
-			$(UTILS)lst_utils.c \
-			$(UTILS)ranking_var.c \
+			$(CMD)find_path.c \
+			$(CMD)cmd_process.c \
+			$(ENV)get_env.c \
+			$(ENV)get_var.c \
+			$(ENV)lst_utils.c \
+			$(EXPORT)ranking_var.c \
+			$(EXPORT)display.c \
 			$(BUILT-IN)ft_pwd.c \
 			$(BUILT-IN)ft_cd.c \
 			$(BUILT-IN)ft_env.c \

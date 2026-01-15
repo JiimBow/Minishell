@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/15 16:36:21 by jodone            #+#    #+#             */
-/*   Updated: 2025/12/22 16:55:08 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/15 16:52:03 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*ft_strdup(const char *s)
 	int		lensrc;
 	char	*tab;
 
+	if (!s)
+		return (NULL);
 	lensrc = sft_strlen((char *)s);
 	tab = malloc(lensrc * sizeof(char) + 1);
 	if (tab == NULL)

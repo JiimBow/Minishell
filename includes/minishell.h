@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 15:02:02 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/15 17:00:18 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int		ft_env(char	**envp);
 int		ft_echo(char **args);
 int		ft_unset(t_env *env, char **args);
 int		ft_export(t_var **lst_var, char **args);
+void	display_export(t_var **lst_var);
 int		process(char **cmd, t_env *env);
 
 // MEMORY MANAGEMENT
