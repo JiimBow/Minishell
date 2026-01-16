@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 20:45:48 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/16 13:15:52 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	main(int argc, char **argv, char **envp)
 				g_sig = ft_echo(line->args);
 			else if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "unset", 6) == 0)
-				g_sig = ft_unset(line);
+				g_sig = ft_unset(line, &lst_var);
 			else if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "exit", 5) == 0)
 				g_sig = free_before_exit(line, data, lst_var);

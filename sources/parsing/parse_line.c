@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/15 20:29:08 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/16 10:36:36 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,14 @@
 // 	return (count);
 // }
 
-char	*parse_line(t_line *line)
-{
-	char	*new;
+// char	*parse_line(t_line *line)
+// {
+	// char	*new;
 	// char	quote;
 	// int		size;
 	// int		i;
 
-	new = substr_var(line->env, line->line, ft_strlen(line->line));
+	// new = substr_var(line->env, line->line, ft_strlen(line->line));
 	// i = 0;
 	// size = 0;
 	// while (line->line[i])
@@ -152,9 +152,9 @@ char	*parse_line(t_line *line)
 	// 		i++;
 	// 	}
 	// }
-	printf("len=%zu%s\n", new);
+	// printf("len=%zu%s\n", new);
 	// new = (char *)malloc(sizeof(char) * (size + 1));
 	// if (!new)
 	// 	return (NULL);
-	return (new);
-}
+	// return (new);
+// }
