@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/15 20:29:08 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/16 12:37:26 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,71 @@
 // 	return (count);
 // }
 
+char	*sep_operators(t_line *line)
+{
+	char	quote;
+	int		i;
+
+	i = 0;
+	while (line->line[i])
+	{
+		if (is_quote(line->line[i]))
+		{
+			quote = line->line[i];
+			line->new = gnl_strjoin(line->new, line->line[i++]);
+			while (line->line[i] && line->line[i] != quote)
+				line->new = gnl_strjoin(line->new, line->line[i++]);
+			
+		}
+		else if (line->line[i] == '|' || line->line[i] == '<' || line->line[i] == '>')
+		{
+			line->new = gnl_strjoin(line->new, ' ');
+			line->new = gnl_strjoin(line->new, line->line[i]);
+			if (line->line[i] )
+		}
+		else
+			line->new = gnl_strjoin(line->new, line->line[i]);
+		i++;
+	}
+}
+
+int	quotes_unclosed(char *line)
+{
+	char	quote;
+	int		i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (is_quote(line[i]))
+		{
+			quote = line[i++];
+			while (line[i] && line[i] != quote)
+				i++;
+			if (line[i] == '\0')
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 char	*parse_line(t_line *line)
 {
-	char	*new;
+	if (quotes_unclosed(line->line))
+	{
+		write(2, "syntax error: quote unclosed\n", 29);
+		return (NULL);
+	}
+	line->new = sep_operators(line);
+	if (!line->new)
+		return (NULL);
+	// char	*new;
 	// char	quote;
 	// int		size;
 	// int		i;
 
-	new = substr_var(line->env, line->line, ft_strlen(line->line));
+	// new = substr_var(line->env, line->line, ft_strlen(line->line));
 	// i = 0;
 	// size = 0;
 	// while (line->line[i])
@@ -152,9 +209,9 @@ char	*parse_line(t_line *line)
 	// 		i++;
 	// 	}
 	// }
-	printf("len=%zu%s\n", new);
+	// printf("len=%zu\nnew=%s\n", ft_strlen(new), new);
 	// new = (char *)malloc(sizeof(char) * (size + 1));
 	// if (!new)
 	// 	return (NULL);
-	return (new);
+	// return (new);
 }
