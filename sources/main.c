@@ -6,11 +6,11 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 20:45:48 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/16 23:42:43 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 int	g_sig = 0;
 
@@ -84,8 +84,10 @@ int	main(int argc, char **argv, char **envp)
 			free_before_exit(line, NULL, lst_var);
 		else
 		{
-			// line->new = parse_line(line);
-			// free(line->new);
+			line->new = parse_line(line);
+			free(line->line);
+			line->line = ft_strdup(line->new);
+			free(line->new);
 			line->args = split_line(line);
 			data = NULL;//tokenisation(line->args, 0);
 			if (line->args && line->args[0]

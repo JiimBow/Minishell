@@ -6,11 +6,11 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:51:07 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/16 10:57:18 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/16 23:29:27 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 static int	check_car(char *arg)
 {

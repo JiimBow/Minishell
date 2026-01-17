@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ranking_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 11:33:43 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 20:10:59 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/16 23:29:32 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 int	already_sorted(t_var **lst_var)
 {

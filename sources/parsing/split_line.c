@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/15 19:34:26 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/16 23:28:42 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 int	parse_word(char *line, int i)
 {
@@ -79,6 +79,8 @@ char	**split_line(t_line *line)
 
 	i = 0;
 	row = 0;
+	if (!line->line)
+		return (NULL);
 	while (line->line[i])
 	{
 		while (line->line[i] && is_spaces(line->line[i]))
