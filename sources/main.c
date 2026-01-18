@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/16 23:42:43 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/18 21:47:10 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,6 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			line->new = parse_line(line);
-			free(line->line);
-			line->line = ft_strdup(line->new);
-			free(line->new);
 			line->args = split_line(line);
 			data = NULL;//tokenisation(line->args, 0);
 			if (line->args && line->args[0]

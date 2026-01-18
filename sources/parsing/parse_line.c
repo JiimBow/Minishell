@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/17 01:05:35 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/18 23:28:44 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,14 @@ int	get_parsed_line_lenght(char *line)
 	return (i + add);
 }
 
-char	*set_parsed_line(char *line)
+char	*set_parsed_line(char *line, int i, int j)
 {
 	char	*new;
 	char	quote;
-	int		size;
-	int		i;
-	int		j;
 
-	size = get_parsed_line_lenght(line);
-	printf("size=%d\n", size);
-	new = ft_calloc(sizeof(char), size + 1);
+	new = ft_calloc(sizeof(char), get_parsed_line_lenght(line) + 1);
 	if (!new)
 		return (NULL);
-	i = 0;
-	j = 0;
 	while (line[i])
 	{
 		if (is_quote(line[i]))
@@ -102,20 +95,25 @@ char	*set_parsed_line(char *line)
 char	*parse_line(t_line *line)
 {
 	char	*new;
+	char	*tmp;
 
 	if (quotes_unclosed(line->line))
 	{
 		write(2, "syntax error: quote unclosed\n", 29);
 		return (NULL);
 	}
-	new = set_parsed_line(line->line);
-	if (!new)
+	tmp = set_parsed_line(line->line, 0, 0);
+	if (!tmp)
+	{
+		write(2, "Error malloc\n", 13);
 		return (NULL);
-	printf("after operator/new=%s\n", new);
-	char *tmp = ft_strdup(new);
-	free(new);
+	}
 	new = substr_var(line->env, tmp, ft_strlen(tmp));
 	free(tmp);
-	printf("after variable/new=%s\n", new);
+	if (!new)
+	{
+		write(2, "Error malloc\n", 13);
+		return (NULL);
+	}
 	return (new);
 }

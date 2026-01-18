@@ -6,7 +6,7 @@
 #    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/16 23:39:05 by mgarnier         ###   ########.fr        #
+#    Updated: 2026/01/18 21:05:03 by mgarnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,10 +28,10 @@ EXPORT		= $(UTILS)export/
 
 # MINISHELL
 NAME		= minishell
-HEADER		= -I includes \
-			-I Great_Libft/Libft \
-			-I Great_Libft/ft_printf \
-			-I Great_Libft/GNL
+HEADER		= -Iincludes \
+			-IGreat_Libft/Libft \
+			-IGreat_Libft/ft_printf \
+			-IGreat_Libft/GNL
 
 SRC			= $(DIR)main.c \
 			$(PARSING)parse_line.c \
