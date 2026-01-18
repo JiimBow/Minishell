@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:51:07 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/15 19:05:04 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/16 23:29:27 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 static int	check_car(char *arg)
 {
@@ -28,9 +28,6 @@ static int	check_car(char *arg)
 
 int	parse_export(char *args)
 {
-	int	i;
-
-	i = 0;
 	if ((!ft_isalpha(args[0]) && args[0] != '_')
 		|| !check_car(args))
 	{

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/16 13:15:52 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/18 23:31:50 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 int	g_sig = 0;
 
@@ -84,8 +84,7 @@ int	main(int argc, char **argv, char **envp)
 			free_before_exit(line, NULL, lst_var);
 		else
 		{
-			// line->new = parse_line(line);
-			// free(line->new);
+			line->new = parse_line(line);
 			line->args = split_line(line);
 			data = NULL;//tokenisation(line->args, 0);
 			if (line->args && line->args[0]

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   split_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/15 19:34:26 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/18 22:33:11 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 int	parse_word(char *line, int i)
 {
@@ -25,17 +25,38 @@ int	parse_word(char *line, int i)
 			quote = line[i++];
 			while (line[i] && line[i] != quote)
 				i++;
-			if (line[i] && line[i] == quote)
-				i++;
-			else
-			{
-				write(2, "minishell: syntax error\n", 24);
-				g_sig = 2;
-				return (-1);
-			}
+			i++;
 		}
 	}
 	return (i);
+}
+
+char	*substr_unquote(char const *s, int n)
+{
+	char	*new;
+	char	quote;
+	int		i;
+	int		j;
+
+	new = ft_calloc(sizeof(char), n + 1);
+	if (!new)
+		return (NULL);
+	i = 0;
+	j = 0;
+	while (i < n)
+	{
+		if (is_quote(s[i]))
+		{
+			quote = s[i++];
+			while (i < n && s[i] != quote)
+				new[j++] = s[i++];
+			i++;
+		}
+		else
+			new[j++] = s[i++];
+	}
+	new[j] = '\0';
+	return (new);
 }
 
 static char	**ft_add_lines(t_line *line, int row)
@@ -50,15 +71,15 @@ static char	**ft_add_lines(t_line *line, int row)
 	tab[row] = NULL;
 	i = 0;
 	row = 0;
-	while (line->line[i])
+	while (line->new[i])
 	{
-		while (line->line[i] && is_spaces(line->line[i]))
+		while (line->new[i] && is_spaces(line->new[i]))
 			i++;
 		save_i = i;
-		i = parse_word(line->line, i);
+		i = parse_word(line->new, i);
 		if (i > save_i)
 		{
-			tab[row] = substr_var(line->env, line->line + save_i, i - save_i);
+			tab[row] = substr_unquote(line->new + save_i, i - save_i);
 			if (!tab[row])
 			{
 				ft_free_tab(tab, row);
@@ -79,14 +100,14 @@ char	**split_line(t_line *line)
 
 	i = 0;
 	row = 0;
-	while (line->line[i])
+	if (!line->new)
+		return (NULL);
+	while (line->new[i])
 	{
-		while (line->line[i] && is_spaces(line->line[i]))
+		while (line->new[i] && is_spaces(line->new[i]))
 			i++;
 		save_i = i;
-		i = parse_word(line->line, i);
-		if (i < 0)
-			return (NULL);
+		i = parse_word(line->new, i);
 		if (i > save_i)
 			row++;
 	}

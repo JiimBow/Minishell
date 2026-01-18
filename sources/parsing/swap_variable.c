@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:59:24 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/15 15:05:18 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/18 23:04:34 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ static int	variable_size(char **env, const char *s, int *i, int count)
 		free(tmp);
 		(*i)++;
 	}
-	else if (s[*i + 1] == '_' || ft_isalpha(s[*i + 1]))
+	else if (s[*i + 1] == '_' || ft_isalnum(s[*i + 1]))
 		count = get_count(env, s + *i + 1, i);
 	else
 		count = 1;
@@ -133,6 +133,7 @@ char	*substr_var(char **env, char const *s, int n)
 		if (s[i] == '\'' || s[i] == '"')
 		{
 			quote = s[i++];
+			count += 2;
 			while (s[i] != quote)
 			{
 				if (quote == '"' && s[i] == '$' && s[i + 1])
@@ -157,7 +158,8 @@ char	*substr_var(char **env, char const *s, int n)
 	{
 		if (s[i] == '\'' || s[i] == '"')
 		{
-			quote = s[i++];
+			quote = s[i];
+			tab[j++] = s[i++];
 			while (s[i] != quote)
 			{
 				if (quote == '"' && s[i] == '$' && s[i + 1] && s[i + 1] == '?')
@@ -174,7 +176,7 @@ char	*substr_var(char **env, char const *s, int n)
 				else
 					tab[j++] = s[i++];
 			}
-			i++;
+			tab[j++] = s[i++];
 		}
 		else if (s[i] == '$' && s[i + 1] && s[i + 1] == '?')
 		{
@@ -187,6 +189,8 @@ char	*substr_var(char **env, char const *s, int n)
 		}
 		else if (s[i] == '$' && s[i + 1] && (s[i + 1] == '_' || ft_isalpha(s[i + 1])))
 			i += fill_tab(env, s + i + 1, tab, &j) + 1;
+		else if (s[i] == '$' && is_quote(s[i + 1]))
+			i++;
 		else
 			tab[j++] = s[i++];
 	}
