@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:59:24 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/19 09:36:30 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 12:14:47 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,39 @@ static int	variable_size(char **env, const char *s, int *i, int count)
 	return (count);
 }
 
+int	change_variable(char **env, const char *s, char *tab, int *j)
+{
+	char	*tmp;
+	int		count;
+	int		i;
+
+	i = 0;
+	if (s[i + 1] == '?')
+	{
+		tmp = ft_itoa(g_sig);
+		count = 0;
+		while (tmp[count])
+			tab[(*j)++] = tmp[count++];
+		i += 2;
+		free(tmp);
+	}
+	else if ((s[i + 1] == '_' || ft_isalpha(s[i + 1])))
+		i += fill_tab(env, s + i + 1, tab, j) + 1;
+	else if (is_quote(s[i + 1]))
+		i++;
+	else
+	 	tab[(*j)++] = s[i++];
+	return (i);
+}
+
+int	get_size_with_variable()
+{
+	
+}
+
 char	*substr_var(char **env, char const *s)
 {
 	char	*tab;
-	char	*tmp;
 	char	quote;
 	int		count;
 	int		j;
@@ -126,7 +155,7 @@ char	*substr_var(char **env, char const *s)
 
 	if (!env || !*env || !s)
 		return (NULL);
-	count = 0;
+	count = get_size_with_variable(env, s);
 	i = 0;
 	while (s[i])
 	{
@@ -162,35 +191,15 @@ char	*substr_var(char **env, char const *s)
 			tab[j++] = s[i++];
 			while (s[i] != quote)
 			{
-				if (quote == '"' && s[i] == '$' && s[i + 1] && s[i + 1] == '?')
-				{
-					tmp = ft_itoa(g_sig);
-					count = 0;
-					while (tmp[count])
-						tab[j++] = tmp[count++];
-					i += 2;
-					free(tmp);
-				}
-				else if (quote == '"' && s[i] == '$' && s[i + 1] && (s[i + 1] == '_' || ft_isalpha(s[i + 1])))
-					i += fill_tab(env, s + i + 1, tab, &j) + 1;
+				if (quote == '"' && s[i] == '$' && s[i + 1] && !is_quote(s[i + 1]))
+					i += change_variable(env, s + i, tab, &j);
 				else
 					tab[j++] = s[i++];
 			}
 			tab[j++] = s[i++];
 		}
-		else if (s[i] == '$' && s[i + 1] && s[i + 1] == '?')
-		{
-			tmp = ft_itoa(g_sig);
-			count = 0;
-			while (tmp[count])
-				tab[j++] = tmp[count++];
-			i += 2;
-			free(tmp);
-		}
-		else if (s[i] == '$' && s[i + 1] && (s[i + 1] == '_' || ft_isalpha(s[i + 1])))
-			i += fill_tab(env, s + i + 1, tab, &j) + 1;
-		else if (s[i] == '$' && is_quote(s[i + 1]))
-			i++;
+		else if (s[i] == '$' && s[i + 1])
+			i += change_variable(env, s + i, tab, &j);
 		else
 			tab[j++] = s[i++];
 	}
