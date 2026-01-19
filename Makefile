@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
+#    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/18 21:05:03 by mgarnier         ###   ########.fr        #
+#    Updated: 2026/01/19 14:08:44 by jodone           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ RESET		:= \033[0m
 
 # DIR
 DIR			= sources/
+OBJ_DIR		= objects
 BUILT-IN	= $(DIR)built-in/
 PARSING		= $(DIR)parsing/
 UTILS		= $(DIR)utils/
@@ -55,7 +56,7 @@ SRC			= $(DIR)main.c \
 			$(BUILT-IN)ft_exit.c \
 			$(BUILT-IN)ft_export.c
 
-OBJ			= $(SRC:.c=.o)
+OBJ			= $(SRC:%.c=$(OBJ_DIR)/%.o)
 
 LIBFT= ./Great_Libft/g_libft.a
 
@@ -68,7 +69,8 @@ $(NAME):	$(OBJ) $(LIBFT)
 $(LIBFT):
 		@$(MAKE) -C Great_Libft --no-print-directory
 
-%.o: %.c
+$(OBJ_DIR)/%.o: %.c
+			@mkdir -p $(dir $@)
 			@$(CC) -c $(CFLAGS) $(HEADER) $< -o $@
 
 clean:
@@ -76,6 +78,7 @@ clean:
 			echo "${GREEN}====   $(NAME)   ==== : >>>OBJ CLEANED<<<${RESET}"; \
 			fi
 			@rm -f $(OBJ)
+			@rm -rf $(OBJ_DIR)
 			@$(MAKE) -C Great_Libft clean --no-print-directory
 
 fclean:		clean
