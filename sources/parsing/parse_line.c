@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/19 11:09:42 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 15:51:29 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ char	*parse_line(t_line *line)
 		write(2, "Error malloc\n", 13);
 		return (NULL);
 	}
+	line->block = split_pipe(tmp);
 	new = substr_var(line->env, tmp);
 	free(tmp);
 	if (!new)

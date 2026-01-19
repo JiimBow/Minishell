@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:53:51 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/16 23:29:57 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 16:48:34 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	free_and_exit(t_line *line, int sig_exit)
 		exit(sig_exit);
 	}
 	free_double_tab(line->args);
+	free_double_tab(line->block);
 	free(line);
 	exit(2);
 }
@@ -65,6 +66,7 @@ int	free_before_exit(t_line *line, t_arg *data, t_var *lst_var)
 	if (line->line)
 		free_and_exit(line, g_sig);
 	free_double_tab(line->args);
+	free_double_tab(line->block);
 	free(line);
 	exit(g_sig);
 }

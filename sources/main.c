@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 13:24:36 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/19 16:52:38 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			line->new = parse_line(line);
 			line->args = split_line(line);
+			free(line->new);
 			data = NULL;//tokenisation(line->args, 0);
 			if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "cd", 3) == 0)
@@ -111,10 +112,12 @@ int	main(int argc, char **argv, char **envp)
 			else if (line->args)
 				g_sig = process(line, lst_var, 0);
 			free_double_tab(line->args);
+			free_double_tab(line->block);
 			free_struct(data);
 			free_double_tab(line->env);
 			add_history(line->line);
 			free(line->line);
+			free(line->new);
 			line->line = NULL;
 		}
 	}
