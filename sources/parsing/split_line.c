@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/19 11:21:54 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 11:27:05 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,5 @@ char	**split_line(t_line *line)
 	tab = ft_add_lines(line, row);
 	if (!tab)
 		return (NULL);
-	i = 0;
-	while (tab[i])
-	{
-		printf("args[%d]=%s\n", i, tab[i]);
-		i++;
-	}
 	return (tab);
 }
