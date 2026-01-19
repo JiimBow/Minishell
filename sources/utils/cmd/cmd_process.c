@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 09:55:30 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 13:25:04 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,15 @@ void	pointer_free(char **str)
 	}
 }
 
-static void	exec_process(t_line *line, t_var *lst_var)
+static void	exec_process(t_line *line, t_var *lst_var, int is_dir)
 {
 	char	*path_cmd;
 	char	*full_path;
 
 	full_path = NULL;
 	path_cmd = find_cmd_path(line->args[0], line->env, 0, full_path);
-	if (!path_cmd || execve(path_cmd, line->args, line->env) == -1)
+	if (!path_cmd || execve(path_cmd, line->args, line->env) == -1
+		|| is_dir == 1)
 	{
 		perror(line->args[0]);
 		pointer_free(line->args);
@@ -58,11 +59,13 @@ static void	exec_process(t_line *line, t_var *lst_var)
 		free(line);
 		ft_lstclear_var(&lst_var, free);
 		free(path_cmd);
+		if (is_dir == 1)
+			exit(126);
 		exit(127);
 	}
 }
 
-int	process(t_line *line, t_var *lst_var)
+int	process(t_line *line, t_var *lst_var, int dir)
 {
 	__pid_t	pid;
 	int		status;
@@ -74,7 +77,7 @@ int	process(t_line *line, t_var *lst_var)
 	if (pid < 0)
 		exit(EXIT_FAILURE);
 	if (pid == 0)
-		exec_process(line, lst_var);
+		exec_process(line, lst_var, dir);
 	waitpid(-1, &status, 0);
 	sig_return = return_value(status);
 	return (sig_return);

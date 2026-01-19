@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:20:54 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/18 22:50:23 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 13:12:32 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,17 @@ int	ft_echo(char **args)
 {
 	int	i;
 
+	i = 1;
 	if (!args[1])
 		printf("\n");
-	else if (ft_strncmp("-n", args[1], 2) != 0)
+	else if (ft_strncmp("-n", args[1], 2) == 0)
+		i = skip_option(args, 1);
+	if (i == 1)
 	{
 		write_args(args, 1);
 		printf("\n");
 	}
 	else
-	{
-		i = skip_option(args, 1);
 		write_args(args, i);
-	}
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/18 23:31:50 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 13:24:36 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	main(int argc, char **argv, char **envp)
 				&& ft_strncmp(line->args[0], "export", 7) == 0)
 				g_sig = ft_export(&lst_var, line->args);
 			else if (line->args)
-				g_sig = process(line, lst_var);
+				g_sig = process(line, lst_var, 0);
 			free_double_tab(line->args);
 			free_struct(data);
 			free_double_tab(line->env);
