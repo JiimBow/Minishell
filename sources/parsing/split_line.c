@@ -6,10 +6,11 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/18 22:33:11 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 11:21:54 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 
 int	parse_word(char *line, int i)
@@ -79,7 +80,10 @@ static char	**ft_add_lines(t_line *line, int row)
 		i = parse_word(line->new, i);
 		if (i > save_i)
 		{
-			tab[row] = substr_unquote(line->new + save_i, i - save_i);
+			if (row > 0 && tab[row - 1][0] && tab[row - 1][1] && tab[row - 1][0] == '<' && tab[row - 1][1] == '<')
+				tab[row] = ft_substr(line->new + save_i, 0, i - save_i);
+			else
+				tab[row] = substr_unquote(line->new + save_i, i - save_i);
 			if (!tab[row])
 			{
 				ft_free_tab(tab, row);
@@ -114,5 +118,11 @@ char	**split_line(t_line *line)
 	tab = ft_add_lines(line, row);
 	if (!tab)
 		return (NULL);
+	i = 0;
+	while (tab[i])
+	{
+		printf("args[%d]=%s\n", i, tab[i]);
+		i++;
+	}
 	return (tab);
 }

@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:10:11 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/16 23:30:01 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 09:14:58 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	var_exist(t_var **lst_var, char *name, char *content, int update)
 {
 	t_var	*tmp;
-	
+
 	tmp = *lst_var;
 	while (tmp)
 	{

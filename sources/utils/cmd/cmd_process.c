@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/16 23:28:56 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 09:55:30 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	process(t_line *line, t_var *lst_var)
 	int		sig_return;
 
 	if (!line->args || !*line->args)
-		return (127);
+		return (0);
 	pid = fork();
 	if (pid < 0)
 		exit(EXIT_FAILURE);

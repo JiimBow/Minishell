@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/18 23:31:16 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 09:38:11 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	**split_line(t_line *line);
 char	**ft_free_tab(char **tab, int line);
 int		is_spaces(char c);
 int		is_quote(char c);
-char	*substr_var(char **env, char const *s, int end);
+char	*substr_var(char **env, char const *s);
 char	*parse_line(t_line *line);
 int		parse_export(char *args);
 

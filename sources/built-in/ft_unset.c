@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 17:06:53 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/18 23:32:38 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 09:12:28 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	remove_var(t_var **lst_var, char *name)
 	{
 		if (tmp->next)
 		{
-			if (ft_strncmp(name, tmp->next->name, len_name + 1) == 0)\
+			if (ft_strncmp(name, tmp->next->name, len_name + 1) == 0)
 			{
 				remove_node(tmp);
 				break ;

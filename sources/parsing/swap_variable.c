@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:59:24 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/18 23:04:34 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 09:36:30 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ static int	variable_size(char **env, const char *s, int *i, int count)
 	return (count);
 }
 
-char	*substr_var(char **env, char const *s, int n)
+char	*substr_var(char **env, char const *s)
 {
 	char	*tab;
 	char	*tmp;
@@ -128,7 +128,7 @@ char	*substr_var(char **env, char const *s, int n)
 		return (NULL);
 	count = 0;
 	i = 0;
-	while (i < n)
+	while (s[i])
 	{
 		if (s[i] == '\'' || s[i] == '"')
 		{
@@ -154,7 +154,7 @@ char	*substr_var(char **env, char const *s, int n)
 		return (NULL);
 	i = 0;
 	j = 0;
-	while (i < n)
+	while (s[i])
 	{
 		if (s[i] == '\'' || s[i] == '"')
 		{
