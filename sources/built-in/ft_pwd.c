@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:59:27 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/16 23:30:05 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 15:58:39 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,11 @@ static int	if_no_path(void)
 	return (0);
 }
 
-int	ft_pwd(t_line *env)
+int	ft_pwd(t_var *lst_var)
 {
 	char	*path;
-	int		i;
 
-	i = 0;
-	path = get_env_path("PWD", env->env, &i);
+	path = get_env_path(lst_var, "PWD");
 	if (!path)
 	{
 		if (if_no_path() == 0)

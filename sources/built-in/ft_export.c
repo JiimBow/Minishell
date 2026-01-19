@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:10:11 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 09:14:58 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 16:53:45 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static int	var_exist(t_var **lst_var, char *name, char *content, int update)
 		{
 			if (update && content)
 			{
+				free(tmp->content);
 				tmp->content = ft_strdup(content);
 				return (0);
 			}

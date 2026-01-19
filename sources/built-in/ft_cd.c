@@ -3,82 +3,85 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:44:39 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/16 23:29:40 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 15:59:33 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_env_path(char *str, char **envp, int *i)
+char	*get_env_path(t_var *lst_var, char *str)
 {
-	int	path_len;
+	t_var	*tmp;
+	int		len_str;
 
-	path_len = ft_strlen(str);
-	while (envp && envp[(*i)])
+	tmp = lst_var;
+	len_str = ft_strlen(str) + 1;
+	while (tmp)
 	{
-		if (ft_strncmp(envp[(*i)], str, path_len) == 0)
-			return (envp[(*i)] + path_len + 1);
-		(*i)++;
+		if (ft_strncmp(str, tmp->name, len_str) == 0)
+			return (tmp->content);
+		tmp = tmp->next;
 	}
 	return (NULL);
 }
 
-static void	update_path(char **envp, int *i, int is_old)
+static void	replace_content(t_var *lst_var, char *name, char *new_content)
 {
-	char	curr_path[PATH_MAX];
-	char	*new_path;
-	int		path_len;
+	t_var	*tmp;
+	int		len_old;
+	int		len_new;
 
-	(*i) = 0;
-	getcwd(curr_path, sizeof(curr_path));
-	path_len = ft_strlen(curr_path);
-	if (is_old == 1)
+	tmp = lst_var;
+	len_old = ft_strlen(name);
+	len_new = ft_strlen(new_content);
+	while (tmp)
 	{
-		get_env_path("OLDPWD", envp, i);
-		new_path = malloc((7 + ft_strlen(curr_path) + 1) * sizeof(char));
-		ft_strlcpy(new_path, "OLDPWD=", 8);
-		ft_strlcat(new_path, curr_path, path_len + 9);
-		free(envp[(*i)]);
-		envp[(*i)] = ft_strdup(new_path);
-		free(new_path);
-	}
-	else
-	{
-		get_env_path("PWD", envp, i);
-		new_path = malloc((4 + ft_strlen(curr_path) + 1) * sizeof(char));
-		ft_strlcpy(new_path, "PWD=", 5);
-		ft_strlcat(new_path, curr_path, path_len + 6);
-		free(envp[(*i)]);
-		envp[(*i)] = ft_strdup(new_path);
-		free(new_path);
+		if (ft_strncmp(name, tmp->name, len_old + 1) == 0)
+		{
+			free(tmp->content);
+			tmp->content = ft_strdup(new_content);
+			return ;
+		}
+		tmp = tmp->next;
 	}
 }
 
-int	ft_cd(char **argv, char **envp)
+static void	update_path(t_var *lst_var, int is_old)
+{
+	char	curr_path[PATH_MAX];
+
+	getcwd(curr_path, sizeof(curr_path));
+	if (is_old == 1)
+		replace_content(lst_var, "OLDPWD", curr_path);
+	else
+		replace_content(lst_var, "PWD", curr_path);
+}
+
+int	ft_cd(t_line *line, t_var *lst_var)
 {
 	char	*path;
 	int		i;
 
 	i = 0;
-	if (argv[2])
+	if (line->args[2])
 	{
 		write(2, "minishell: cd: too many arguments\n", 34);
 		return (1);
 	}
-	if (!argv[1] || ft_strncmp(argv[1], "~", 2) == 0)
-		path = get_env_path("HOME", envp, &i);
+	if (!line->args[1] || ft_strncmp(line->args[1], "~", 2) == 0)
+		path = get_env_path(lst_var, "HOME");
 	else
-		path = argv[1];
-	update_path(envp, &i, 1);
+		path = line->args[1];
+	update_path(lst_var, 1);
 	if (chdir(path) == -1)
 	{
 		write(2, "minishell: cd: ", 15);
 		perror(path);
 		return (1);
 	}
-	update_path(envp, &i, 0);
+	update_path(lst_var, 0);
 	return (0);
 }
