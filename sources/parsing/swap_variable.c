@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 18:59:24 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/19 12:14:47 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 14:40:16 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,10 @@ int	change_variable(char **env, const char *s, char *tab, int *j)
 	return (i);
 }
 
-int	get_size_with_variable()
-{
+// int	get_size_with_variable()
+// {
 	
-}
+// }
 
 char	*substr_var(char **env, char const *s)
 {
@@ -155,7 +155,7 @@ char	*substr_var(char **env, char const *s)
 
 	if (!env || !*env || !s)
 		return (NULL);
-	count = get_size_with_variable(env, s);
+	count = 0;//get_size_with_variable(env, s);
 	i = 0;
 	while (s[i])
 	{
