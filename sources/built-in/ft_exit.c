@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:53:51 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/16 23:29:57 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 15:26:35 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,13 @@
 
 static void	free_and_exit(t_line *line, int sig_exit)
 {
-	free(line->line);
+	int	exit_code;
+
+	exit_code = 2;
 	if (sig_exit || (line->args && !line->args[1]))
-	{
-		free_double_tab(line->args);
-		free(line);
-		exit(sig_exit);
-	}
-	free_double_tab(line->args);
-	free(line);
-	exit(2);
+		exit_code = sig_exit;
+	free_line_struct(line);
+	exit(exit_code);
 }
 
 static int	arg_isnum(char *args)
@@ -52,7 +49,7 @@ int	free_before_exit(t_line *line, t_arg *data, t_var *lst_var)
 	}
 	rl_clear_history();
 	ft_lstclear_var(&lst_var, free);
-	free_double_tab(line->env);
+	free_struct(data);
 	if (line->args && !arg_isnum(line->args[1]))
 	{
 		write(2, "minishell: exit: ", 17);
@@ -61,10 +58,8 @@ int	free_before_exit(t_line *line, t_arg *data, t_var *lst_var)
 	}
 	else if (line->args && !g_sig)
 		g_sig = ft_atoi(line->args[1]);
-	free_struct(data);
 	if (line->line)
 		free_and_exit(line, g_sig);
-	free_double_tab(line->args);
-	free(line);
+	free_line_struct(line);
 	exit(g_sig);
 }

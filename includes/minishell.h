@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 13:24:25 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/19 15:58:58 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char	*parse_line(t_line *line);
 int		parse_export(char *args);
 
 // UTILITIES
-char	*get_env_path(char *str, char **envp, int *i);
+char	*get_env_path(t_var *lst_var, char *str);
 char	*get_env_name(char *line);
 t_var	*ft_lst_new_var(char *name, char *content);
 void	ft_lstadd_back_var(t_var **lst, t_var *new);
@@ -94,8 +94,8 @@ int		already_sorted(t_var **lst_var);
 void	rank_var(t_var **lst_var);
 
 // EXECUTING
-int		ft_pwd(t_line *env);
-int		ft_cd(char **argv, char **envp);
+int		ft_pwd(t_var *lst_var);
+int		ft_cd(t_line *line, t_var *lst_var);
 int		ft_env(char	**envp);
 int		ft_echo(char **args);
 int		ft_unset(t_line *line, t_var **lst_var);
@@ -108,5 +108,6 @@ void	pointer_free(char **str);
 void	free_double_tab(char **tab);
 void	free_struct(t_arg *data);
 int		free_before_exit(t_line *line, t_arg *data, t_var *lst_var);
+void	free_line_struct(t_line *line);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 13:24:36 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/19 15:59:28 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,10 @@ int	main(int argc, char **argv, char **envp)
 			data = NULL;//tokenisation(line->args, 0);
 			if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "cd", 3) == 0)
-				g_sig = ft_cd(line->args, line->env);
+				g_sig = ft_cd(line, lst_var);
 			else if (line->args && line->args[0]
 				&& ft_strncmp(line->args[0], "pwd", 4) == 0)
-				g_sig = ft_pwd(line);
+				g_sig = ft_pwd(lst_var);
 			else if (line->args && line->args[0] && !line->args[1]
 				&& ft_strncmp(line->args[0], "env", 4) == 0)
 				g_sig = ft_env(line->env);
@@ -110,12 +110,12 @@ int	main(int argc, char **argv, char **envp)
 				g_sig = ft_export(&lst_var, line->args);
 			else if (line->args)
 				g_sig = process(line, lst_var, 0);
-			free_double_tab(line->args);
-			free_struct(data);
-			free_double_tab(line->env);
 			add_history(line->line);
+			free_double_tab(line->args);
+			free_double_tab(line->env);
 			free(line->line);
 			line->line = NULL;
+			free_struct(data);
 		}
 	}
 	return (0);
