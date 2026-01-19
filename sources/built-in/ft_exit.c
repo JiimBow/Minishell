@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:53:51 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 15:26:35 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/19 16:47:15 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	free_and_exit(t_line *line, int sig_exit)
 	exit_code = 2;
 	if (sig_exit || (line->args && !line->args[1]))
 		exit_code = sig_exit;
-	free_line_struct(line);
+	free_line_struct(line, 1);
 	exit(exit_code);
 }
 
@@ -60,6 +60,6 @@ int	free_before_exit(t_line *line, t_arg *data, t_var *lst_var)
 		g_sig = ft_atoi(line->args[1]);
 	if (line->line)
 		free_and_exit(line, g_sig);
-	free_line_struct(line);
+	free_line_struct(line, 1);
 	exit(g_sig);
 }

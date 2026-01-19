@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 13:41:42 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/16 23:29:08 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/19 16:19:08 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	**ft_copy_env(t_var **lst_var)
 	return (env);
 }
 
-t_line	*ft_get_env(void)
+t_line	*creation_line(void)
 {
 	t_line	*env;
 

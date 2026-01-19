@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 15:29:10 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/19 16:46:51 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	exec_process(t_line *line, t_var *lst_var, int is_dir)
 		|| is_dir == 1)
 	{
 		perror(line->args[0]);
-		free_line_struct(line);
+		free_line_struct(line, 1);
 		ft_lstclear_var(&lst_var, free);
 		free(path_cmd);
 		if (is_dir == 1)
