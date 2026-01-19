@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:00:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 16:20:24 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/19 17:03:13 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	free_line_struct(t_line *line, int all)
 	free_double_tab(line->env);
 	free(line->line);
 	free(line->new);
+	free_double_tab(line->block);
 	if (all == 1)
 		free(line);
 }

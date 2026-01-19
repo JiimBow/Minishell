@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 17:02:03 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/19 17:03:50 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,7 @@ int	main(int argc, char **argv, char **envp)
 			data = NULL;//tokenisation(line->args, 0);
 			assignement(line, lst_var, data);
 			add_history(line->line);
-			free_double_tab(line->args);
-			free_double_tab(line->block);
-			free_double_tab(line->env);
-			free(line->line);
-			free(line->new);
+			free_line_struct(line, 0);
 			line->line = NULL;
 			free_struct(data);
 		}
