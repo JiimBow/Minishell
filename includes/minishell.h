@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 16:04:28 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 19:05:05 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ int		ft_echo(char **args);
 int		ft_unset(t_line *line, t_var **lst_var);
 int		ft_export(t_var **lst_var, char **args);
 void	display_export(t_var **lst_var);
-int		process(t_line *line, t_var *lst_var, int dir);
-void	assignement(t_line *line, t_var *lst_var, t_arg *data);
+int		process(t_line *line, t_var *lst_var, int dir, int is_fork);
+void	assignement(t_line *line, t_var *lst_var, t_arg *data, int is_fork);
 
 // MEMORY MANAGEMENT
 void	pointer_free(char **str);

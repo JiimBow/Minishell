@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 16:45:03 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 19:05:14 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var, t_arg *data)
 	}
 	if (child->pipefd[0] != -1)
 		close(child->pipefd[0]);
-	assignement(line, lst_var, data);
+	assignement(line, lst_var, data, 1);
 	free_all(line, lst_var, data);
 	_exit(g_sig);
 }

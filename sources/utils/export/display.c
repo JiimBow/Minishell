@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   display.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 16:59:25 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/16 23:29:23 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 18:17:43 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static void	manage_display(char *name, char *content)
 {
 	if (content)
-		printf("declare -x %s=\"%s\"\n", name, content);
+		ft_printf("declare -x %s=\"%s\"\n", name, content);
 	else
-		printf("declare -x %s\n", name);
+		ft_printf("declare -x %s\n", name);
 }
 
 void	display_export(t_var **lst_var)

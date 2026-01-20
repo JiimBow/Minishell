@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:59:27 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 15:58:39 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 18:16:58 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	if_no_path(void)
 		perror(NULL);
 		return (1);
 	}
-	printf("%s\n", cwd);
+	ft_printf("%s\n", cwd);
 	return (0);
 }
 
@@ -37,6 +37,6 @@ int	ft_pwd(t_var *lst_var)
 		return (1);
 	}
 	else
-		printf("%s\n", path);
+		ft_printf("%s\n", path);
 	return (0);
 }
