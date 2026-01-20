@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 15:21:52 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 16:27:39 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,9 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var, t_arg *data)
 	_exit(g_sig);
 }
 
-void	pipe_process(t_line *line, t_var *lst_var, t_arg *data, t_pipe *child)
+pid_t	pipe_process(t_line *line, t_var *lst_var, t_arg *data, t_pipe *child)
 {
 	pid_t	pid;
-	int		status;
 
 	if (child->index != line->row)
 	{
@@ -60,6 +59,5 @@ void	pipe_process(t_line *line, t_var *lst_var, t_arg *data, t_pipe *child)
 			child->prev_fd = child->pipefd[0];
 		close(child->pipefd[1]);
 	}
-	waitpid(-1, &status, 0);
-	g_sig = return_value(status);
+	return (pid);
 }

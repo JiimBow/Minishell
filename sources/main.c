@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 15:03:52 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 16:25:39 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ int	main(int argc, char **argv, char **envp)
 	t_line	*line;
 	t_var	*lst_var;
 	t_pipe	child;
+	__pid_t	pid;
+	__pid_t	last_pid;
+	int		status;
+	int		last_status;
 	char	*tmp;
 	int		i;
 
@@ -85,18 +89,29 @@ int	main(int argc, char **argv, char **envp)
 			line->new = parse_line(line, data, lst_var);
 			line->block = split_pipe(line);
 			i = 0;
-			while (line->block[i])
+			if (line->block)
 			{
-				child.index = i + 1;
-				tmp = ft_substr(line->block[i], 0, ft_strlen(line->block[i]));
-				free(line->block[i]);
-				line->block[i] = substr_var(line->env, tmp);
-				free(tmp);
-				line->args = split_line(line->block[i]);
-				pipe_process(line, lst_var, data, &child);
-				free_double_tab(line->args);
-				line->args = NULL;
-				i++;
+				while (line->block[i])
+				{
+					pid = 1;
+					child.index = i + 1;
+					tmp = ft_substr(line->block[i], 0, ft_strlen(line->block[i]));
+					free(line->block[i]);
+					line->block[i] = substr_var(line->env, tmp);
+					free(tmp);
+					line->args = split_line(line->block[i]);
+					last_pid = pipe_process(line, lst_var, data, &child);
+					free_double_tab(line->args);
+					line->args = NULL;
+					i++;
+				}
+				while (pid > 0)
+				{
+					if (pid == last_pid)
+						last_status = status;
+					pid = wait(&status);
+				}
+				g_sig = return_value(last_status);
 			}
 			data = NULL;
 			add_history(line->line);

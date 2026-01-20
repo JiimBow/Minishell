@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/20 15:10:37 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 16:26:25 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ char	*parse_line(t_line *line, t_arg *data, t_var *lst_var)
 	if (quotes_unclosed(line->line))
 	{
 		write(2, "syntax error: unclosed quote\n", 29);
-		free_before_exit(line, data, lst_var);
+		g_sig = 2;
+		return (NULL);
 	}
 	new = ft_calloc(sizeof(char), get_parsed_line_lenght(line->line) + 1);
 	if (!new)
