@@ -6,7 +6,7 @@
 #    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/20 11:10:54 by jodone           ###   ########.fr        #
+#    Updated: 2026/01/20 11:42:27 by jodone           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ UTILS		= $(DIR)utils/
 CMD			= $(UTILS)cmd/
 ENV			= $(UTILS)env/
 EXPORT		= $(UTILS)export/
+PIPE		= $(UTILS)pipe/
 
 # MINISHELL
 NAME		= minishell
@@ -49,6 +50,8 @@ SRC			= $(DIR)main.c \
 			$(EXPORT)ranking_var.c \
 			$(EXPORT)display.c \
 			$(EXPORT)parsing_export.c \
+			$(PIPE)pipe_utils.c \
+			$(PIPE)pipe_process.c \
 			$(BUILT-IN)ft_pwd.c \
 			$(BUILT-IN)ft_cd.c \
 			$(BUILT-IN)ft_env.c \

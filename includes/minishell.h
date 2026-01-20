@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 11:19:10 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 13:38:50 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_pipe
 	int	fdout;
 	int	pipefd[2];
 	int	prev_fd;
+	int	index;
 }	t_pipe;
 
 
@@ -78,7 +79,7 @@ extern int	g_sig;
 
 // INITIALIZATION
 t_line	*creation_line(void);
-t_pipe	pipe_init(void);
+t_pipe	pipe_init(int i);
 char	**ft_copy_env(t_var **lst_var);
 void	get_var(t_var **lst_var, char **envp);
 
@@ -115,6 +116,7 @@ int		ft_unset(t_line *line, t_var **lst_var);
 int		ft_export(t_var **lst_var, char **args);
 void	display_export(t_var **lst_var);
 int		process(t_line *line, t_var *lst_var, int dir);
+void	assignement(t_line *line, t_var *lst_var, t_arg *data);
 
 // MEMORY MANAGEMENT
 void	pointer_free(char **str);
@@ -122,5 +124,12 @@ void	free_double_tab(char **tab);
 void	free_struct(t_arg *data);
 int		free_before_exit(t_line *line, t_arg *data, t_var *lst_var);
 void	free_line_struct(t_line *line, int all);
+void	free_all(t_line *line, t_var *lst_var, t_arg *data);
+
+// PIPE
+void	pipe_process(t_line *line, t_var *lst_var, t_arg *data, int i);
+void	close_file(t_pipe *child, char *message);
+int		return_value(int status);
+void	dup_and_close(t_pipe *child, int fd, int redirect);
 
 #endif

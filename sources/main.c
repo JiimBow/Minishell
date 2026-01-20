@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 11:18:57 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 13:34:27 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	handle_sigint(int signal)
 	}
 }
 
-static void	assignement(t_line *line, t_var *lst_var, t_arg *data)
+void	assignement(t_line *line, t_var *lst_var, t_arg *data)
 {
 	if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "cd", 3) == 0)
@@ -52,20 +52,6 @@ static void	assignement(t_line *line, t_var *lst_var, t_arg *data)
 		g_sig = ft_export(&lst_var, line->args);
 	else if (line->args)
 		g_sig = process(line, lst_var, 0);
-}
-
-int	pipe_process(t_line *line, t_var *lst_var, t_arg *data, int i)
-{
-	pid_t	pid;
-	t_pipe	child;
-	int		status;
-
-	child = pipe_init();
-	if (i != line->row)
-	{
-		if (pipe(child.pipefd) == -1)
-			
-	}
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -102,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 				line->block[i] = substr_var(line->env, tmp);
 				free(tmp);
 				line->args = split_line(line->block[i]);
-				assignement(line, lst_var, data);
+				pipe_process(line, lst_var, data, i);
 				free_double_tab(line->args);
 				line->args = NULL;
 				i++;

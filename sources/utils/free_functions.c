@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:00:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 10:59:46 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 13:38:31 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,11 @@ void	free_line_struct(t_line *line, int all)
 	free_double_tab(line->block);
 	if (all == 1)
 		free(line);
+}
+
+void	free_all(t_line *line, t_var *lst_var, t_arg *data)
+{
+	ft_lstclear_var(&lst_var, free);
+	free_struct(data);
+	free_line_struct(line, 1);
 }
