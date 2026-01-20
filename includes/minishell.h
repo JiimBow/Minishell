@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 10:40:26 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 11:04:09 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_line
 	char	*line;
 	char	*new;
 	char	**block;
+	int		row;
 	char	**args;
 	char	**env;
 	int		sig;
@@ -75,7 +76,7 @@ void	get_var(t_var **lst_var, char **envp);
 t_arg	*tokenisation(char **args, int i);
 char	*find_cmd_path(char *cmd, char **envp, int i, char *full_path);
 char	**split_line(char *line);
-char	**split_pipe(char *line);
+char	**split_pipe(t_line *line);
 char	**ft_free_tab(char **tab, int line);
 int		is_spaces(char c);
 int		is_quote(char c);

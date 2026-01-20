@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:16:08 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/19 16:18:14 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 11:12:16 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,36 +63,29 @@ static char	**ft_add_lines(char *line, int row)
 	return (tab);
 }
 
-char	**split_pipe(char *line)
+char	**split_pipe(t_line *line)
 {
 	char	**tab;
 	int		save_i;
-	int		row;
 	int		i;
 
 	i = 0;
-	row = 0;
-	if (!line)
+	line->row = 0;
+	if (!line->new)
 		return (NULL);
-	while (line[i])
+	while (line->new[i])
 	{
-		while (line[i] && is_spaces(line[i]))
+		while (line->new[i] && is_spaces(line->new[i]))
 			i++;
 		save_i = i;
-		i = parse_word(line, i);
+		i = parse_word(line->new, i);
 		if (i > save_i)
-			row++;
-		if (line[i])
+			line->row++;
+		if (line->new[i])
 			i++;
 	}
-	tab = ft_add_lines(line, row);
+	tab = ft_add_lines(line->new, line->row);
 	if (!tab)
 		return (NULL);
-	i = 0;
-	while (tab[i])
-	{
-		printf("block[%d]=%s\n", i, tab[i]);
-		i++;
-	}
 	return (tab);
 }
