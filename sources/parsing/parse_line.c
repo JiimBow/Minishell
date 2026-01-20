@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/19 15:51:29 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 10:21:44 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,22 +95,13 @@ char	*set_parsed_line(char *line, int i, int j)
 char	*parse_line(t_line *line)
 {
 	char	*new;
-	char	*tmp;
 
 	if (quotes_unclosed(line->line))
 	{
 		write(2, "syntax error: quote unclosed\n", 29);
 		return (NULL);
 	}
-	tmp = set_parsed_line(line->line, 0, 0);
-	if (!tmp)
-	{
-		write(2, "Error malloc\n", 13);
-		return (NULL);
-	}
-	line->block = split_pipe(tmp);
-	new = substr_var(line->env, tmp);
-	free(tmp);
+	new = set_parsed_line(line->line, 0, 0);
 	if (!new)
 	{
 		write(2, "Error malloc\n", 13);

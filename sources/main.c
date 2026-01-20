@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 09:54:10 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 10:39:42 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,20 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			line->new = parse_line(line);
-			line->args = split_line(line);
+			line->block = split_pipe(line->new);
+			int i = 0;
+			while (line->block[i])
+			{
+				char	*tmp = ft_substr(line->block[i], 0, ft_strlen(line->block[i]));
+				free(line->block[i]);
+				line->block[i] = substr_var(line->env, tmp);
+				free(tmp);
+				line->args = split_line(line->block[i]);
+				assignement(line->args, lst_var, data);
+				free_double_tab(line->args);
+				i++;
+			}
 			data = NULL;//tokenisation(line->args, 0);
-			assignement(line, lst_var, data);
 			add_history(line->line);
 			free_line_struct(line, 0);
 			line->line = NULL;

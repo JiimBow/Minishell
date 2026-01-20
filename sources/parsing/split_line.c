@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/19 16:47:58 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 10:40:42 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	*substr_unquote(char const *s, int n)
 	return (new);
 }
 
-static char	**ft_add_lines(t_line *line, int row)
+static char	**ft_add_lines(char *line, int row)
 {
 	char	**tab;
 	int		save_i;
@@ -71,18 +71,18 @@ static char	**ft_add_lines(t_line *line, int row)
 	tab[row] = NULL;
 	i = 0;
 	row = 0;
-	while (line->new[i])
+	while (line[i])
 	{
-		while (line->new[i] && is_spaces(line->new[i]))
+		while (line[i] && is_spaces(line[i]))
 			i++;
 		save_i = i;
-		i = parse_word(line->new, i);
+		i = parse_word(line, i);
 		if (i > save_i)
 		{
 			if (row > 0 && tab[row - 1][0] && tab[row - 1][1] && tab[row - 1][0] == '<' && tab[row - 1][1] == '<')
-				tab[row] = ft_substr(line->new + save_i, 0, i - save_i);
+				tab[row] = ft_substr(line + save_i, 0, i - save_i);
 			else
-				tab[row] = substr_unquote(line->new + save_i, i - save_i);
+				tab[row] = substr_unquote(line + save_i, i - save_i);
 			if (!tab[row])
 			{
 				ft_free_tab(tab, row);
@@ -94,7 +94,7 @@ static char	**ft_add_lines(t_line *line, int row)
 	return (tab);
 }
 
-char	**split_line(t_line *line)
+char	**split_line(char *line)
 {
 	char	**tab;
 	int		save_i;
@@ -103,14 +103,14 @@ char	**split_line(t_line *line)
 
 	i = 0;
 	row = 0;
-	if (!line->new)
+	if (!line)
 		return (NULL);
-	while (line->new[i])
+	while (line[i])
 	{
-		while (line->new[i] && is_spaces(line->new[i]))
+		while (line[i] && is_spaces(line[i]))
 			i++;
 		save_i = i;
-		i = parse_word(line->new, i);
+		i = parse_word(line, i);
 		if (i > save_i)
 			row++;
 	}
