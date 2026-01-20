@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 17:03:50 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 09:47:48 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		line->env = ft_copy_env(&lst_var);
 		line->args = NULL;
+		line->block = NULL;
 		line->line = readline("minishell> ");
 		if (!line->line)
 			free_before_exit(line, NULL, lst_var);
@@ -78,7 +79,6 @@ int	main(int argc, char **argv, char **envp)
 		{
 			line->new = parse_line(line);
 			line->args = split_line(line);
-			free(line->new);
 			data = NULL;//tokenisation(line->args, 0);
 			assignement(line, lst_var, data);
 			add_history(line->line);
