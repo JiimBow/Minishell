@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 17:03:50 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/19 17:53:42 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	main(int argc, char **argv, char **envp)
 		{
 			line->new = parse_line(line);
 			line->args = split_line(line);
-			free(line->new);
 			data = NULL;//tokenisation(line->args, 0);
 			assignement(line, lst_var, data);
 			add_history(line->line);
