@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 13:41:42 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 16:19:08 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/19 17:59:06 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,7 @@ t_line	*creation_line(void)
 	if (!env)
 		return (NULL);
 	env->env = NULL;
+	env->new = NULL;
+	env->block = NULL;
 	return (env);
 }
