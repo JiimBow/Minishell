@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 16:25:39 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 17:21:54 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	main(int argc, char **argv, char **envp)
 			line->new = parse_line(line, data, lst_var);
 			line->block = split_pipe(line);
 			i = 0;
-			if (line->block)
+			if (line->block && line->row > 1)
 			{
 				while (line->block[i])
 				{

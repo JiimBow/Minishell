@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 16:27:39 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 16:45:03 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var, t_arg *data)
 		/* if (child->fdout == -1)
 			close_file(child, "");
 		dup_and_close(child, child->fdout, STDOUT_FILENO);*/
-		close(child->pipefd[1]);
+		if (child->pipefd[1] != -1)
+			close(child->pipefd[1]);
 	}
 	else
 	{
@@ -31,7 +32,8 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var, t_arg *data)
 		if (child->fdout != -1)
 			close(child->fdout);
 	}
-	close(child->pipefd[0]);
+	if (child->pipefd[0] != -1)
+		close(child->pipefd[0]);
 	assignement(line, lst_var, data);
 	free_all(line, lst_var, data);
 	_exit(g_sig);
@@ -57,7 +59,8 @@ pid_t	pipe_process(t_line *line, t_var *lst_var, t_arg *data, t_pipe *child)
 			close(child->prev_fd);*/
 		if (child->index != line->row)
 			child->prev_fd = child->pipefd[0];
-		close(child->pipefd[1]);
+		if (child->pipefd[1] != -1)
+			close(child->pipefd[1]);
 	}
 	return (pid);
 }
