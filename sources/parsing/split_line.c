@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/20 10:40:42 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 12:02:10 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,10 @@ static char	*substr_unquote(char const *s, int n)
 	return (new);
 }
 
-static char	**ft_add_lines(char *line, int row)
+static char	**ft_add_lines(char **tab, char *line, int i, int row)
 {
-	char	**tab;
 	int		save_i;
-	int		i;
 
-	tab = (char **)malloc(sizeof(char *) * (row + 1));
-	if (!tab)
-		return (NULL);
-	tab[row] = NULL;
-	i = 0;
-	row = 0;
 	while (line[i])
 	{
 		while (line[i] && is_spaces(line[i]))
@@ -79,7 +71,8 @@ static char	**ft_add_lines(char *line, int row)
 		i = parse_word(line, i);
 		if (i > save_i)
 		{
-			if (row > 0 && tab[row - 1][0] && tab[row - 1][1] && tab[row - 1][0] == '<' && tab[row - 1][1] == '<')
+			if (row > 0 && tab[row - 1][0] && tab[row - 1][1]
+				&& tab[row - 1][0] == '<' && tab[row - 1][1] == '<')
 				tab[row] = ft_substr(line + save_i, 0, i - save_i);
 			else
 				tab[row] = substr_unquote(line + save_i, i - save_i);
@@ -114,8 +107,10 @@ char	**split_line(char *line)
 		if (i > save_i)
 			row++;
 	}
-	tab = ft_add_lines(line, row);
+	tab = (char **)malloc(sizeof(char *) * (row + 1));
 	if (!tab)
 		return (NULL);
+	tab[row] = NULL;
+	tab = ft_add_lines(tab, line, 0, 0);
 	return (tab);
 }

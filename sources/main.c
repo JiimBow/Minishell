@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 13:34:27 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 13:41:15 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	main(int argc, char **argv, char **envp)
 	t_arg	*data;
 	t_line	*line;
 	t_var	*lst_var;
+	char	*tmp;
+	int		i;
 
 	(void)argc;
 	(void)argv;
@@ -78,12 +80,12 @@ int	main(int argc, char **argv, char **envp)
 			free_before_exit(line, NULL, lst_var);
 		else
 		{
-			line->new = parse_line(line);
+			line->new = parse_line(line, data, lst_var);
 			line->block = split_pipe(line);
-			int i = 0;
+			i = 0;
 			while (line->block[i])
 			{
-				char	*tmp = ft_substr(line->block[i], 0, ft_strlen(line->block[i]));
+				tmp = ft_substr(line->block[i], 0, ft_strlen(line->block[i]));
 				free(line->block[i]);
 				line->block[i] = substr_var(line->env, tmp);
 				free(tmp);
@@ -93,7 +95,7 @@ int	main(int argc, char **argv, char **envp)
 				line->args = NULL;
 				i++;
 			}
-			data = NULL;//tokenisation(line->args, 0);
+			data = NULL;
 			add_history(line->line);
 			free_line_struct(line, 0);
 			line->line = NULL;
