@@ -6,13 +6,13 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/20 10:21:44 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 12:24:00 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	quotes_unclosed(char *line)
+static int	quotes_unclosed(char *line)
 {
 	char	quote;
 	int		i;
@@ -33,7 +33,7 @@ int	quotes_unclosed(char *line)
 	return (0);
 }
 
-int	get_parsed_line_lenght(char *line)
+static int	get_parsed_line_lenght(char *line)
 {
 	char	quote;
 	int		add;
@@ -60,14 +60,10 @@ int	get_parsed_line_lenght(char *line)
 	return (i + add);
 }
 
-char	*set_parsed_line(char *line, int i, int j)
+static char	*set_parsed_line(char *line, char *new, int i, int j)
 {
-	char	*new;
 	char	quote;
 
-	new = ft_calloc(sizeof(char), get_parsed_line_lenght(line) + 1);
-	if (!new)
-		return (NULL);
 	while (line[i])
 	{
 		if (is_quote(line[i]))
@@ -92,20 +88,26 @@ char	*set_parsed_line(char *line, int i, int j)
 	return (new);
 }
 
-char	*parse_line(t_line *line)
+char	*parse_line(t_line *line, t_arg *data, t_var *lst_var)
 {
 	char	*new;
 
 	if (quotes_unclosed(line->line))
 	{
-		write(2, "syntax error: quote unclosed\n", 29);
-		return (NULL);
+		write(2, "syntax error: unclosed quote\n", 29);
+		free_before_exit(line, data, lst_var);
 	}
-	new = set_parsed_line(line->line, 0, 0);
+	new = ft_calloc(sizeof(char), get_parsed_line_lenght(line->line) + 1);
 	if (!new)
 	{
 		write(2, "Error malloc\n", 13);
-		return (NULL);
+		free_before_exit(line, data, lst_var);
+	}
+	new = set_parsed_line(line->line, new, 0, 0);
+	if (!new)
+	{
+		write(2, "Error malloc\n", 13);
+		free_before_exit(line, data, lst_var);
 	}
 	return (new);
 }

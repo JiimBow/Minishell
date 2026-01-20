@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 11:04:09 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 11:49:00 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,13 @@ char	**ft_free_tab(char **tab, int line);
 int		is_spaces(char c);
 int		is_quote(char c);
 char	*substr_var(char **env, char const *s);
-char	*parse_line(t_line *line);
+char	*parse_line(t_line *line, t_arg *data, t_var *lst_var);
 int		parse_export(char *args);
+char	*get_name(const char *s);
+char	*get_content(char **env, char *tab);
+int		get_count(char **env, const char *s, int *i);
+int		get_size_with_variable(char **env, const char *s, int count, int i);
+int		variable_size(char **env, const char *s, int *i, int count);
 
 // UTILITIES
 char	*get_env_path(t_var *lst_var, char *str);
