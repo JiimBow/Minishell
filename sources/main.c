@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 11:14:13 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 11:18:57 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	data = NULL;
 	lst_var = NULL;
 	get_var(&lst_var, envp);
 	line = creation_line();
@@ -92,7 +93,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			line->new = parse_line(line);
-			line->block = split_pipe(line->new);
+			line->block = split_pipe(line);
 			int i = 0;
 			while (line->block[i])
 			{
@@ -101,8 +102,9 @@ int	main(int argc, char **argv, char **envp)
 				line->block[i] = substr_var(line->env, tmp);
 				free(tmp);
 				line->args = split_line(line->block[i]);
-				assignement(line->args, lst_var, data);
+				assignement(line, lst_var, data);
 				free_double_tab(line->args);
+				line->args = NULL;
 				i++;
 			}
 			data = NULL;//tokenisation(line->args, 0);
