@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:53:51 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 17:02:57 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 17:02:10 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	arg_isnum(char *args)
 
 int	free_before_exit(t_line *line, t_arg *data, t_var *lst_var)
 {
-	printf("exit\n");
+	write(2, "exit\n", 5);
 	if (line->args && line->args[1] && line->args[2])
 	{
 		write(2, "minishell: exit: too many arguments\n", 37);

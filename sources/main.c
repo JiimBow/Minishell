@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 17:21:54 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 17:23:17 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,18 +100,24 @@ int	main(int argc, char **argv, char **envp)
 					line->block[i] = substr_var(line->env, tmp);
 					free(tmp);
 					line->args = split_line(line->block[i]);
-					last_pid = pipe_process(line, lst_var, data, &child);
+					if (line->row > 1)
+						last_pid = pipe_process(line, lst_var, data, &child);
+					else
+						assignement(line, lst_var, data);
 					free_double_tab(line->args);
 					line->args = NULL;
 					i++;
 				}
-				while (pid > 0)
+				if (line->row > 1)
 				{
-					if (pid == last_pid)
-						last_status = status;
-					pid = wait(&status);
+					while (pid > 0)
+					{
+						if (pid == last_pid)
+							last_status = status;
+						pid = wait(&status);
+					}
+					g_sig = return_value(last_status);
 				}
-				g_sig = return_value(last_status);
 			}
 			data = NULL;
 			add_history(line->line);
