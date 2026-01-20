@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 18:18:02 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 19:10:40 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	handle_sigint(int signal)
 	}
 }
 
-void	assignement(t_line *line, t_var *lst_var, t_arg *data)
+void	assignement(t_line *line, t_var *lst_var, t_arg *data, int is_fork)
 {
 	if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "cd", 3) == 0)
@@ -51,7 +51,7 @@ void	assignement(t_line *line, t_var *lst_var, t_arg *data)
 		&& ft_strncmp(line->args[0], "export", 7) == 0)
 		g_sig = ft_export(&lst_var, line->args);
 	else if (line->args)
-		g_sig = process(line, lst_var, 0);
+		g_sig = process(line, lst_var, 0, is_fork);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -101,7 +101,7 @@ int	main(int argc, char **argv, char **envp)
 				if (line->row > 1)
 					last_pid = pipe_process(line, lst_var, data, &child);
 				else
-					assignement(line, lst_var, data);
+					assignement(line, lst_var, data, 0);
 				free_double_tab(line->args);
 				line->args = NULL;
 				i++;
