@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 19:05:14 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 20:54:08 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ pid_t	pipe_process(t_line *line, t_var *lst_var, t_arg *data, t_pipe *child)
 		child_process(child, line, lst_var, data);
 	else
 	{
-		/* if (child->prev_fd != -1)
-			close(child->prev_fd);*/
+		if (child->prev_fd != -1)
+			close(child->prev_fd);
 		if (child->index != line->row)
 			child->prev_fd = child->pipefd[0];
 		if (child->pipefd[1] != -1)

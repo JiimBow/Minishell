@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 19:03:43 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 19:22:13 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	process(t_line *line, t_var *lst_var, int dir, int is_fork)
 	__pid_t	pid;
 	int		status;
 
+	status = 0;
 	if (!line->args || !*line->args)
 		return (0);
 	if (is_fork == 0)
@@ -71,5 +72,5 @@ int	process(t_line *line, t_var *lst_var, int dir, int is_fork)
 	}
 	else
 		exec_process(line, lst_var, dir);
-	return (0);
+	return (return_value(status));
 }

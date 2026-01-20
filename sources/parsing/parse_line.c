@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/20 18:48:42 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 21:01:44 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,9 @@ static int	syntax_error(char *line)
 				i++;
 			while (line[i] && is_spaces(line[i]))
 				i++;
-			if (line[i] == '\0' || is_operator(line[i]))
+			if (line[i] && operator == '|' && (line[i] == '>' || line[i] == '<'))
+				continue ;
+			else if (line[i] == '\0' || is_operator(line[i]))
 				return (1);
 		}
 		i++;
@@ -147,6 +149,7 @@ char	*parse_line(t_line *line, t_arg *data, t_var *lst_var)
 	if (syntax_error(new))
 	{
 		write(2, "minishell: syntax error\n", 24);
+		free(new);
 		g_sig = 2;
 		return (NULL);
 	}
