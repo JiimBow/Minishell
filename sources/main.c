@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 10:39:42 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 11:14:13 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,20 @@ static void	assignement(t_line *line, t_var *lst_var, t_arg *data)
 		g_sig = ft_export(&lst_var, line->args);
 	else if (line->args)
 		g_sig = process(line, lst_var, 0);
+}
+
+int	pipe_process(t_line *line, t_var *lst_var, t_arg *data, int i)
+{
+	pid_t	pid;
+	t_pipe	child;
+	int		status;
+
+	child = pipe_init();
+	if (i != line->row)
+	{
+		if (pipe(child.pipefd) == -1)
+			
+	}
 }
 
 int	main(int argc, char **argv, char **envp)

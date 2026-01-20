@@ -6,7 +6,7 @@
 #    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/19 17:01:24 by jodone           ###   ########.fr        #
+#    Updated: 2026/01/20 11:10:54 by jodone           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,8 @@ SRC			= $(DIR)main.c \
 			$(BUILT-IN)ft_unset.c \
 			$(BUILT-IN)ft_exit.c \
 			$(BUILT-IN)ft_export.c \
-			$(UTILS)free_functions.c 
+			$(UTILS)free_functions.c \
+			$(UTILS)struct_init.c
 
 OBJ			= $(SRC:%.c=$(OBJ_DIR)/%.o)
 

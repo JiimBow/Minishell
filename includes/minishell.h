@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 10:40:26 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 11:13:26 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,20 @@ typedef struct s_var
 	struct s_var	*next;
 }	t_var;
 
+typedef struct s_pipe
+{
+	int	fdin;
+	int	fdout;
+	int	pipefd[2];
+	int	prev_fd;
+}	t_pipe;
+
+
 extern int	g_sig;
 
 // INITIALIZATION
 t_line	*creation_line(void);
+t_pipe	pipe_init(void);
 char	**ft_copy_env(t_var **lst_var);
 void	get_var(t_var **lst_var, char **envp);
 

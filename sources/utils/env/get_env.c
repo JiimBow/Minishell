@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 13:41:42 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 17:59:06 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 11:09:56 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,5 @@ char	**ft_copy_env(t_var **lst_var)
 		tmp = tmp->next;
 	}
 	env[i] = NULL;
-	return (env);
-}
-
-t_line	*creation_line(void)
-{
-	t_line	*env;
-
-	env = malloc(sizeof(t_line));
-	if (!env)
-		return (NULL);
-	env->env = NULL;
-	env->new = NULL;
-	env->block = NULL;
 	return (env);
 }
