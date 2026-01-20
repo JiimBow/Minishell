@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 14:58:36 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/19 11:20:29 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 15:04:38 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ int	is_spaces(char c)
 int	is_quote(char c)
 {
 	if (c == '"' || c == '\'')
+		return (1);
+	return (0);
+}
+
+int	is_operator(char c)
+{
+	if (c == '|' || c == '<' || c == '>')
 		return (1);
 	return (0);
 }

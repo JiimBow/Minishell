@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/20 12:24:00 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 15:10:37 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,34 @@ static int	quotes_unclosed(char *line)
 	return (0);
 }
 
+static int	syntax_error(char *line)
+{
+	char	operator;
+	char	quote;
+	int		i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (is_quote(line[i]))
+		{
+			quote = line[i++];
+			while (line[i] && line[i] != quote)
+				i++;
+		}
+		else if (is_operator(line[i]))
+		{
+			operator = line[i++];
+			while (line[i] && is_spaces(line[i]))
+				i++;
+			if (is_operator(line[i]))
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 static int	get_parsed_line_lenght(char *line)
 {
 	char	quote;
@@ -49,7 +77,7 @@ static int	get_parsed_line_lenght(char *line)
 			while (line[i] && line[i] != quote)
 				i++;
 		}
-		else if (line[i] == '|' || line[i] == '<' || line[i] == '>')
+		else if (is_operator(line[i]))
 		{
 			add += 2;
 			if (line[i + 1] && line[i + 1] != '|' && line[i + 1] == line[i])
@@ -74,7 +102,7 @@ static char	*set_parsed_line(char *line, char *new, int i, int j)
 				new[j++] = line[i++];
 			new[j++] = line[i++];
 		}
-		else if (line[i] == '|' || line[i] == '<' || line[i] == '>')
+		else if (is_operator(line[i]))
 		{
 			new[j++] = ' ';
 			new[j++] = line[i++];
@@ -101,6 +129,11 @@ char	*parse_line(t_line *line, t_arg *data, t_var *lst_var)
 	if (!new)
 	{
 		write(2, "Error malloc\n", 13);
+		free_before_exit(line, data, lst_var);
+	}
+	if (syntax_error(new))
+	{
+		write(2, "syntax error\n", 13);
 		free_before_exit(line, data, lst_var);
 	}
 	new = set_parsed_line(line->line, new, 0, 0);
