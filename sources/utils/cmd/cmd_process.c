@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 13:34:05 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 13:42:19 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,8 @@ static void	exec_process(t_line *line, t_var *lst_var, int is_dir)
 
 int	process(t_line *line, t_var *lst_var, int dir)
 {
-	int		status;
-	int		sig_return;
-
 	if (!line->args || !*line->args)
 		return (0);
 	exec_process(line, lst_var, dir);
+	return (1);
 }

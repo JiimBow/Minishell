@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 13:39:58 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 15:21:52 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 void	child_process(t_pipe *child, t_line *line, t_var *lst_var, t_arg *data)
 {
-	if (child->prev_fd == -1)
-		close_file(child, "");
-	dup_and_close(child, child->prev_fd, STDIN_FILENO);
+	/* if (child->prev_fd == -1)
+		close_file(child, "");*/
+	if (child->index > 1)
+		dup_and_close(child, child->prev_fd, STDIN_FILENO);
 	if (child->index == line->row)
 	{
-		// if (child->fdout == -1)
-		// 	close_file(child, "");
-		// dup_and_close(child, child->fdout, STDOUT_FILENO);
+		/* if (child->fdout == -1)
+			close_file(child, "");
+		dup_and_close(child, child->fdout, STDOUT_FILENO);*/
 		close(child->pipefd[1]);
 	}
 	else
@@ -33,33 +34,31 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var, t_arg *data)
 	close(child->pipefd[0]);
 	assignement(line, lst_var, data);
 	free_all(line, lst_var, data);
-	exit(g_sig);
+	_exit(g_sig);
 }
 
-void	pipe_process(t_line *line, t_var *lst_var, t_arg *data, int i)
+void	pipe_process(t_line *line, t_var *lst_var, t_arg *data, t_pipe *child)
 {
 	pid_t	pid;
-	t_pipe	child;
 	int		status;
 
-	child = pipe_init(i);
-	if (i != line->row)
+	if (child->index != line->row)
 	{
-		if (pipe(child.pipefd) == -1)
-			close_file(&child, "pipe error");
+		if (pipe(child->pipefd) == -1)
+			close_file(child, "pipe error\n");
 	}
 	pid = fork();
 	if (pid < 0)
-		close_file(&child, "fork error");
+		close_file(child, "fork error\n");
 	if (pid == 0)
-		child_process(&child, line, lst_var, data);
+		child_process(child, line, lst_var, data);
 	else
 	{
-		if (child.prev_fd != -1)
-			close(child.prev_fd);
-		if (i != line->row)
-			child.prev_fd = child.pipefd[0];
-		close(child.pipefd[1]);
+		/* if (child->prev_fd != -1)
+			close(child->prev_fd);*/
+		if (child->index != line->row)
+			child->prev_fd = child->pipefd[0];
+		close(child->pipefd[1]);
 	}
 	waitpid(-1, &status, 0);
 	g_sig = return_value(status);

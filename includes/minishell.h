@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 13:41:10 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 15:22:16 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,11 @@ typedef struct s_pipe
 	int	index;
 }	t_pipe;
 
-
 extern int	g_sig;
 
 // INITIALIZATION
 t_line	*creation_line(void);
-t_pipe	pipe_init(int i);
+t_pipe	pipe_init(void);
 char	**ft_copy_env(t_var **lst_var);
 void	get_var(t_var **lst_var, char **envp);
 
@@ -132,7 +131,7 @@ void	free_line_struct(t_line *line, int all);
 void	free_all(t_line *line, t_var *lst_var, t_arg *data);
 
 // PIPE
-void	pipe_process(t_line *line, t_var *lst_var, t_arg *data, int i);
+void	pipe_process(t_line *line, t_var *lst_var, t_arg *data, t_pipe *child);
 void	close_file(t_pipe *child, char *message);
 int		return_value(int status);
 void	dup_and_close(t_pipe *child, int fd, int redirect);

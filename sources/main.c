@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 13:41:15 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 15:03:52 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	main(int argc, char **argv, char **envp)
 	t_arg	*data;
 	t_line	*line;
 	t_var	*lst_var;
+	t_pipe	child;
 	char	*tmp;
 	int		i;
 
@@ -68,6 +69,7 @@ int	main(int argc, char **argv, char **envp)
 	lst_var = NULL;
 	get_var(&lst_var, envp);
 	line = creation_line();
+	child = pipe_init();
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -85,12 +87,13 @@ int	main(int argc, char **argv, char **envp)
 			i = 0;
 			while (line->block[i])
 			{
+				child.index = i + 1;
 				tmp = ft_substr(line->block[i], 0, ft_strlen(line->block[i]));
 				free(line->block[i]);
 				line->block[i] = substr_var(line->env, tmp);
 				free(tmp);
 				line->args = split_line(line->block[i]);
-				pipe_process(line, lst_var, data, i);
+				pipe_process(line, lst_var, data, &child);
 				free_double_tab(line->args);
 				line->args = NULL;
 				i++;
@@ -98,7 +101,6 @@ int	main(int argc, char **argv, char **envp)
 			data = NULL;
 			add_history(line->line);
 			free_line_struct(line, 0);
-			line->line = NULL;
 			free_struct(data);
 		}
 	}
