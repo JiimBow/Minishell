@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/20 16:26:25 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 18:48:42 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ static int	syntax_error(char *line)
 	int		i;
 
 	i = 0;
+	while (line[i] && is_spaces(line[i]))
+		i++;
+	if (line[i] && line[i] == '|')
+		return (1);
 	while (line[i])
 	{
 		if (is_quote(line[i]))
@@ -51,9 +55,11 @@ static int	syntax_error(char *line)
 		else if (is_operator(line[i]))
 		{
 			operator = line[i++];
+			if ((line[i] == '>' || line[i] == '<') && operator == line[i])
+				i++;
 			while (line[i] && is_spaces(line[i]))
 				i++;
-			if (is_operator(line[i]))
+			if (line[i] == '\0' || is_operator(line[i]))
 				return (1);
 		}
 		i++;
@@ -122,26 +128,27 @@ char	*parse_line(t_line *line, t_arg *data, t_var *lst_var)
 
 	if (quotes_unclosed(line->line))
 	{
-		write(2, "syntax error: unclosed quote\n", 29);
+		write(2, "minishell: syntax error: unclosed quote\n", 40);
 		g_sig = 2;
 		return (NULL);
 	}
 	new = ft_calloc(sizeof(char), get_parsed_line_lenght(line->line) + 1);
 	if (!new)
 	{
-		write(2, "Error malloc\n", 13);
-		free_before_exit(line, data, lst_var);
-	}
-	if (syntax_error(new))
-	{
-		write(2, "syntax error\n", 13);
+		write(2, "minishell: Error malloc\n", 24);
 		free_before_exit(line, data, lst_var);
 	}
 	new = set_parsed_line(line->line, new, 0, 0);
 	if (!new)
 	{
-		write(2, "Error malloc\n", 13);
+		write(2, "minishell: Error malloc\n", 24);
 		free_before_exit(line, data, lst_var);
+	}
+	if (syntax_error(new))
+	{
+		write(2, "minishell: syntax error\n", 24);
+		g_sig = 2;
+		return (NULL);
 	}
 	return (new);
 }

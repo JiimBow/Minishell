@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:20:54 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 16:51:23 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/20 19:06:33 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ static void	write_args(char **args, int i)
 			i++;
 			continue ;
 		}
-		printf("%s", args[i++]);
+		ft_printf("%s", args[i++]);
 		if (args[i] && args[i][0])
-			printf(" ");
+			ft_printf(" ");
 	}
 }
 
@@ -59,7 +59,7 @@ int	ft_echo(char **args)
 	i = 1;
 	if (!args[1])
 	{
-		printf("\n");
+		ft_printf("\n");
 		return (0);
 	}
 	else if (ft_strncmp("-n", args[1], 2) == 0)
@@ -67,7 +67,7 @@ int	ft_echo(char **args)
 	if (i == 1)
 	{
 		write_args(args, 1);
-		printf("\n");
+		ft_printf("\n");
 	}
 	else
 		write_args(args, i);

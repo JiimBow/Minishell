@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 16:55:37 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 18:18:02 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	handle_sigint(int signal)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		printf("\n");
+		ft_printf("\n");
 		rl_redisplay();
 		if (WIFSIGNALED(signal))
 			g_sig = WTERMSIG(signal) + 128;
@@ -89,35 +89,32 @@ int	main(int argc, char **argv, char **envp)
 			line->new = parse_line(line, data, lst_var);
 			line->block = split_pipe(line);
 			i = 0;
-			if (line->block)
+			while (line->block && line->block[i])
 			{
-				while (line->block[i])
-				{
-					pid = 1;
-					child.index = i + 1;
-					tmp = ft_substr(line->block[i], 0, ft_strlen(line->block[i]));
-					free(line->block[i]);
-					line->block[i] = substr_var(line->env, tmp);
-					free(tmp);
-					line->args = split_line(line->block[i]);
-					if (line->row > 1)
-						last_pid = pipe_process(line, lst_var, data, &child);
-					else
-						assignement(line, lst_var, data);
-					free_double_tab(line->args);
-					line->args = NULL;
-					i++;
-				}
+				pid = 1;
+				child.index = i + 1;
+				tmp = ft_substr(line->block[i], 0, ft_strlen(line->block[i]));
+				free(line->block[i]);
+				line->block[i] = substr_var(line->env, tmp);
+				free(tmp);
+				line->args = split_line(line->block[i]);
 				if (line->row > 1)
+					last_pid = pipe_process(line, lst_var, data, &child);
+				else
+					assignement(line, lst_var, data);
+				free_double_tab(line->args);
+				line->args = NULL;
+				i++;
+			}
+			if (line->row > 1)
+			{
+				while (pid > 0)
 				{
-					while (pid > 0)
-					{
-						if (pid == last_pid)
-							last_status = status;
-						pid = wait(&status);
-					}
-					g_sig = return_value(last_status);
+					if (pid == last_pid)
+						last_status = status;
+					pid = wait(&status);
 				}
+				g_sig = return_value(last_status);
 			}
 			data = NULL;
 			add_history(line->line);

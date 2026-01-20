@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:03:16 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/16 23:29:53 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/20 18:16:36 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_env(char	**envp)
 	i = 0;
 	while (envp && envp[i])
 	{
-		printf("%s\n", envp[i]);
+		ft_printf("%s\n", envp[i]);
 		i++;
 	}
 	return (0);
