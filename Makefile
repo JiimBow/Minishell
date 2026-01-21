@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
+#    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/21 14:15:36 by mgarnier         ###   ########.fr        #
+#    Updated: 2026/01/21 18:39:08 by jodone           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,8 @@ SRC			= $(DIR)main.c \
 			$(BUILT-IN)ft_exit.c \
 			$(BUILT-IN)ft_export.c \
 			$(UTILS)free_functions.c \
-			$(UTILS)struct_init.c
+			$(UTILS)struct_init.c \
+			$(UTILS)ft_atoll.c
 
 OBJ			= $(SRC:%.c=$(OBJ_DIR)/%.o)
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 18:26:01 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 19:23:42 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,13 @@ typedef struct s_pipe
 	int	index;
 }	t_pipe;
 
-extern int	g_sig;
+typedef struct s_atoll
+{
+	long	result;
+	int		sign;
+}	t_atoll;
+
+extern long	g_sig;
 
 // INITIALIZATION
 t_line	*creation_line(void);
@@ -89,7 +95,7 @@ int		is_quote(char c);
 int		is_operator(char c);
 char	*substr_var(char **env, char const *s);
 char	*parse_line(t_line *line);
-int		parse_export(char *args);
+int		parse_export(char *name, char *args);
 char	*get_name(const char *s);
 char	*get_content(char **env, char *tab);
 int		get_count(char **env, const char *s, int *i);
@@ -104,6 +110,7 @@ void	ft_lstadd_back_var(t_var **lst, t_var *new);
 void	ft_lstclear_var(t_var **lst, void (*del)(void *));
 int		ft_lstsize_var(t_var *lst);
 void	write_error(char *cmd_name, int code);
+long	ft_atoll(const char *nptr, int *overf);
 
 // RANKING
 int		already_sorted(t_var **lst_var);

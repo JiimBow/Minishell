@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:10:11 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 16:51:16 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/21 17:46:28 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ static void	add_var(t_var **lst_var, char *arg, char *name)
 
 	i = 0;
 	content = NULL;
+	if (!name)
+		return ;
 	if (ft_strchr(arg, '='))
 	{
 		while (arg[i] != '=')
@@ -98,7 +100,7 @@ int	ft_export(t_var **lst_var, char **args)
 		while (args[i])
 		{
 			name = get_env_name(args[i]);
-			if (!parse_export(name))
+			if (!parse_export(name, args[i]))
 				g_sig = 1;
 			add_var(lst_var, args[i++], name);
 			free(name);
