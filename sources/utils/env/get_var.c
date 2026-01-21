@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:38:33 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/16 23:29:12 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 16:58:06 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,16 @@ char	*get_env_name(char *line)
 	len_name = 0;
 	while (line[len_name] && line[len_name] != '=')
 		len_name++;
-	name = ft_calloc(len_name + 1, sizeof(char));
-	ft_strlcpy(name, line, len_name + 1);
+	if (line[len_name - 1] == '+')
+	{
+		name = ft_calloc(len_name, sizeof(char));
+		ft_strlcpy(name, line, len_name);
+	}
+	else
+	{
+		name = ft_calloc(len_name + 1, sizeof(char));
+		ft_strlcpy(name, line, len_name + 1);
+	}
 	return (name);
 }
 

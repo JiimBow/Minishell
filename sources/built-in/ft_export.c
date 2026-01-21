@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:10:11 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 16:53:45 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/21 16:51:16 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,28 @@ static int	var_exist(t_var **lst_var, char *name, char *content, int update)
 	return (0);
 }
 
+static char	*content_cat(t_var **lst_var, char *name, char *content)
+{
+	t_var	*tmp;
+	char	*new_content;
+
+	tmp = *lst_var;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->name, name, ft_strlen(name)) == 0)
+		{
+			new_content = ft_strdup(tmp->content);
+			new_content = ft_strjoin(new_content, content);
+			free(content);
+			return (new_content);
+		}
+		tmp = tmp->next;
+	}
+	new_content = ft_strdup(content);
+	free(content);
+	return (new_content);
+}
+
 static void	add_var(t_var **lst_var, char *arg, char *name)
 {
 	int		i;
@@ -47,6 +69,8 @@ static void	add_var(t_var **lst_var, char *arg, char *name)
 		while (arg[i] != '=')
 			i++;
 		content = ft_substr(arg, i + 1, ft_strlen(arg) - i);
+		if (arg[i - 1] == '+')
+			content = content_cat(lst_var, name, content);
 	}
 	if (var_exist(lst_var, name, content, 0))
 		var_exist(lst_var, name, content, 1);
