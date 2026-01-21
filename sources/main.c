@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 19:10:40 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/21 10:53:07 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	main(int argc, char **argv, char **envp)
 	lst_var = NULL;
 	get_var(&lst_var, envp);
 	line = creation_line();
-	child = pipe_init();
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
@@ -81,6 +80,7 @@ int	main(int argc, char **argv, char **envp)
 		line->env = ft_copy_env(&lst_var);
 		line->args = NULL;
 		line->block = NULL;
+		child = pipe_init();
 		line->line = readline("minishell> ");
 		if (!line->line)
 			free_before_exit(line, NULL, lst_var);

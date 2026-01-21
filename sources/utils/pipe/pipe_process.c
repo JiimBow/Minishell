@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 20:54:08 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 10:44:24 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var, t_arg *data)
 {
 	/* if (child->prev_fd == -1)
 		close_file(child, "");*/
-	if (child->index > 1)
+	if (child->prev_fd != -1)
 		dup_and_close(child, child->prev_fd, STDIN_FILENO);
 	if (child->index == line->row)
 	{
