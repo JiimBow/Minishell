@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:00:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 14:05:55 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 21:26:14 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	free_line_struct(t_line *line, int all)
 	free(line->new);
 	line->new = NULL;
 	free_double_tab(line->block);
+	ft_lstclear_var(&line->red, free);
 	if (all == 1)
 		free(line);
 }

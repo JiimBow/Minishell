@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 19:23:42 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/21 21:34:41 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,10 @@
 # include <linux/limits.h>
 # include <sys/stat.h>
 
-typedef enum e_token
-{
-	BUILT_IN,
-	COMMANDS,
-	OPTIONS,
-	FILES,
-	DIRECTORIES,
-	OPERATORS,
-	END
-}	t_token;
+# define REDIR_IN 1
+# define REDIR_HEREDOC 2
+# define REDIR_APPEND 3
+# define REDIR_OUT 4
 
 typedef struct s_var
 {
@@ -55,7 +49,7 @@ typedef struct s_line
 	char	**block;
 	int		row;
 	char	**args;
-	t_var	**red;
+	t_var	*red;
 	char	**env;
 	int		sig;
 }	t_line;

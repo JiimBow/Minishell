@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 19:24:10 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/21 22:27:14 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,20 +53,6 @@ void	assignement(t_line *line, t_var *lst_var, int is_fork)
 	else if (line->args)
 		g_sig = process(line, lst_var, 0, is_fork);
 }
-		// int j = 0;
-		// printf("block[%d]=>\n", i);
-		// while (line->args && line->args[j])
-		// {
-		// 	printf("AVANT/args[%d]=%s\n", j, line->args[j]);
-		// 	j++;
-		// }
-		// find_redirection(line);
-		// j = 0;
-		// while (line->args && line->args[j])
-		// {
-		// 	printf("APRES/args[%d]=%s\n", j, line->args[j]);
-		// 	j++;
-		// }
 
 static void	get_last_status(__pid_t pid, __pid_t last_pid)
 {
@@ -99,6 +85,33 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe child, int i)
 		line->block[i] = substr_var(line->env, tmp);
 		free(tmp);
 		line->args = split_line(line->block[i]);
+		// int	j = 0;
+		// ft_printf("block[%d]=>\n", i);
+		// while (line->args && line->args[j])
+		// {
+		// 	ft_printf("AVANT/args[%d]=%s\n", j, line->args[j]);
+		// 	j++;
+		// }
+		find_redirection(line);
+		// j = 0;
+		// ft_printf("---\n");
+		// while (line->args && line->args[j])
+		// {
+		// 	ft_printf("APRES/args[%d]=%s\n", j, line->args[j]);
+		// 	j++;
+		// }
+		// ft_printf("---\n");
+		// if (line && line->red)
+		// {
+		// 	t_var	*tmp = line->red;
+		// 	while (tmp)
+		// 	{
+		// 		ft_printf("line->red->content=%s\nline->red->rank=%d\n",
+		// 			tmp->content, tmp->rank);
+		// 		tmp = tmp->next;
+		// 	}
+		// }
+		// ft_printf("==========\n");
 		if (line->row > 1)
 			last_pid = pipe_process(line, lst_var, &child);
 		else

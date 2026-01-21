@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:14:13 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/21 18:01:54 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 21:35:27 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**reduce_args(t_line *line)
 	while (line->args[i])
 		if (is_redirection(line->args[i++]))
 			len += 2;
-	new_args = malloc(sizeof(char) * (i - len + 1));
+	new_args = (char **)malloc(sizeof(char *) * (i - len + 1));
 	if (!new_args)
 		return (NULL);
 	new_args[i - len] = NULL;
@@ -63,16 +63,16 @@ void	find_redirection(t_line *line)
 	{
 		if (is_redirection(line->args[i]))
 		{
-			new = ft_lst_new_var(NULL, ft_strdup(line->args[i + 1]));
-			ft_lstadd_back_var(line->red, new);
+			new = ft_lst_new_var(NULL, line->args[i + 1]);
 			if (ft_strncmp(line->args[i], "<", 2) == 0)
-				new->rank = 1;
+				new->rank = REDIR_IN;
 			else if (ft_strncmp(line->args[i], "<<", 3) == 0)
-				new->rank = 2;
+				new->rank = REDIR_HEREDOC;
 			else if (ft_strncmp(line->args[i], ">", 2) == 0)
-				new->rank = 3;
+				new->rank = REDIR_OUT;
 			else if (ft_strncmp(line->args[i], ">>", 3) == 0)
-				new->rank = 4;
+				new->rank = REDIR_APPEND;
+			ft_lstadd_back_var(&line->red, new);
 		}
 		i++;
 	}
