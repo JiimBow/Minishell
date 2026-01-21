@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:14:13 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/21 17:20:07 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 18:01:54 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,13 @@ char	**reduce_args(t_line *line)
 	i = 0;
 	len = 0;
 	while (line->args[i])
-	{
-		if (is_redirection(line->args[i]))
-		{
+		if (is_redirection(line->args[i++]))
 			len += 2;
-			i++;
-		}
-		i++;
-	}
 	new_args = malloc(sizeof(char) * (i - len + 1));
 	if (!new_args)
 		return (NULL);
 	new_args[i - len] = NULL;
-    i = 0;
+	i = 0;
 	len = 0;
 	while (line->args[i])
 	{
@@ -55,8 +49,8 @@ char	**reduce_args(t_line *line)
 		else
 			new_args[len++] = ft_strdup(line->args[i++]);
 	}
-    free_double_tab(line->args);
-    return (new_args);
+	free_double_tab(line->args);
+	return (new_args);
 }
 
 void	find_redirection(t_line *line)

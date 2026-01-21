@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:16:08 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/20 19:02:19 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 18:47:08 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ static char	**ft_add_lines(char **tab, char *line, int i, int row)
 
 	while (line[i])
 	{
-		while (line[i] && is_spaces(line[i]))
-			i++;
+		i = skip_spaces(line, i);
 		save_i = i;
 		i = parse_word(line, i);
 		if (i > save_i)
@@ -67,8 +66,7 @@ char	**split_pipe(t_line *line)
 		return (NULL);
 	while (line->new[i])
 	{
-		while (line->new[i] && is_spaces(line->new[i]))
-			i++;
+		i = skip_spaces(line->new, i);
 		save_i = i;
 		i = parse_word(line->new, i);
 		if (i > save_i)

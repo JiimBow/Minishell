@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/21 14:08:04 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 18:27:07 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,9 @@ static int	quotes_unclosed(char *line)
 	return (0);
 }
 
-static int	syntax_error(char *line)
+static int	syntax_error(char *line, char token, char quote, int i)
 {
-	char	operator;
-	char	quote;
-	int		i;
-
-	i = 0;
-	while (line[i] && is_spaces(line[i]))
-		i++;
+	i = skip_spaces(line, i);
 	if (line[i] && line[i] == '|')
 		return (1);
 	while (line[i])
@@ -54,14 +48,13 @@ static int	syntax_error(char *line)
 		}
 		else if (is_operator(line[i]))
 		{
-			operator = line[i++];
-			if ((line[i] == '>' || line[i] == '<') && operator == line[i])
+			token = line[i++];
+			if ((line[i] == '>' || line[i] == '<') && token == line[i])
 				i++;
-			while (line[i] && is_spaces(line[i]))
-				i++;
-			if (line[i] && operator == '|' && (line[i] == '>' || line[i] == '<'))
+			i = skip_spaces(line, i);
+			if (line[i] && token == '|' && (line[i] == '>' || line[i] == '<'))
 				continue ;
-			else if (line[i] == '\0' || is_operator(line[i]))
+			if (line[i] == '\0' || is_operator(line[i]))
 				return (1);
 		}
 		i++;
@@ -124,7 +117,7 @@ static char	*set_parsed_line(char *line, char *new, int i, int j)
 	return (new);
 }
 
-char	*parse_line(t_line *line, t_var *lst_var)
+char	*parse_line(t_line *line)
 {
 	char	*new;
 
@@ -136,17 +129,11 @@ char	*parse_line(t_line *line, t_var *lst_var)
 	}
 	new = ft_calloc(sizeof(char), get_parsed_line_lenght(line->line) + 1);
 	if (!new)
-	{
-		write(2, "minishell: Error malloc\n", 24);
-		free_before_exit(line, lst_var);
-	}
+		return (NULL);
 	new = set_parsed_line(line->line, new, 0, 0);
 	if (!new)
-	{
-		write(2, "minishell: Error malloc\n", 24);
-		free_before_exit(line, lst_var);
-	}
-	if (syntax_error(new))
+		return (NULL);
+	if (syntax_error(new, 't', 'q', 0))
 	{
 		write(2, "minishell: syntax error\n", 24);
 		free(new);

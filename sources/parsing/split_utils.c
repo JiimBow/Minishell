@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 14:58:36 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/20 15:04:38 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 18:25:47 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,11 @@ int	is_operator(char c)
 	if (c == '|' || c == '<' || c == '>')
 		return (1);
 	return (0);
+}
+
+int	skip_spaces(char *tab, int i)
+{
+	while (tab[i] && is_spaces(tab[i]))
+		i++;
+	return (i);
 }
