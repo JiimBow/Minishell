@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 10:53:07 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/21 17:06:02 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	handle_sigint(int signal)
 	}
 }
 
-void	assignement(t_line *line, t_var *lst_var, t_arg *data, int is_fork)
+void	assignement(t_line *line, t_var *lst_var, int is_fork)
 {
 	if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "cd", 3) == 0)
@@ -46,7 +46,7 @@ void	assignement(t_line *line, t_var *lst_var, t_arg *data, int is_fork)
 		g_sig = ft_unset(line, &lst_var);
 	else if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "exit", 5) == 0)
-		g_sig = free_before_exit(line, data, lst_var);
+		g_sig = free_before_exit(line, lst_var);
 	else if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "export", 7) == 0)
 		g_sig = ft_export(&lst_var, line->args);
@@ -56,7 +56,6 @@ void	assignement(t_line *line, t_var *lst_var, t_arg *data, int is_fork)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_arg	*data;
 	t_line	*line;
 	t_var	*lst_var;
 	t_pipe	child;
@@ -69,7 +68,6 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	data = NULL;
 	lst_var = NULL;
 	get_var(&lst_var, envp);
 	line = creation_line();
@@ -80,13 +78,14 @@ int	main(int argc, char **argv, char **envp)
 		line->env = ft_copy_env(&lst_var);
 		line->args = NULL;
 		line->block = NULL;
+		line->red = NULL;
 		child = pipe_init();
 		line->line = readline("minishell> ");
 		if (!line->line)
-			free_before_exit(line, NULL, lst_var);
+			free_before_exit(line, lst_var);
 		else
 		{
-			line->new = parse_line(line, data, lst_var);
+			line->new = parse_line(line, lst_var);
 			line->block = split_pipe(line);
 			i = 0;
 			while (line->block && line->block[i])
@@ -98,10 +97,24 @@ int	main(int argc, char **argv, char **envp)
 				line->block[i] = substr_var(line->env, tmp);
 				free(tmp);
 				line->args = split_line(line->block[i]);
+				int j = 0;
+				printf("block[%d]=>\n", i);
+				while (line->args && line->args[j])
+				{
+					printf("AVANT/args[%d]=%s\n", j, line->args[j]);
+					j++;
+				}
+				find_redirection(line);
+				j = 0;
+				while (line->args && line->args[j])
+				{
+					printf("APRES/args[%d]=%s\n", j, line->args[j]);
+					j++;
+				}
 				if (line->row > 1)
-					last_pid = pipe_process(line, lst_var, data, &child);
+					last_pid = pipe_process(line, lst_var, &child);
 				else
-					assignement(line, lst_var, data, 0);
+					assignement(line, lst_var, 0);
 				free_double_tab(line->args);
 				line->args = NULL;
 				i++;
@@ -116,10 +129,8 @@ int	main(int argc, char **argv, char **envp)
 				}
 				g_sig = return_value(last_status);
 			}
-			data = NULL;
 			add_history(line->line);
 			free_line_struct(line, 0);
-			free_struct(data);
 		}
 	}
 	return (0);
