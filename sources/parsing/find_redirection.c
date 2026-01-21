@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:14:13 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/21 17:05:45 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 17:20:07 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ void	find_redirection(t_line *line)
 				new->rank = 3;
 			else if (ft_strncmp(line->args[i], ">>", 3) == 0)
 				new->rank = 4;
-			i++;
 		}
 		i++;
 	}
