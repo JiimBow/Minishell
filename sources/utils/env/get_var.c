@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:38:33 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 16:58:06 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/21 17:39:48 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ char	*get_env_name(char *line)
 	len_name = 0;
 	while (line[len_name] && line[len_name] != '=')
 		len_name++;
+	if (len_name == 0)
+		return (NULL);
 	if (line[len_name - 1] == '+')
 	{
 		name = ft_calloc(len_name, sizeof(char));

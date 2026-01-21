@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:20:54 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 11:08:34 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 18:48:26 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,8 @@ static void	write_args(char **args, int i)
 {
 	while (args[i])
 	{
-		// if (args[i][0] == '\0')
-		// {
-		// 	i++;
-		// 	continue ;
-		// }
 		ft_printf("%s", args[i++]);
-		if (args[i])// && args[i][0])
+		if (args[i])
 			ft_printf(" ");
 	}
 }

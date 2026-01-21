@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 17:06:02 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 19:20:43 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_sig = 0;
+long	g_sig = 0;
 
 static void	handle_sigint(int signal)
 {
@@ -97,20 +97,20 @@ int	main(int argc, char **argv, char **envp)
 				line->block[i] = substr_var(line->env, tmp);
 				free(tmp);
 				line->args = split_line(line->block[i]);
-				int j = 0;
-				printf("block[%d]=>\n", i);
-				while (line->args && line->args[j])
-				{
-					printf("AVANT/args[%d]=%s\n", j, line->args[j]);
-					j++;
-				}
-				find_redirection(line);
-				j = 0;
-				while (line->args && line->args[j])
-				{
-					printf("APRES/args[%d]=%s\n", j, line->args[j]);
-					j++;
-				}
+				// int j = 0;
+				// printf("block[%d]=>\n", i);
+				// while (line->args && line->args[j])
+				// {
+				// 	printf("AVANT/args[%d]=%s\n", j, line->args[j]);
+				// 	j++;
+				// }
+				// find_redirection(line);
+				// j = 0;
+				// while (line->args && line->args[j])
+				// {
+				// 	printf("APRES/args[%d]=%s\n", j, line->args[j]);
+				// 	j++;
+				// }
 				if (line->row > 1)
 					last_pid = pipe_process(line, lst_var, &child);
 				else

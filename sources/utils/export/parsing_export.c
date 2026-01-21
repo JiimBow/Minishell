@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:51:07 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/16 23:29:27 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 18:03:11 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,29 @@ static int	check_car(char *arg)
 	return (1);
 }
 
-int	parse_export(char *args)
+static void	write_parse(char *str)
 {
-	if ((!ft_isalpha(args[0]) && args[0] != '_')
-		|| !check_car(args))
+	write(2, "minishell: export: ", 19);
+	write(2, str, ft_strlen(str));
+	write(2, ": not a valid identifier\n", 26);
+}
+
+int	parse_export(char *name, char *args)
+{
+	if (ft_strncmp(args, "=", 2) == 0)
 	{
-		write(2, "minishell: export: ", 19);
-		write(2, args, ft_strlen(args));
-		write(2, ": not a valid identifier\n", 26);
+		write_parse("=");
+		return (0);
+	}
+	else if (!name)
+	{
+		write_parse(args);
+		return (0);
+	}
+	else if ((!ft_isalpha(name[0]) && name[0] != '_')
+		|| !check_car(name))
+	{
+		write_parse(name);
 		return (0);
 	}
 	return (1);
