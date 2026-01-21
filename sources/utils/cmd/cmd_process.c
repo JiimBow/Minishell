@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 19:22:13 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 11:27:28 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ static void	exec_process(t_line *line, t_var *lst_var, int is_dir)
 
 	full_path = NULL;
 	path_cmd = find_cmd_path(line->args[0], line->env, 0, full_path);
-	if (!path_cmd || execve(path_cmd, line->args, line->env) == -1
-		|| is_dir == 1)
+	if (!path_cmd || is_dir == 1 || execve(path_cmd, line->args, line->env) == -1)
 	{
 		perror(line->args[0]);
 		free_line_struct(line, 1);
