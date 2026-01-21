@@ -3,14 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 19:22:13 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 16:17:07 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	write_error(char *cmd_name, int code)
+{
+	if (code == 1)
+	{
+		write(2, cmd_name, ft_strlen(cmd_name));
+		write(2, ": command not found\n", 20);
+	}
+	if (code == 2)
+	{
+		write(2, cmd_name, ft_strlen(cmd_name));
+		write(2, ": No such file or directory\n", 28);
+	}
+}
 
 void	pointer_free(char **str)
 {
@@ -32,18 +46,27 @@ static void	exec_process(t_line *line, t_var *lst_var, int is_dir)
 {
 	char	*path_cmd;
 	char	*full_path;
+	char	**paths;
 
+	paths = NULL;
 	full_path = NULL;
-	path_cmd = find_cmd_path(line->args[0], line->env, 0, full_path);
+	path_cmd = find_cmd_path(line, paths, 0, full_path);
 	if (!path_cmd || execve(path_cmd, line->args, line->env) == -1
 		|| is_dir == 1)
 	{
-		perror(line->args[0]);
-		free_line_struct(line, 1);
 		ft_lstclear_var(&lst_var, free);
 		free(path_cmd);
 		if (is_dir == 1)
+		{
+			perror(line->args[0]);
+			free_line_struct(line, 1);
 			exit(126);
+		}
+		if (!path_cmd)
+			write_error(line->args[0], 1);
+		else
+			write_error(line->args[0], 2);
+		free_line_struct(line, 1);
 		exit(127);
 	}
 }
@@ -65,7 +88,7 @@ int	process(t_line *line, t_var *lst_var, int dir, int is_fork)
 			ft_lstclear_var(&lst_var, free);
 			exit(EXIT_FAILURE);
 		}
-		if  (pid == 0)
+		if (pid == 0)
 			exec_process(line, lst_var, dir);
 		else
 			waitpid(-1, &status, 0);

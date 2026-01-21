@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 19:05:05 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/21 15:04:34 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	get_var(t_var **lst_var, char **envp);
 
 // PARSING
 t_arg	*tokenisation(char **args, int i);
-char	*find_cmd_path(char *cmd, char **envp, int i, char *full_path);
+char	*find_cmd_path(t_line *line, char **paths, int i, char *full_path);
 char	**split_line(char *line);
 char	**split_pipe(t_line *line);
 char	**ft_free_tab(char **tab, int line);
@@ -107,6 +107,7 @@ t_var	*ft_lst_new_var(char *name, char *content);
 void	ft_lstadd_back_var(t_var **lst, t_var *new);
 void	ft_lstclear_var(t_var **lst, void (*del)(void *));
 int		ft_lstsize_var(t_var *lst);
+void	write_error(char *cmd_name, int code);
 
 // RANKING
 int		already_sorted(t_var **lst_var);

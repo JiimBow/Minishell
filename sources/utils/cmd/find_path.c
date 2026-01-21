@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:53:10 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/16 23:29:01 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 15:55:25 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	find_envp(char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp && envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
+		i++;
+	return (i);
+}
 
 static char	*join_path(char *dir, char *cmd)
 {
@@ -43,24 +53,21 @@ static int	cmd_check(char *cmd)
 	return (0);
 }
 
-char	*find_cmd_path(char *cmd, char **envp, int i, char *full_path)
+char	*find_cmd_path(t_line *line, char **paths, int i, char *full_path)
 {
-	char	**paths;
-
-	if (cmd_check(cmd) == 1)
+	if (cmd_check(line->args[0]) == 1)
 	{
-		full_path = ft_strdup(cmd);
+		full_path = ft_strdup(line->args[0]);
 		return (full_path);
 	}
-	while (envp && envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
-		i++;
-	if (envp && envp[i] && cmd)
+	i = find_envp(line->env);
+	if (line->env && line->env[i] && line->args[0])
 	{
-		paths = ft_split(envp[i] + 5, ':');
+		paths = ft_split(line->env[i] + 5, ':');
 		i = 0;
 		while (paths && paths[i])
 		{
-			full_path = join_path(paths[i++], cmd);
+			full_path = join_path(paths[i++], line->args[0]);
 			if (access(full_path, X_OK) == 0)
 				break ;
 			free(full_path);
@@ -68,5 +75,7 @@ char	*find_cmd_path(char *cmd, char **envp, int i, char *full_path)
 		}
 		pointer_free(paths);
 	}
+	else
+		full_path = ft_strdup("fail");
 	return (full_path);
 }
