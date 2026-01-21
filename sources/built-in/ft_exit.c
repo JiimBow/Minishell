@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:53:51 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 17:02:10 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 14:09:14 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	arg_isnum(char *args)
 	return (1);
 }
 
-int	free_before_exit(t_line *line, t_arg *data, t_var *lst_var)
+int	free_before_exit(t_line *line, t_var *lst_var)
 {
 	write(2, "exit\n", 5);
 	if (line->args && line->args[1] && line->args[2])
@@ -49,7 +49,6 @@ int	free_before_exit(t_line *line, t_arg *data, t_var *lst_var)
 	}
 	rl_clear_history();
 	ft_lstclear_var(&lst_var, free);
-	free_struct(data);
 	if (line->args && !arg_isnum(line->args[1]))
 	{
 		write(2, "minishell: exit: ", 17);

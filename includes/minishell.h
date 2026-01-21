@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 19:05:05 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/21 17:04:47 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,13 @@ typedef enum e_token
 	END
 }	t_token;
 
-typedef struct s_arg
+typedef struct s_var
 {
-	char	*content;
-	t_token	group;
-}	t_arg;
+	char			*name;
+	char			*content;
+	int				rank;
+	struct s_var	*next;
+}	t_var;
 
 typedef struct s_line
 {
@@ -53,17 +55,10 @@ typedef struct s_line
 	char	**block;
 	int		row;
 	char	**args;
+	t_var	**red;
 	char	**env;
 	int		sig;
 }	t_line;
-
-typedef struct s_var
-{
-	char			*name;
-	char			*content;
-	int				rank;
-	struct s_var	*next;
-}	t_var;
 
 typedef struct s_pipe
 {
@@ -83,16 +78,16 @@ char	**ft_copy_env(t_var **lst_var);
 void	get_var(t_var **lst_var, char **envp);
 
 // PARSING
-t_arg	*tokenisation(char **args, int i);
 char	*find_cmd_path(char *cmd, char **envp, int i, char *full_path);
 char	**split_line(char *line);
 char	**split_pipe(t_line *line);
+void	find_redirection(t_line *line);
 char	**ft_free_tab(char **tab, int line);
 int		is_spaces(char c);
 int		is_quote(char c);
 int		is_operator(char c);
 char	*substr_var(char **env, char const *s);
-char	*parse_line(t_line *line, t_arg *data, t_var *lst_var);
+char	*parse_line(t_line *line, t_var *lst_var);
 int		parse_export(char *args);
 char	*get_name(const char *s);
 char	*get_content(char **env, char *tab);
@@ -121,18 +116,17 @@ int		ft_unset(t_line *line, t_var **lst_var);
 int		ft_export(t_var **lst_var, char **args);
 void	display_export(t_var **lst_var);
 int		process(t_line *line, t_var *lst_var, int dir, int is_fork);
-void	assignement(t_line *line, t_var *lst_var, t_arg *data, int is_fork);
+void	assignement(t_line *line, t_var *lst_var, int is_fork);
 
 // MEMORY MANAGEMENT
 void	pointer_free(char **str);
 void	free_double_tab(char **tab);
-void	free_struct(t_arg *data);
-int		free_before_exit(t_line *line, t_arg *data, t_var *lst_var);
+int		free_before_exit(t_line *line, t_var *lst_var);
 void	free_line_struct(t_line *line, int all);
-void	free_all(t_line *line, t_var *lst_var, t_arg *data);
+void	free_all(t_line *line, t_var *lst_var);
 
 // PIPE
-pid_t	pipe_process(t_line *line, t_var *lst_var, t_arg *data, t_pipe *child);
+pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child);
 void	close_file(t_pipe *child, char *message);
 int		return_value(int status);
 void	dup_and_close(t_pipe *child, int fd, int redirect);

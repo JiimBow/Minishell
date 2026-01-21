@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:00:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 13:38:31 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/21 14:05:55 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
-
-void	free_struct(t_arg *data)
-{
-	int	i;
-
-	if (!data)
-		return ;
-	i = 0;
-	while (data[i].group != END)
-	{
-		if (data[i].content)
-			free(data[i].content);
-		data[i].content = NULL;
-		i++;
-	}
-	free(data);
-	data = NULL;
-}
 
 void	free_double_tab(char **tab)
 {
@@ -60,9 +42,8 @@ void	free_line_struct(t_line *line, int all)
 		free(line);
 }
 
-void	free_all(t_line *line, t_var *lst_var, t_arg *data)
+void	free_all(t_line *line, t_var *lst_var)
 {
 	ft_lstclear_var(&lst_var, free);
-	free_struct(data);
 	free_line_struct(line, 1);
 }

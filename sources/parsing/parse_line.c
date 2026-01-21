@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/20 21:01:44 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/21 14:08:04 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ static char	*set_parsed_line(char *line, char *new, int i, int j)
 	return (new);
 }
 
-char	*parse_line(t_line *line, t_arg *data, t_var *lst_var)
+char	*parse_line(t_line *line, t_var *lst_var)
 {
 	char	*new;
 
@@ -138,13 +138,13 @@ char	*parse_line(t_line *line, t_arg *data, t_var *lst_var)
 	if (!new)
 	{
 		write(2, "minishell: Error malloc\n", 24);
-		free_before_exit(line, data, lst_var);
+		free_before_exit(line, lst_var);
 	}
 	new = set_parsed_line(line->line, new, 0, 0);
 	if (!new)
 	{
 		write(2, "minishell: Error malloc\n", 24);
-		free_before_exit(line, data, lst_var);
+		free_before_exit(line, lst_var);
 	}
 	if (syntax_error(new))
 	{

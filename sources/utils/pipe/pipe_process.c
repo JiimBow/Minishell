@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 10:44:24 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/21 14:08:53 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	child_process(t_pipe *child, t_line *line, t_var *lst_var, t_arg *data)
+void	child_process(t_pipe *child, t_line *line, t_var *lst_var)
 {
 	/* if (child->prev_fd == -1)
 		close_file(child, "");*/
@@ -34,12 +34,12 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var, t_arg *data)
 	}
 	if (child->pipefd[0] != -1)
 		close(child->pipefd[0]);
-	assignement(line, lst_var, data, 1);
-	free_all(line, lst_var, data);
+	assignement(line, lst_var, 1);
+	free_all(line, lst_var);
 	_exit(g_sig);
 }
 
-pid_t	pipe_process(t_line *line, t_var *lst_var, t_arg *data, t_pipe *child)
+pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child)
 {
 	pid_t	pid;
 
@@ -52,7 +52,7 @@ pid_t	pipe_process(t_line *line, t_var *lst_var, t_arg *data, t_pipe *child)
 	if (pid < 0)
 		close_file(child, "fork error\n");
 	if (pid == 0)
-		child_process(child, line, lst_var, data);
+		child_process(child, line, lst_var);
 	else
 	{
 		if (child->prev_fd != -1)
