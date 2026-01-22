@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 16:35:50 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/22 17:08:56 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
 		if (line->red)
 			ft_lstclear_var(&line->red, free);
 		pid = 1;
+		g_sig = 0;
 		child->index = i + 1;
 		tmp = ft_substr(line->block[i], 0, ft_strlen(line->block[i]));
 		free(line->block[i]);
@@ -88,13 +89,13 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
 		free(tmp);
 		line->args = split_line(line->block[i++]);
 		find_redirection(line);
-		if (line->red)
+		if (line->red && g_sig != 1)
 			g_sig = open_file(line, child);
 		last_pid = pipe_process(line, lst_var, child);
 		free_double_tab(line->args);
 		line->args = NULL;
 	}
-	if (line->row > 1 || line->red)
+	if (g_sig != 1 && (line->row > 1 || line->red))
 		get_last_status(pid, last_pid);
 }
 
