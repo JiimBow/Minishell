@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 13:36:13 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/22 14:00:21 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ int	process(t_line *line, t_var *lst_var, int dir, int is_fork)
 		pid = fork();
 		if (pid < 0)
 		{
-			free_all(line, lst_var);
-			exit(EXIT_FAILURE);
+			// écrire message d'erreur
+			return (1);
 		}
 		if (pid == 0)
 			exec_process(line, lst_var, dir);

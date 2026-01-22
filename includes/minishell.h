@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 13:43:09 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/22 14:14:49 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	free_all(t_line *line, t_var *lst_var);
 pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child);
 void	close_file(t_pipe *child, char *message);
 int		return_value(int status);
-int		dup_and_close(t_pipe *child, int fd, int redirect);
+int		dup_and_close(int fd, int redirect);
 
 // REDIRECTION
 void	open_file(t_line *line, t_pipe *child, t_var *lst_var);

@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:30:19 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 13:42:59 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/22 14:14:42 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	return_value(int status)
 	return (result);
 }
 
-int	dup_and_close(t_pipe *child, int fd, int redirect)
+int	dup_and_close(int fd, int redirect)
 {
 	if (dup2(fd, redirect) == -1)
 		return (-1);

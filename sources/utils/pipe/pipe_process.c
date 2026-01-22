@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 13:46:48 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/22 14:15:28 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	child_process(t_pipe *child, t_line *line, t_var *lst_var)
 {
 	if (child->prev_fd != -1)
-		if (dup_and_close(child, child->prev_fd, STDIN_FILENO) == -1)
+		if (dup_and_close(child->prev_fd, STDIN_FILENO) == -1)
 		{
 			free_all(line, lst_var);
 			close_file(child, "dup error\n");
@@ -27,7 +27,7 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var)
 	}
 	else
 	{
-		if (dup_and_close(child, child->pipefd[1], STDOUT_FILENO) == -1)
+		if (dup_and_close(child->pipefd[1], STDOUT_FILENO) == -1)
 		{
 			free_all(line, lst_var);
 			close_file(child, "dup error\n");
@@ -50,8 +50,8 @@ pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child)
 	{
 		if (pipe(child->pipefd) == -1)
 		{
-			free_all(line, lst_var);
-			close_file(child, "pipe error\n");
+			// écrire message d'erreur
+			return (1);
 		}
 	}
 	if (line->row == 1 && !line->red)
@@ -62,8 +62,8 @@ pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child)
 	pid = fork();
 	if (pid < 0)
 	{
-		free_all(line, lst_var);
-		close_file(child, "fork error\n");
+		// écrire message d'erreur
+		return (1);
 	}
 	if (pid == 0)
 		child_process(child, line, lst_var);
