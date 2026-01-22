@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 22:27:14 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/22 10:25:01 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,7 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe child, int i)
 		// 	}
 		// }
 		// ft_printf("==========\n");
-		if (line->row > 1)
-			last_pid = pipe_process(line, lst_var, &child);
-		else
-			assignement(line, lst_var, 0);
+		last_pid = pipe_process(line, lst_var, &child);
 		free_double_tab(line->args);
 		line->args = NULL;
 		i++;
