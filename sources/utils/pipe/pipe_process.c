@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 14:43:45 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/22 16:18:49 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,16 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var)
 			free_all(line, lst_var);
 			close_file(child, "dup error\n");
 		}
-	// else
-	// 	dup_and_close(child, child->fdout);
 	if (child->index == line->row)
 	{
+		if (child->fdout != -1)
+		{
+			if (dup_and_close(child->fdout, STDOUT_FILENO) == -1)
+			{
+				free_all(line, lst_var);
+				close_file(child, "dup error\n");
+			}
+		}
 		if (child->pipefd[1] != -1)
 			close(child->pipefd[1]);
 	}
@@ -37,8 +43,6 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var)
 	}
 	if (child->pipefd[0] != -1)
 		close(child->pipefd[0]);
-	if (line->red)
-		open_file(line, child, lst_var);
 	assignement(line, lst_var, 1);
 	free_all(line, lst_var);
 	_exit(g_sig);

@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 14:42:59 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/22 15:51:51 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_line
 
 typedef struct s_pipe
 {
+	int	fdout;
 	int	pipefd[2];
 	int	prev_fd;
 	int	index;
@@ -134,7 +135,7 @@ int		return_value(int status);
 int		dup_and_close(int fd, int redirect);
 
 // REDIRECTION
-void	open_file(t_line *line, t_pipe *child, t_var *lst_var);
+int		open_file(t_line *line, t_pipe *child);
 char	*add_nl(char *limiter);
 
 #endif

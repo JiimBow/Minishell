@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 14:43:31 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/22 16:35:50 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	get_last_status(__pid_t pid, __pid_t last_pid)
 	g_sig = return_value(last_status);
 }
 
-static void	minishell(t_line *line, t_var *lst_var, t_pipe child, int i)
+static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
 {
 	__pid_t	pid;
 	__pid_t	last_pid;
@@ -78,19 +78,23 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe child, int i)
 	line->block = split_pipe(line);
 	while (line->block && line->block[i])
 	{
+		if (line->red)
+			ft_lstclear_var(&line->red, free);
 		pid = 1;
-		child.index = i + 1;
+		child->index = i + 1;
 		tmp = ft_substr(line->block[i], 0, ft_strlen(line->block[i]));
 		free(line->block[i]);
 		line->block[i] = substr_var(line->env, tmp);
 		free(tmp);
 		line->args = split_line(line->block[i++]);
 		find_redirection(line);
-		last_pid = pipe_process(line, lst_var, &child);
+		if (line->red)
+			g_sig = open_file(line, child);
+		last_pid = pipe_process(line, lst_var, child);
 		free_double_tab(line->args);
 		line->args = NULL;
 	}
-	if (line->row > 1)
+	if (line->row > 1 || line->red)
 		get_last_status(pid, last_pid);
 }
 
@@ -124,7 +128,7 @@ int	main(int argc, char **argv, char **envp)
 			free_before_exit(line, lst_var);
 		else
 		{
-			minishell(line, lst_var, child, 0);
+			minishell(line, lst_var, &child, 0);
 			add_history(line->line);
 			free_line_struct(line, 0);
 		}
