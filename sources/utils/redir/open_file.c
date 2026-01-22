@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 17:02:31 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/22 18:09:15 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	r_in(t_pipe *child, char *content)
 	return (0);
 }
 
-int	r_here_doc(t_pipe *child, char *content)
+int	r_here_doc(t_pipe *child, t_line *line, char *content)
 {
 	char	*until_lim;
 	int		pipe_doc[2];
@@ -38,6 +38,8 @@ int	r_here_doc(t_pipe *child, char *content)
 	while (1)
 	{
 		until_lim = get_next_line(STDIN_FILENO);
+		if (line->quote == 1)
+			until_lim = substr_var(line->env, until_lim);
 		if (!until_lim)
 			break ;
 		if (ft_strncmp(until_lim, content, ft_strlen(content)) == 0
@@ -90,7 +92,7 @@ int	open_file(t_line *line, t_pipe *child)
 		if (tmp->rank == REDIR_IN)
 			file_sig = r_in(child, tmp->content);
 		else if (tmp->rank == REDIR_HEREDOC)
-			file_sig = r_here_doc(child, tmp->content);
+			file_sig = r_here_doc(child, line, tmp->content);
 		else if (tmp->rank == REDIR_OUT)
 			file_sig = r_out(child, tmp->content);
 		else if (tmp->rank == REDIR_APPEND)

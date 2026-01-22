@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:36:00 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/20 20:12:13 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/22 18:06:37 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	change_var_in_quote(char **env, const char *s, char *tab, int *j)
 	return (i);
 }
 
-char	*substr_var(char **env, char const *s)
+char	*substr_var(char **env, char *s)
 {
 	char	*tab;
 	int		count;
@@ -118,5 +118,6 @@ char	*substr_var(char **env, char const *s)
 		else
 			tab[j++] = s[i++];
 	}
+	free(s);
 	return (tab);
 }

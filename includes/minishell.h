@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 15:51:51 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/22 18:17:01 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_line
 	t_var	*red;
 	char	**env;
 	int		sig;
+	int		quote;
 }	t_line;
 
 typedef struct s_pipe
@@ -86,7 +87,7 @@ int		is_spaces(char c);
 int		skip_spaces(char *tab, int i);
 int		is_quote(char c);
 int		is_operator(char c);
-char	*substr_var(char **env, char const *s);
+char	*substr_var(char **env, char *s);
 char	*parse_line(t_line *line);
 int		parse_export(char *name, char *args);
 char	*get_name(const char *s);
@@ -94,7 +95,7 @@ char	*get_content(char **env, char *tab);
 int		get_count(char **env, const char *s, int *i);
 int		get_size_with_variable(char **env, const char *s, int count, int i);
 int		variable_size(char **env, const char *s, int *i, int count);
-char	*strdup_unquote(char *s, int i, int j);
+char	*strdup_unquote(t_line *line, char *s, int i, int j);
 
 // UTILITIES
 char	*get_env_path(t_var *lst_var, char *str);

@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:14:13 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/22 14:20:22 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/22 18:18:01 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	replace_args_without_redirection(t_line *line)
 	i = 0;
 	while (line->args[i])
 	{
-		tmp = strdup_unquote(line->args[i], 0, 0);
+		tmp = strdup_unquote(line, line->args[i], 0, 0);
 		free(line->args[i]);
 		line->args[i] = ft_strdup(tmp);
 		free(tmp);
@@ -81,7 +81,7 @@ void	find_redirection(t_line *line)
 	{
 		if (is_redirection(line->args[i]))
 		{
-			tmp = strdup_unquote(line->args[i + 1], 0, 0);
+			tmp = strdup_unquote(line, line->args[i + 1], 0, 0);
 			new = ft_lst_new_var(NULL, tmp);
 			free(tmp);
 			if (ft_strncmp(line->args[i], "<", 2) == 0)
