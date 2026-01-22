@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:53:51 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 19:18:23 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/22 17:17:55 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	free_before_exit(t_line *line, t_var *lst_var)
 	int	overflow;
 
 	overflow = 0;
-	write(2, "exit\n", 5);
+	write(1, "exit\n", 5);
 	if (line->args && line->args[1] && line->args[2])
 	{
 		write(2, "minishell: exit: too many arguments\n", 37);
