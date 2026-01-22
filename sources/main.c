@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 10:34:59 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/22 14:21:22 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,41 +84,14 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe child, int i)
 		free(line->block[i]);
 		line->block[i] = substr_var(line->env, tmp);
 		free(tmp);
-		line->args = split_line(line->block[i]);
-		// int	j = 0;
-		// ft_printf("block[%d]=>\n", i);
-		// while (line->args && line->args[j])
-		// {
-		// 	ft_printf("AVANT/args[%d]=%s\n", j, line->args[j]);
-		// 	j++;
-		// }
+		line->args = split_line(line->block[i++]);
 		find_redirection(line);
-		// j = 0;
-		// ft_printf("---\n");
-		// while (line->args && line->args[j])
-		// {
-		// 	ft_printf("APRES/args[%d]=%s\n", j, line->args[j]);
-		// 	j++;
-		// }
-		// ft_printf("---\n");
-		// if (line && line->red)
-		// {
-		// 	t_var	*tmp = line->red;
-		// 	while (tmp)
-		// 	{
-		// 		ft_printf("line->red->content=%s\nline->red->rank=%d\n",
-		// 			tmp->content, tmp->rank);
-		// 		tmp = tmp->next;
-		// 	}
-		// }
-		// ft_printf("==========\n");
 		if (line->row > 1)
 			last_pid = pipe_process(line, lst_var, &child);
 		else
 			assignement(line, lst_var, 0);
 		free_double_tab(line->args);
 		line->args = NULL;
-		i++;
 	}
 	if (line->row > 1)
 		get_last_status(pid, last_pid);

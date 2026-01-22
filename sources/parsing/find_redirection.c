@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:14:13 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/22 13:47:54 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/22 14:20:22 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,11 @@ int	is_redirection(char *args)
 	return (0);
 }
 
-char	**reduce_args(t_line *line)
+char	**reduce_args(t_line *line, int i)
 {
 	char	**new_args;
 	int		len;
-	int		i;
 
-	i = 0;
 	len = 0;
 	if (!line->args)
 		return (NULL);
@@ -55,6 +53,23 @@ char	**reduce_args(t_line *line)
 	return (new_args);
 }
 
+void	replace_args_without_redirection(t_line *line)
+{
+	char	*tmp;
+	int		i;
+
+	line->args = reduce_args(line, 0);
+	i = 0;
+	while (line->args[i])
+	{
+		tmp = strdup_unquote(line->args[i], 0, 0);
+		free(line->args[i]);
+		line->args[i] = ft_strdup(tmp);
+		free(tmp);
+		i++;
+	}
+}
+
 void	find_redirection(t_line *line)
 {
 	t_var	*new;
@@ -66,7 +81,7 @@ void	find_redirection(t_line *line)
 	{
 		if (is_redirection(line->args[i]))
 		{
-			tmp = strdup_unquote(line->args[i + 1], ft_strlen(line->args[i + 1]));
+			tmp = strdup_unquote(line->args[i + 1], 0, 0);
 			new = ft_lst_new_var(NULL, tmp);
 			free(tmp);
 			if (ft_strncmp(line->args[i], "<", 2) == 0)
@@ -81,14 +96,5 @@ void	find_redirection(t_line *line)
 		}
 		i++;
 	}
-	line->args = reduce_args(line);
-	i = 0;
-	while (line->args[i])
-	{
-		tmp = strdup_unquote(line->args[i], ft_strlen(line->args[i]));
-		free(line->args[i]);
-		line->args[i] = ft_strdup(tmp);
-		free(tmp);
-		i++;
-	}
+	replace_args_without_redirection(line);
 }
