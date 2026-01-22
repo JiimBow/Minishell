@@ -6,13 +6,13 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 22:14:25 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/22 09:45:13 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-void	redirection(t_line *line, t_pipe *child)
+void	redirection(t_line *line, t_pipe *child, t_var *lst_var)
 {
 	t_var	*tmp = line->red;
 	while (tmp)
@@ -25,7 +25,11 @@ void	redirection(t_line *line, t_pipe *child)
 			if (child->prev_fd < 0)
 			{
 				child->prev_fd = open("/dev/null", O_RDONLY);
+				write(2, "minishell: ", 11);
 				perror(tmp->content);
+				free_all(line, lst_var);
+				g_sig = 1;
+				_exit(g_sig);
 			}
 			else
 			{
@@ -70,7 +74,7 @@ void	redirection(t_line *line, t_pipe *child)
 void	child_process(t_pipe *child, t_line *line, t_var *lst_var)
 {
 	if (child->prev_fd != -1)
-		dup2(child->prev_fd, STDIN_FILENO);
+		dup_and_close(child, child->prev_fd, STDIN_FILENO);
 	if (child->index == line->row)
 	{
 		if (child->pipefd[1] != -1)
@@ -78,7 +82,7 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var)
 	}
 	else
 	{
-		dup2(child->pipefd[1], STDOUT_FILENO);
+		dup_and_close(child, child->pipefd[1], STDOUT_FILENO);
 		if (child->fdout != -1)
 			close(child->fdout);
 	}
@@ -86,7 +90,7 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var)
 		close(child->pipefd[0]);
 	if (line->red)
 	{
-		redirection(line, child);
+		redirection(line, child, lst_var);
 	}
 	assignement(line, lst_var, 1);
 	free_all(line, lst_var);
