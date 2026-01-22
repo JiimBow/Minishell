@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 14:16:51 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/22 14:42:59 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ typedef struct s_line
 
 typedef struct s_pipe
 {
-	int	fdin;
-	int	fdout;
 	int	pipefd[2];
 	int	prev_fd;
 	int	index;
@@ -133,6 +131,10 @@ void	free_all(t_line *line, t_var *lst_var);
 pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child);
 void	close_file(t_pipe *child, char *message);
 int		return_value(int status);
-void	dup_and_close(t_pipe *child, int fd, int redirect);
+int		dup_and_close(int fd, int redirect);
+
+// REDIRECTION
+void	open_file(t_line *line, t_pipe *child, t_var *lst_var);
+char	*add_nl(char *limiter);
 
 #endif

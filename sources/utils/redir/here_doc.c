@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct_init.c                                      :+:      :+:    :+:   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/20 11:09:31 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 11:32:54 by jodone           ###   ########.fr       */
+/*   Created: 2026/01/22 13:04:05 by jodone            #+#    #+#             */
+/*   Updated: 2026/01/22 13:08:45 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_line	*creation_line(void)
+char	*add_nl(char *limiter)
 {
-	t_line	*env;
+	int		len;
+	char	*new_lim;
 
-	env = malloc(sizeof(t_line));
-	if (!env)
+	len = ft_strlen(limiter);
+	new_lim = ft_calloc(len + 2, sizeof(char));
+	if (!new_lim)
 		return (NULL);
-	env->env = NULL;
-	env->new = NULL;
-	env->block = NULL;
-	return (env);
-}
-
-t_pipe	pipe_init(void)
-{
-	t_pipe	child;
-
-	child.pipefd[0] = -1;
-	child.pipefd[1] = -1;
-	child.prev_fd = -1;
-	return (child);
+	new_lim = ft_strdup(limiter);
+	ft_strlcat(new_lim, "\n", len + 2);
+	return (new_lim);
 }
