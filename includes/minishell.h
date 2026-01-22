@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 21:34:41 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/22 13:46:27 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ char	*get_content(char **env, char *tab);
 int		get_count(char **env, const char *s, int *i);
 int		get_size_with_variable(char **env, const char *s, int count, int i);
 int		variable_size(char **env, const char *s, int *i, int count);
+char	*strdup_unquote(char *s, int n);
 
 // UTILITIES
 char	*get_env_path(t_var *lst_var, char *str);

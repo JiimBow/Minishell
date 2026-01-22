@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 14:14:13 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/22 09:53:38 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/22 13:47:54 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char	**reduce_args(t_line *line)
 
 	i = 0;
 	len = 0;
+	if (!line->args)
+		return (NULL);
 	while (line->args[i])
 		if (is_redirection(line->args[i++]))
 			len += 2;
@@ -56,6 +58,7 @@ char	**reduce_args(t_line *line)
 void	find_redirection(t_line *line)
 {
 	t_var	*new;
+	char	*tmp;
 	int		i;
 
 	i = 0;
@@ -63,7 +66,9 @@ void	find_redirection(t_line *line)
 	{
 		if (is_redirection(line->args[i]))
 		{
-			new = ft_lst_new_var(NULL, line->args[i + 1]);
+			tmp = strdup_unquote(line->args[i + 1], ft_strlen(line->args[i + 1]));
+			new = ft_lst_new_var(NULL, tmp);
+			free(tmp);
 			if (ft_strncmp(line->args[i], "<", 2) == 0)
 				new->rank = REDIR_IN;
 			else if (ft_strncmp(line->args[i], "<<", 3) == 0)
@@ -77,4 +82,13 @@ void	find_redirection(t_line *line)
 		i++;
 	}
 	line->args = reduce_args(line);
+	i = 0;
+	while (line->args[i])
+	{
+		tmp = strdup_unquote(line->args[i], ft_strlen(line->args[i]));
+		free(line->args[i]);
+		line->args[i] = ft_strdup(tmp);
+		free(tmp);
+		i++;
+	}
 }

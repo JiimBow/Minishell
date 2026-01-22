@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:30:58 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 15:08:09 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/22 13:10:10 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,20 @@ void	ft_lstclear_var(t_var **lst, void (*del)(void *))
 	t_var	*list;
 	t_var	*tmp;
 
-	if (!*lst || !del)
+	if (!lst || !*lst || !del)
 		return ;
 	list = *lst;
 	while (list)
 	{
 		tmp = list->next;
-		del(list->content);
+		if (list->content)
+			del(list->content);
 		if (list->name)
 			del(list->name);
 		free(list);
 		list = tmp;
 	}
-	free(list);
+	if (list)
+		free(list);
 	*lst = NULL;
 }

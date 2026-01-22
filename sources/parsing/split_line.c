@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/21 22:30:04 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/22 13:43:29 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,15 @@ static int	parse_word(char *line, int i)
 	return (i);
 }
 
-static char	*substr_unquote(char const *s, int n)
+char	*strdup_unquote(char *s, int n)
 {
 	char	*new;
 	char	quote;
 	int		i;
 	int		j;
 
+	if (!s)
+		return (NULL);
 	new = ft_calloc(sizeof(char), n + 1);
 	if (!new)
 		return (NULL);
@@ -70,11 +72,11 @@ static char	**ft_add_lines(char **tab, char *line, int i, int row)
 		i = parse_word(line, i);
 		if (i > save_i)
 		{
-			if (row > 0 && tab[row - 1][0] && tab[row - 1][1]
-				&& tab[row - 1][0] == '<' && tab[row - 1][1] == '<')
-				tab[row] = ft_substr(line + save_i, 0, i - save_i);
-			else
-				tab[row] = substr_unquote(line + save_i, i - save_i);
+			// if (row > 0 && tab[row - 1][0] && tab[row - 1][1]
+			// 	&& tab[row - 1][0] == '<' && tab[row - 1][1] == '<')
+			tab[row] = ft_substr(line + save_i, 0, i - save_i);
+			// else
+			// 	tab[row] = substr_unquote(line + save_i, i - save_i);
 			if (!tab[row])
 			{
 				ft_free_tab(tab, row);

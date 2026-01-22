@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 09:45:13 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/22 11:33:46 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var)
 {
 	if (child->prev_fd != -1)
 		dup_and_close(child, child->prev_fd, STDIN_FILENO);
+	// else
+	// 	dup_and_close(child, child->fdout);
 	if (child->index == line->row)
 	{
 		if (child->pipefd[1] != -1)
