@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/21 18:27:07 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/23 10:57:27 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ static int	quotes_unclosed(char *line)
 	return (0);
 }
 
-static int	syntax_error(char *line, char token, char quote, int i)
+static int	syntax_error(char *line, char token, char quote, size_t i)
 {
 	i = skip_spaces(line, i);
 	if (line[i] && line[i] == '|')
 		return (1);
-	while (line[i])
+	while (i < ft_strlen(line) + 1 && line[i])
 	{
 		if (is_quote(line[i]))
 		{
