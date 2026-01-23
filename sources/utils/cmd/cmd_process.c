@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 14:00:21 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/23 22:33:46 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
+#include <fcntl.h>
+#include <sys/stat.h>
 
 void	write_error(char *cmd_name, int code)
 {
@@ -42,7 +45,7 @@ void	pointer_free(char **str)
 	}
 }
 
-static void	exec_process(t_line *line, t_var *lst_var, int is_dir)
+static void	exec_process(t_line *line, t_var *lst_var)
 {
 	char	*path_cmd;
 	char	*full_path;
@@ -52,11 +55,11 @@ static void	exec_process(t_line *line, t_var *lst_var, int is_dir)
 	full_path = NULL;
 	path_cmd = find_cmd_path(line, paths, 0, full_path);
 	if (!path_cmd || execve(path_cmd, line->args, line->env) == -1
-		|| is_dir == 1)
+		|| line->is_dir == 1)
 	{
 		ft_lstclear_var(&lst_var, free);
 		free(path_cmd);
-		if (is_dir == 1)
+		if (line->is_dir == 1)
 		{
 			perror(line->args[0]);
 			free_line_struct(line, 1);
@@ -71,7 +74,24 @@ static void	exec_process(t_line *line, t_var *lst_var, int is_dir)
 	}
 }
 
-int	process(t_line *line, t_var *lst_var, int dir, int is_fork)
+int	verif_if_first_argument_is_dir(t_line *line)
+{
+	struct stat	verif;
+
+	if (stat(line->args[0], &verif))
+	{
+		perror("stat");
+		line->sig = 1;
+		return (0);
+	}
+	if (S_ISDIR(verif.st_mode) && ft_strncmp(line->args[0], ".", 2) != 0
+		&& ft_strncmp(line->args[0], "..", 3))
+		return (1);
+	else
+		return (0);
+}
+
+int	process(t_line *line, t_var *lst_var, int is_fork)
 {
 	__pid_t	pid;
 	int		status;
@@ -79,20 +99,21 @@ int	process(t_line *line, t_var *lst_var, int dir, int is_fork)
 	status = 0;
 	if (!line->args || !*line->args)
 		return (0);
+	line->is_dir = verif_if_first_argument_is_dir(line);
 	if (is_fork == 0)
 	{
 		pid = fork();
 		if (pid < 0)
 		{
-			// écrire message d'erreur
+			perror("fork");
 			return (1);
 		}
 		if (pid == 0)
-			exec_process(line, lst_var, dir);
+			exec_process(line, lst_var);
 		else
 			waitpid(-1, &status, 0);
 	}
 	else
-		exec_process(line, lst_var, dir);
+		exec_process(line, lst_var);
 	return (return_value(status));
 }

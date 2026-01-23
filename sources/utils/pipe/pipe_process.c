@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 12:57:17 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/23 22:35:05 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child)
 	{
 		if (pipe(child->pipefd) == -1)
 		{
-			// écrire message d'erreur
+			perror("pipe");
+			line->sig = 1;
 			return (1);
 		}
 	}
@@ -73,7 +74,8 @@ pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child)
 	pid = fork();
 	if (pid < 0)
 	{
-		// écrire message d'erreur
+		perror("fork");
+		line->sig = 1;
 		return (1);
 	}
 	if (pid == 0)

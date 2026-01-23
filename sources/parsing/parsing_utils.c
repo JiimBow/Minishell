@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_utils.c                                      :+:      :+:    :+:   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/15 14:58:36 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/22 18:35:11 by mgarnier         ###   ########.fr       */
+/*   Created: 2026/01/23 22:27:14 by mgarnier          #+#    #+#             */
+/*   Updated: 2026/01/23 22:54:14 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**ft_free_tab(char **tab, int line)
 	return (NULL);
 }
 
-int	is_spaces(char c)
+int	is_space(char c)
 {
 	if (c == ' ' || c == '\t' || c == '\n')
 		return (1);
@@ -46,7 +46,7 @@ int	is_operator(char c)
 
 int	skip_spaces(char *tab, int i)
 {
-	while (tab[i] && is_spaces(tab[i]))
+	while (tab[i] && is_space(tab[i]))
 		i++;
 	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 14:52:45 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/23 22:36:49 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,9 @@ int	r_here_doc(t_pipe *child, t_line *line, char *content)
 	char	*until_lim;
 	int		pipe_doc[2];
 
-	(void)content;
 	if (pipe(pipe_doc) == -1)
 	{
-		// ecrire message d'erreur
+		perror("pipe");
 		return (1);
 	}
 	until_lim = NULL;

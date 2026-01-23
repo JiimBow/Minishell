@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 15:52:36 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/23 16:01:00 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/23 22:31:49 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	replace_args_without_redirection(t_line *line)
 
 	line->args = reduce_args(line, 0);
 	i = 0;
-	while (line->args[i])
+	while (line->args && line->args[i])
 	{
 		tmp = strdup_unquote(line->args[i], 0, 0);
 		free(line->args[i]);
@@ -95,23 +95,22 @@ void	separate_redirection(t_line *line)
 	i = 0;
 	while (line->args && line->args[i])
 	{
-		if (is_redirection(line->args[i]))
+		if (is_redirection(line->args[i++]))
 		{
-			line->quote = is_quote_in_tab(line->args[i + 1]);
-			tmp = strdup_unquote(line->args[i + 1], 0, 0);
+			line->quote = is_quote_in_tab(line->args[i]);
+			tmp = strdup_unquote(line->args[i], 0, 0);
 			new = ft_lst_new_var(NULL, tmp);
 			free(tmp);
-			if (ft_strncmp(line->args[i], "<", 2) == 0)
+			if (ft_strncmp(line->args[i - 1], "<", 2) == 0)
 				new->rank = REDIR_IN;
-			else if (ft_strncmp(line->args[i], "<<", 3) == 0)
+			else if (ft_strncmp(line->args[i - 1], "<<", 3) == 0)
 				new->rank = REDIR_HEREDOC;
-			else if (ft_strncmp(line->args[i], ">", 2) == 0)
+			else if (ft_strncmp(line->args[i - 1], ">", 2) == 0)
 				new->rank = REDIR_OUT;
-			else if (ft_strncmp(line->args[i], ">>", 3) == 0)
+			else if (ft_strncmp(line->args[i - 1], ">>", 3) == 0)
 				new->rank = REDIR_APPEND;
 			ft_lstadd_back_var(&line->red, new);
 		}
-		i++;
 	}
 	replace_args_without_redirection(line);
 }

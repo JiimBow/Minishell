@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_line.c                                       :+:      :+:    :+:   */
+/*   split_spaces.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/23 14:21:15 by mgarnier         ###   ########.fr       */
+/*   Created: 2026/01/23 22:26:28 by mgarnier          #+#    #+#             */
+/*   Updated: 2026/01/23 22:54:06 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static int	parse_word(char *line, int i)
 {
 	char	quote;
 
-	while (line[i] && !is_spaces(line[i]))
+	while (line[i] && !is_space(line[i]))
 	{
-		while (line[i] && !is_spaces(line[i]) && !is_quote(line[i]))
+		while (line[i] && !is_space(line[i]) && !is_quote(line[i]))
 			i++;
 		if (is_quote(line[i]))
 		{
@@ -81,7 +81,7 @@ static char	**ft_add_lines(char **tab, char *line, int i, int row)
 	return (tab);
 }
 
-char	**split_line(char *line)
+char	**split_spaces(char *line)
 {
 	char	**tab;
 	int		save_i;

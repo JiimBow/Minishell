@@ -6,7 +6,7 @@
 #    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/23 15:52:46 by mgarnier         ###   ########.fr        #
+#    Updated: 2026/01/23 22:27:32 by mgarnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,8 +38,8 @@ HEADER		= -Iincludes \
 
 SRC			= $(DIR)main.c \
 			$(PARSING)parse_line.c \
-			$(PARSING)split_line.c \
-			$(PARSING)split_utils.c \
+			$(PARSING)split_spaces.c \
+			$(PARSING)parsing_utils.c \
 			$(PARSING)split_pipe.c \
 			$(PARSING)substr_var.c \
 			$(PARSING)substr_var_utils.c \

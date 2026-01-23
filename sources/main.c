@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 15:50:29 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/23 22:26:02 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	assignement(t_line *line, t_var *lst_var, int is_fork)
 		&& ft_strncmp(line->args[0], "export", 7) == 0)
 		line->sig = ft_export(line, &lst_var, line->args);
 	else if (line->args)
-		line->sig = process(line, lst_var, 0, is_fork);
+		line->sig = process(line, lst_var, is_fork);
 }
 
 static void	get_last_status(__pid_t pid, __pid_t last_pid, t_line *line)
@@ -89,7 +89,7 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
 		child->index = i + 1;
 		line->block[i] = substr_var(line, line->block[i]);
 		line->sig = 0;
-		line->args = split_line(line->block[i++]);
+		line->args = split_spaces(line->block[i++]);
 		separate_redirection(line);
 		if (line->red)
 			line->sig = open_file(line, child);

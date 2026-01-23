@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substr_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:36:00 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/23 11:56:49 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/23 22:29:30 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,6 @@ static int	fill_tab(char **env, const char *s, char *tab, int *j)
 	free(name);
 	free(content);
 	return (n);
-}
-
-int	variable_size(t_line *line, const char *s, int *i, int count)
-{
-	char	*tmp;
-
-	if (s[*i + 1] == '?')
-	{
-		tmp = ft_itoa(line->sig);
-		count = ft_strlen(tmp);
-		free(tmp);
-		(*i)++;
-	}
-	else if (s[*i + 1] == '_' || ft_isalnum(s[*i + 1]))
-		count = get_count(line->env, s + *i + 1, i);
-	else
-		count = 1;
-	return (count);
 }
 
 static int	change_variable(t_line *line, const char *s, char *tab, int *j)

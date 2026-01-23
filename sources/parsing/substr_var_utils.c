@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substr_var_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:36:41 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/23 11:59:12 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/23 22:30:21 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*get_content(char **env, char *tab)
 	return (NULL);
 }
 
-int	get_count(char **env, const char *s, int *i)
+static int	get_count(char **env, const char *s, int *i)
 {
 	char	*name;
 	char	*content;
@@ -75,6 +75,24 @@ int	get_count(char **env, const char *s, int *i)
 	}
 	free(name);
 	free(content);
+	return (count);
+}
+
+static int	variable_size(t_line *line, const char *s, int *i, int count)
+{
+	char	*tmp;
+
+	if (s[*i + 1] == '?')
+	{
+		tmp = ft_itoa(line->sig);
+		count = ft_strlen(tmp);
+		free(tmp);
+		(*i)++;
+	}
+	else if (s[*i + 1] == '_' || ft_isalnum(s[*i + 1]))
+		count = get_count(line->env, s + *i + 1, i);
+	else
+		count = 1;
 	return (count);
 }
 
