@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 11:40:59 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/23 12:40:39 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,22 @@
 
 long	g_sig = 0;
 
+static void global_handle(t_line *line)
+{
+	if (WIFSIGNALED(g_sig))
+		line->sig = WTERMSIG(g_sig) + 128;
+	g_sig = 0;
+}
+
 static void	handle_sigint(int signal)
 {
+	g_sig = SIGINT;
 	if (signal == SIGINT)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		ft_printf("\n");
 		rl_redisplay();
-		if (WIFSIGNALED(signal))
-			g_sig = WTERMSIG(signal) + 128;
 	}
 }
 
@@ -123,6 +129,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		init_struct(line, lst_var, &child);
 		line->line = readline("minishell> ");
+		if (g_sig == SIGINT)
+			global_handle(line);
 		if (!line->line)
 			free_before_exit(line, lst_var);
 		else

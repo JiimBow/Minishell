@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 11:38:38 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/23 12:37:34 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	child_process(t_pipe *child, t_line *line, t_var *lst_var)
 {
+	int	exit_sig;
+
+	
 	if (child->prev_fd != -1)
 		if (dup_and_close(child->prev_fd, STDIN_FILENO) == -1)
 		{
@@ -44,8 +47,9 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var)
 	if (child->pipefd[0] != -1)
 		close(child->pipefd[0]);
 	assignement(line, lst_var, 1);
+	exit_sig = line->sig;
 	free_all(line, lst_var);
-	_exit(line->sig);
+	_exit(exit_sig);
 }
 
 pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child)

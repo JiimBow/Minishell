@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 11:57:18 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/23 12:45:03 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_line
 	char	**args;
 	t_var	*red;
 	char	**env;
-	int		sig;
+	long	sig;
 	int		quote;
 }	t_line;
 
