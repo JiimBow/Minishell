@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 14:21:26 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/23 15:50:37 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	get_var(t_var **lst_var, char **envp);
 char	*find_cmd_path(t_line *line, char **paths, int i, char *full_path);
 char	**split_line(char *line);
 char	**split_pipe(t_line *line);
-void	find_redirection(t_line *line);
+void	separate_redirection(t_line *line);
 char	**ft_free_tab(char **tab, int line);
 int		is_spaces(char c);
 int		skip_spaces(char *tab, int i);

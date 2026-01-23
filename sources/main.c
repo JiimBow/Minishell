@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 14:55:29 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/23 15:50:29 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,11 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
 		if (line->red)
 			ft_lstclear_var(&line->red, free);
 		pid = 1;
-		line->quote = 0;
 		child->index = i + 1;
 		line->block[i] = substr_var(line, line->block[i]);
 		line->sig = 0;
 		line->args = split_line(line->block[i++]);
-		find_redirection(line);
+		separate_redirection(line);
 		if (line->red)
 			line->sig = open_file(line, child);
 		if (line->sig != 1)
