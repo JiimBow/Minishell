@@ -6,11 +6,12 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 18:09:15 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/23 10:46:07 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+#include <unistd.h>
 
 int	r_in(t_pipe *child, char *content)
 {
@@ -37,6 +38,7 @@ int	r_here_doc(t_pipe *child, t_line *line, char *content)
 	until_lim = NULL;
 	while (1)
 	{
+		write(1, "> ", 2);
 		until_lim = get_next_line(STDIN_FILENO);
 		if (line->quote == 1)
 			until_lim = substr_var(line->env, until_lim);

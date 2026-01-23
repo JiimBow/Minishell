@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:44:39 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 15:59:33 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/23 10:47:54 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ static void	replace_content(t_var *lst_var, char *name, char *new_content)
 {
 	t_var	*tmp;
 	int		len_old;
-	int		len_new;
 
 	tmp = lst_var;
 	len_old = ft_strlen(name);
-	len_new = ft_strlen(new_content);
 	while (tmp)
 	{
 		if (ft_strncmp(name, tmp->name, len_old + 1) == 0)
@@ -63,9 +61,7 @@ static void	update_path(t_var *lst_var, int is_old)
 int	ft_cd(t_line *line, t_var *lst_var)
 {
 	char	*path;
-	int		i;
 
-	i = 0;
 	if (line->args[2])
 	{
 		write(2, "minishell: cd: too many arguments\n", 34);
