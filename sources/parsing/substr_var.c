@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substr_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:36:00 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/22 18:06:37 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/23 11:56:49 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,25 +31,25 @@ static int	fill_tab(char **env, const char *s, char *tab, int *j)
 	return (n);
 }
 
-int	variable_size(char **env, const char *s, int *i, int count)
+int	variable_size(t_line *line, const char *s, int *i, int count)
 {
 	char	*tmp;
 
 	if (s[*i + 1] == '?')
 	{
-		tmp = ft_itoa(g_sig);
+		tmp = ft_itoa(line->sig);
 		count = ft_strlen(tmp);
 		free(tmp);
 		(*i)++;
 	}
 	else if (s[*i + 1] == '_' || ft_isalnum(s[*i + 1]))
-		count = get_count(env, s + *i + 1, i);
+		count = get_count(line->env, s + *i + 1, i);
 	else
 		count = 1;
 	return (count);
 }
 
-static int	change_variable(char **env, const char *s, char *tab, int *j)
+static int	change_variable(t_line *line, const char *s, char *tab, int *j)
 {
 	char	*tmp;
 	int		count;
@@ -58,7 +58,7 @@ static int	change_variable(char **env, const char *s, char *tab, int *j)
 	i = 0;
 	if (s[i + 1] == '?')
 	{
-		tmp = ft_itoa(g_sig);
+		tmp = ft_itoa(line->sig);
 		count = 0;
 		while (tmp[count])
 			tab[(*j)++] = tmp[count++];
@@ -66,7 +66,7 @@ static int	change_variable(char **env, const char *s, char *tab, int *j)
 		free(tmp);
 	}
 	else if ((s[i + 1] == '_' || ft_isalpha(s[i + 1])))
-		i += fill_tab(env, s + i + 1, tab, j) + 1;
+		i += fill_tab(line->env, s + i + 1, tab, j) + 1;
 	else if (is_quote(s[i + 1]))
 		i++;
 	else
@@ -74,7 +74,7 @@ static int	change_variable(char **env, const char *s, char *tab, int *j)
 	return (i);
 }
 
-static int	change_var_in_quote(char **env, const char *s, char *tab, int *j)
+static int	change_var_in_quote(t_line *line, const char *s, char *tab, int *j)
 {
 	char	quote;
 	int		i;
@@ -86,7 +86,7 @@ static int	change_var_in_quote(char **env, const char *s, char *tab, int *j)
 	{
 		if (quote == '"' && s[i] == '$' && s[i + 1]
 			&& !is_quote(s[i + 1]))
-			i += change_variable(env, s + i, tab, j);
+			i += change_variable(line, s + i, tab, j);
 		else
 			tab[(*j)++] = s[i++];
 	}
@@ -94,16 +94,16 @@ static int	change_var_in_quote(char **env, const char *s, char *tab, int *j)
 	return (i);
 }
 
-char	*substr_var(char **env, char *s)
+char	*substr_var(t_line *line, char *s)
 {
 	char	*tab;
 	int		count;
 	int		j;
 	int		i;
 
-	if (!env || !*env || !s)
+	if (!line->env || !*line->env || !s)
 		return (NULL);
-	count = get_size_with_variable(env, s, 0, 0);
+	count = get_size_with_variable(line, s, 0, 0);
 	tab = ft_calloc(sizeof(char), (count + 1));
 	if (!tab)
 		return (NULL);
@@ -112,9 +112,9 @@ char	*substr_var(char **env, char *s)
 	while (s[i])
 	{
 		if (is_quote(s[i]))
-			i += change_var_in_quote(env, s + i, tab, &j);
+			i += change_var_in_quote(line, s + i, tab, &j);
 		else if (s[i] == '$' && s[i + 1])
-			i += change_variable(env, s + i, tab, &j);
+			i += change_variable(line, s + i, tab, &j);
 		else
 			tab[j++] = s[i++];
 	}

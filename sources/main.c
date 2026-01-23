@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 18:19:39 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/23 11:40:59 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,30 @@ void	assignement(t_line *line, t_var *lst_var, int is_fork)
 {
 	if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "cd", 3) == 0)
-		g_sig = ft_cd(line, lst_var);
+		line->sig = ft_cd(line, lst_var);
 	else if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "pwd", 4) == 0)
-		g_sig = ft_pwd(lst_var);
+		line->sig = ft_pwd(lst_var);
 	else if (line->args && line->args[0] && !line->args[1]
 		&& ft_strncmp(line->args[0], "env", 4) == 0)
-		g_sig = ft_env(line->env);
+		line->sig = ft_env(line->env);
 	else if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "echo", 5) == 0)
-		g_sig = ft_echo(line->args);
+		line->sig = ft_echo(line->args);
 	else if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "unset", 6) == 0)
-		g_sig = ft_unset(line, &lst_var);
+		line->sig = ft_unset(line, &lst_var);
 	else if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "exit", 5) == 0)
-		g_sig = free_before_exit(line, lst_var);
+		line->sig = free_before_exit(line, lst_var);
 	else if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "export", 7) == 0)
-		g_sig = ft_export(&lst_var, line->args);
+		line->sig = ft_export(line, &lst_var, line->args);
 	else if (line->args)
-		g_sig = process(line, lst_var, 0, is_fork);
+		line->sig = process(line, lst_var, 0, is_fork);
 }
 
-static void	get_last_status(__pid_t pid, __pid_t last_pid)
+static void	get_last_status(__pid_t pid, __pid_t last_pid, t_line *line)
 {
 	int	last_status;
 	int	status;
@@ -65,7 +65,7 @@ static void	get_last_status(__pid_t pid, __pid_t last_pid)
 			last_status = status;
 		pid = wait(&status);
 	}
-	g_sig = return_value(last_status);
+	line->sig = return_value(last_status);
 }
 
 static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
@@ -82,19 +82,19 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
 		pid = 1;
 		line->quote = 1;
 		child->index = i + 1;
-		line->block[i] = substr_var(line->env, line->block[i]);
-		g_sig = 0;
+		line->block[i] = substr_var(line, line->block[i]);
+		line->sig = 0;
 		line->args = split_line(line->block[i++]);
 		find_redirection(line);
 		if (line->red)
-			g_sig = open_file(line, child);
-		if (g_sig != 1)
+			line->sig = open_file(line, child);
+		if (line->sig != 1)
 			last_pid = pipe_process(line, lst_var, child);
 		free_double_tab(line->args);
 		line->args = NULL;
 	}
-	if (g_sig != 1 && (line->row > 1 || line->red))
-		get_last_status(pid, last_pid);
+	if (line->sig != 1 && (line->row > 1 || line->red))
+		get_last_status(pid, last_pid, line);
 }
 
 void	init_struct(t_line *line, t_var *lst_var, t_pipe *child)

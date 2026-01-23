@@ -6,7 +6,7 @@
 #    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/22 13:09:26 by jodone           ###   ########.fr        #
+#    Updated: 2026/01/23 11:26:41 by jodone           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,6 @@ clean:
 			echo "${GREEN}====   $(NAME)   ==== : >>>OBJ CLEANED<<<${RESET}"; \
 			fi
 			@rm -f $(OBJ)
-			@rm -rf $(OBJ_DIR)
 			@$(MAKE) -C Great_Libft clean --no-print-directory
 
 fclean:		clean
@@ -97,6 +96,7 @@ fclean:		clean
 			echo "${GREEN}====   $(NAME)   ==== : >>>ALL CLEANED<<<${RESET}"; \
 			fi
 			@rm -f $(NAME)
+			@rm -rf $(OBJ_DIR)
 			@$(MAKE) -C Great_Libft fclean --no-print-directory
 
 re:			fclean all
