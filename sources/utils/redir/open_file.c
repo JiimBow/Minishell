@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 10:46:07 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/23 12:02:05 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	r_here_doc(t_pipe *child, t_line *line, char *content)
 	char	*until_lim;
 	int		pipe_doc[2];
 
+	(void)content;
 	if (pipe(pipe_doc) == -1)
 	{
 		// ecrire message d'erreur
@@ -38,18 +39,18 @@ int	r_here_doc(t_pipe *child, t_line *line, char *content)
 	until_lim = NULL;
 	while (1)
 	{
-		write(1, "> ", 2);
+		write(0, "> ", 2);
 		until_lim = get_next_line(STDIN_FILENO);
-		if (line->quote == 1)
-			until_lim = substr_var(line->env, until_lim);
 		if (!until_lim)
 			break ;
 		if (ft_strncmp(until_lim, content, ft_strlen(content)) == 0
-			&& until_lim[ft_strlen(content)] == '\n')
+			&& (until_lim[ft_strlen(content)] == '\n' || until_lim[ft_strlen(content)] == '\0'))
 		{
 			free(until_lim);
 			break ;
 		}
+		if (line->quote == 1)
+			until_lim = substr_var(line->env, until_lim);
 		write(pipe_doc[1], until_lim, ft_strlen(until_lim));
 		free(until_lim);
 	}
