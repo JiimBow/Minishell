@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 12:11:53 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/23 12:59:38 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	r_here_doc(t_pipe *child, t_line *line, char *content)
 	{
 		// ecrire message d'erreur
 		return (1);
-	} 
+	}
 	until_lim = NULL;
 	while (1)
 	{
@@ -44,7 +44,8 @@ int	r_here_doc(t_pipe *child, t_line *line, char *content)
 		if (!until_lim)
 			break ;
 		if (ft_strncmp(until_lim, content, ft_strlen(content)) == 0
-			&& (until_lim[ft_strlen(content)] == '\n' || until_lim[ft_strlen(content)] == '\0'))
+			&& (until_lim[ft_strlen(content)] == '\n'
+				|| until_lim[ft_strlen(content)] == '\0'))
 		{
 			free(until_lim);
 			break ;

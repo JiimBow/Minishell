@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:20:54 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 18:03:32 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/23 12:59:11 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,3 @@ int	ft_echo(char **args)
 		write_args(args, i);
 	return (0);
 }
- 

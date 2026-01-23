@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 12:40:39 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/23 13:00:03 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 long	g_sig = 0;
 
-static void global_handle(t_line *line)
+static void	global_handle(t_line *line)
 {
 	if (WIFSIGNALED(g_sig))
 		line->sig = WTERMSIG(g_sig) + 128;
