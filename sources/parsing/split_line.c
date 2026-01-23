@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:19:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/22 18:19:35 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/23 14:21:15 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	parse_word(char *line, int i)
 	return (i);
 }
 
-char	*strdup_unquote(t_line *line, char *s, int i, int j)
+char	*strdup_unquote(char *s, int i, int j)
 {
 	char	*new;
 	char	quote;
@@ -55,8 +55,6 @@ char	*strdup_unquote(t_line *line, char *s, int i, int j)
 		else
 			new[j++] = s[i++];
 	}
-	if (j < n)
-		line->quote = 0;
 	return (new);
 }
 
