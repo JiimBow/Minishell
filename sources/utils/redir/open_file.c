@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 10:46:07 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/23 11:57:56 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	r_here_doc(t_pipe *child, t_line *line, char *content)
 		write(1, "> ", 2);
 		until_lim = get_next_line(STDIN_FILENO);
 		if (line->quote == 1)
-			until_lim = substr_var(line->env, until_lim);
+			until_lim = substr_var(line, until_lim);
 		if (!until_lim)
 			break ;
 		if (ft_strncmp(until_lim, content, ft_strlen(content)) == 0

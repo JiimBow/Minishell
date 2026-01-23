@@ -6,19 +6,19 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:53:51 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 18:37:43 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/23 11:36:21 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	write_exit(char *str, int code)
+static void	write_exit(t_line *line, int code)
 {
 	write(2, "minishell: exit: ", 17);
-	write(2, str, ft_strlen(str));
+	write(2, line->args[1], ft_strlen(line->args[1]));
 	write(2, ": numeric argument required\n", 29);
 	if (code == 1)
-		g_sig = 2;
+		line->sig = 2;
 }
 
 static void	free_and_exit(t_line *line)
@@ -26,8 +26,8 @@ static void	free_and_exit(t_line *line)
 	int	exit_code;
 
 	exit_code = 2;
-	if (g_sig || (line->args && !line->args[1]))
-		exit_code = g_sig;
+	if (line->sig || (line->args && !line->args[1]))
+		exit_code = line->sig;
 	free_line_struct(line, 1);
 	exit(exit_code);
 }
@@ -62,15 +62,15 @@ int	free_before_exit(t_line *line, t_var *lst_var)
 	rl_clear_history();
 	ft_lstclear_var(&lst_var, free);
 	if (line->args && !arg_isnum(line->args[1]))
-		write_exit(line->args[1], 0);
-	else if (line->args && !g_sig)
+		write_exit(line, 0);
+	else if (line->args && !line->sig)
 	{
-		g_sig = ft_atoll(line->args[1], &overflow);
+		line->sig = ft_atoll(line->args[1], &overflow);
 		if (overflow == -1)
-			write_exit(line->args[1], 1);
+			write_exit(line, 1);
 	}
 	if (line->line)
 		free_and_exit(line);
 	free_line_struct(line, 1);
-	exit(g_sig);
+	exit(line->sig);
 }

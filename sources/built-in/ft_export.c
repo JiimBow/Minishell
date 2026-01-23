@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:10:11 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 10:10:24 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/23 11:37:33 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,12 @@ static void	add_var(t_var **lst_var, char *arg, char *name)
 		free(content);
 }
 
-int	ft_export(t_var **lst_var, char **args)
+int	ft_export(t_line *line, t_var **lst_var, char **args)
 {
 	int		i;
 	char	*name;
 
-	g_sig = 0;
+	line->sig = 0;
 	if (!args[1])
 	{
 		if (!already_sorted(lst_var))
@@ -100,10 +100,10 @@ int	ft_export(t_var **lst_var, char **args)
 		{
 			name = get_env_name(args[i]);
 			if (!parse_export(name, args[i]))
-				g_sig = 1;
+				line->sig = 1;
 			add_var(lst_var, args[i++], name);
 			free(name);
 		}
 	}
-	return (g_sig);
+	return (line->sig);
 }

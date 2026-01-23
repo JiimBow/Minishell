@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/23 10:57:27 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/23 11:38:15 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ char	*parse_line(t_line *line)
 	if (quotes_unclosed(line->line))
 	{
 		write(2, "minishell: syntax error: unclosed quote\n", 40);
-		g_sig = 2;
+		line->sig = 2;
 		return (NULL);
 	}
 	new = ft_calloc(sizeof(char), get_parsed_line_lenght(line->line) + 1);
@@ -137,7 +137,7 @@ char	*parse_line(t_line *line)
 	{
 		write(2, "minishell: syntax error\n", 24);
 		free(new);
-		g_sig = 2;
+		line->sig = 2;
 		return (NULL);
 	}
 	return (new);

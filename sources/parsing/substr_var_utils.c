@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substr_var_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:36:41 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/20 12:18:18 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/23 11:59:12 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	get_count(char **env, const char *s, int *i)
 	return (count);
 }
 
-int	get_size_with_variable(char **env, const char *s, int count, int i)
+int	get_size_with_variable(t_line *line, const char *s, int count, int i)
 {
 	char	quote;
 
@@ -91,14 +91,14 @@ int	get_size_with_variable(char **env, const char *s, int count, int i)
 			while (s[i] != quote)
 			{
 				if (quote == '"' && s[i] == '$' && s[i + 1])
-					count += variable_size(env, s, &i, 0);
+					count += variable_size(line, s, &i, 0);
 				else
 					count++;
 				i++;
 			}
 		}
 		else if (s[i] == '$' && s[i + 1])
-			count += variable_size(env, s, &i, 0);
+			count += variable_size(line, s, &i, 0);
 		else
 			count++;
 		i++;

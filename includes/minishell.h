@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 18:17:01 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/23 11:57:18 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_atoll
 	int		sign;
 }	t_atoll;
 
-extern long	g_sig;
+// extern long	g_sig;
 
 // INITIALIZATION
 t_line	*creation_line(void);
@@ -87,14 +87,14 @@ int		is_spaces(char c);
 int		skip_spaces(char *tab, int i);
 int		is_quote(char c);
 int		is_operator(char c);
-char	*substr_var(char **env, char *s);
+char	*substr_var(t_line *line, char *s);
 char	*parse_line(t_line *line);
 int		parse_export(char *name, char *args);
 char	*get_name(const char *s);
 char	*get_content(char **env, char *tab);
 int		get_count(char **env, const char *s, int *i);
-int		get_size_with_variable(char **env, const char *s, int count, int i);
-int		variable_size(char **env, const char *s, int *i, int count);
+int		get_size_with_variable(t_line *line, const char *s, int count, int i);
+int		variable_size(t_line *line, const char *s, int *i, int count);
 char	*strdup_unquote(t_line *line, char *s, int i, int j);
 
 // UTILITIES
@@ -117,7 +117,7 @@ int		ft_cd(t_line *line, t_var *lst_var);
 int		ft_env(char	**envp);
 int		ft_echo(char **args);
 int		ft_unset(t_line *line, t_var **lst_var);
-int		ft_export(t_var **lst_var, char **args);
+int		ft_export(t_line *line, t_var **lst_var, char **args);
 void	display_export(t_var **lst_var);
 int		process(t_line *line, t_var *lst_var, int dir, int is_fork);
 void	assignement(t_line *line, t_var *lst_var, int is_fork);
