@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 22:26:02 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/23 23:06:08 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
 		get_last_status(pid, last_pid, line);
 }
 
-void	init_struct(t_line *line, t_var *lst_var, t_pipe *child)
+static void	initialization_struct(t_line *line, t_var *lst_var, t_pipe *child)
 {
 	line->env = ft_copy_env(&lst_var);
 	line->args = NULL;
@@ -126,7 +126,7 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		init_struct(line, lst_var, &child);
+		initialization_struct(line, lst_var, &child);
 		line->line = readline("minishell> ");
 		if (g_sig == SIGINT)
 			global_handle(line);
