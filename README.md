@@ -1,16 +1,18 @@
-This project has been created as part of the 42 curriculum by jodone, mgarnier.
+This project has been created as part of the 42 curriculum by jodone & mgarnier.
 
 /* ************************************************************************** */
 /*                                Description                                 */
 /* ************************************************************************** */
 
-
+The purpose of this project is to re-create a shell in a simplificate form.
 
 /* ************************************************************************** */
 /*                                Instructions                                */
 /* ************************************************************************** */
 
-
+`make`
+`./minishell`
+Then you can do some command
 
 /* ************************************************************************** */
 /*                                 Resources                                  */

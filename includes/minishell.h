@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 22:59:58 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/25 21:21:02 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <dirent.h>
 # include <linux/limits.h>
 # include <sys/stat.h>
+# include <termios.h>
 
 # define REDIR_IN 1
 # define REDIR_HEREDOC 2
@@ -70,7 +71,7 @@ typedef struct s_atoll
 	int		sign;
 }	t_atoll;
 
-// extern long	g_sig;
+extern long	g_sig;
 
 // INITIALIZATION
 t_pipe	pipe_init(void);

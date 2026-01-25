@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 22:33:46 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/25 20:01:49 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,7 @@ int	verif_if_first_argument_is_dir(t_line *line)
 	struct stat	verif;
 
 	if (stat(line->args[0], &verif))
-	{
-		perror("stat");
-		line->sig = 1;
 		return (0);
-	}
 	if (S_ISDIR(verif.st_mode) && ft_strncmp(line->args[0], ".", 2) != 0
 		&& ft_strncmp(line->args[0], "..", 3))
 		return (1);

@@ -6,10 +6,11 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 22:36:49 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/25 21:28:59 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
 #include <minishell.h>
 #include <unistd.h>
 
@@ -30,12 +31,16 @@ int	r_here_doc(t_pipe *child, t_line *line, char *content)
 	char	*until_lim;
 	int		pipe_doc[2];
 
+	// struct termios t;
+	// tcgetattr(STDIN_FILENO, &t);
+
 	if (pipe(pipe_doc) == -1)
 	{
 		perror("pipe");
 		return (1);
 	}
 	until_lim = NULL;
+	line->line = gnl_strjoin(line->line, "\n");
 	while (1)
 	{
 		write(0, "> ", 2);
@@ -49,6 +54,7 @@ int	r_here_doc(t_pipe *child, t_line *line, char *content)
 			free(until_lim);
 			break ;
 		}
+		line->line = gnl_strjoin(line->line, until_lim);
 		if (line->quote == 0)
 			until_lim = substr_var(line, until_lim);
 		write(pipe_doc[1], until_lim, ft_strlen(until_lim));
