@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:09:31 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/26 17:08:07 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/26 17:09:55 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	reinitialization(t_line *line, t_var *lst_var, t_pipe *child)
 {
 	line->env = ft_copy_env(&lst_var);
 	if (!line->env)
-		error_memory_failed(NULL, lst_var);
+		error_memory_failed(line, lst_var);
 	line->args = NULL;
 	line->block = NULL;
 	line->red = NULL;
