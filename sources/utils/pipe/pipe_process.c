@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 22:35:05 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/26 14:56:56 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void	child_process(t_pipe *child, t_line *line, t_var *lst_var)
 {
 	int	exit_sig;
+	int	fdout_open;
 
+	fdout_open = 0;
 	if (child->prev_fd != -1)
 	{
 		if (dup_and_close(child->prev_fd, STDIN_FILENO) == -1)
@@ -24,25 +26,29 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var)
 			close_file(child, "dup error\n");
 		}
 	}
+	if (child->fdout != -1)
+	{
+		if (dup_and_close(child->fdout, STDOUT_FILENO) == -1)
+		{
+			free_all(line, lst_var);
+			close_file(child, "dup error\n");
+		}
+		fdout_open = 1;
+	}
 	if (child->index == line->row)
 	{
-		if (child->fdout != -1)
-		{
-			if (dup_and_close(child->fdout, STDOUT_FILENO) == -1)
-			{
-				free_all(line, lst_var);
-				close_file(child, "dup error\n");
-			}
-		}
 		if (child->pipefd[1] != -1)
 			close(child->pipefd[1]);
 	}
 	else
 	{
-		if (dup_and_close(child->pipefd[1], STDOUT_FILENO) == -1)
+		if (fdout_open == 0)
 		{
-			free_all(line, lst_var);
-			close_file(child, "dup error\n");
+			if (dup_and_close(child->pipefd[1], STDOUT_FILENO) == -1)
+			{
+				free_all(line, lst_var);
+				close_file(child, "dup error\n");
+			}
 		}
 	}
 	if (child->pipefd[0] != -1)
@@ -88,6 +94,13 @@ pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child)
 			child->prev_fd = child->pipefd[0];
 		if (child->pipefd[1] != -1)
 			close(child->pipefd[1]);
+		if (child->fdout != -1)
+		{
+			close(child->fdout);
+			child->fdout = -1;
+		}
+		if (child->index == line->row)
+			close(child->pipefd[0]);
 	}
 	return (pid);
 }

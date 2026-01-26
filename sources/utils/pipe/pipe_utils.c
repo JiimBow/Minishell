@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:30:19 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 14:14:42 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/26 13:25:27 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ void	close_file(t_pipe *child, char *message)
 		close(child->pipefd[0]);
 	if (child->pipefd[1] != -1)
 		close(child->pipefd[1]);
+	if (child->fdout != -1)
+		close(child->fdout);
 	if (message)
 	{
 		ft_putstr_fd(message, 2);
