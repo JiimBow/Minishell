@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   struct_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:09:31 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 11:17:33 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/26 14:12:20 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-t_line	*creation_line(void)
+t_line	*creation_line(t_var *lst_var)
 {
 	t_line	*line;
 
-	line = malloc(sizeof(t_line));
+	line = (t_line *)malloc(sizeof(t_line));
 	if (!line)
-		return (NULL);
+		error_memory_failed(NULL, lst_var);
 	line->env = NULL;
 	line->new = NULL;
 	line->block = NULL;

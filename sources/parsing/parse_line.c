@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/23 11:38:15 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/26 14:59:30 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	quotes_unclosed(char *line)
 	int		i;
 
 	i = 0;
-	while (line[i])
+	while (line && line[i])
 	{
 		if (is_quote(line[i]))
 		{
@@ -37,7 +37,7 @@ static int	syntax_error(char *line, char token, char quote, size_t i)
 {
 	i = skip_spaces(line, i);
 	if (line[i] && line[i] == '|')
-		return (1);
+		return (i);
 	while (i < ft_strlen(line) + 1 && line[i])
 	{
 		if (is_quote(line[i]))
@@ -55,7 +55,7 @@ static int	syntax_error(char *line, char token, char quote, size_t i)
 			if (line[i] && token == '|' && (line[i] == '>' || line[i] == '<'))
 				continue ;
 			if (line[i] == '\0' || is_operator(line[i]))
-				return (1);
+				return (i - 2);
 		}
 		i++;
 	}
@@ -117,25 +117,27 @@ static char	*set_parsed_line(char *line, char *new, int i, int j)
 	return (new);
 }
 
-char	*parse_line(t_line *line)
+char	*parse_line(t_line *line, t_var *lst_var)
 {
 	char	*new;
+	int		syntax;
 
 	if (quotes_unclosed(line->line))
 	{
-		write(2, "minishell: syntax error: unclosed quote\n", 40);
+		write(2, "minishell: syntax error unclosed quote\n", 39);
 		line->sig = 2;
 		return (NULL);
 	}
 	new = ft_calloc(sizeof(char), get_parsed_line_lenght(line->line) + 1);
 	if (!new)
-		return (NULL);
+		error_memory_failed(line, lst_var);
 	new = set_parsed_line(line->line, new, 0, 0);
-	if (!new)
-		return (NULL);
-	if (syntax_error(new, 't', 'q', 0))
+	syntax = syntax_error(new, 't', 'q', 0);
+	if (syntax != 0)
 	{
-		write(2, "minishell: syntax error\n", 24);
+		write(2, "minishell: syntax error near unexpected token \" ", 48);
+		write(2, &new[syntax], 1);
+		write(2, " \"\n", 3);
 		free(new);
 		line->sig = 2;
 		return (NULL);

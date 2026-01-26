@@ -6,11 +6,12 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/25 21:09:45 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/26 14:28:52 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <time.h>
 
 long	g_sig = 0;
 
@@ -79,7 +80,7 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
 	__pid_t	pid;
 	__pid_t	last_pid;
 
-	line->new = parse_line(line);
+	line->new = parse_line(line, lst_var);
 	line->block = split_pipe(line);
 	while (line->block && line->block[i])
 	{
@@ -105,6 +106,8 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
 static void	initialization_struct(t_line *line, t_var *lst_var, t_pipe *child)
 {
 	line->env = ft_copy_env(&lst_var);
+	if (!line->env)
+		error_memory_failed(line, lst_var);
 	line->args = NULL;
 	line->block = NULL;
 	line->red = NULL;
@@ -119,9 +122,8 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	lst_var = NULL;
-	get_var(&lst_var, envp);
-	line = creation_line();
+	lst_var = get_var(envp);
+	line = creation_line(lst_var);
 	signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
 	while (1)

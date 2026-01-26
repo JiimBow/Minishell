@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 13:41:42 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 11:09:56 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/26 14:07:28 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ char	**ft_copy_env(t_var **lst_var)
 	i = 0;
 	tmp = *lst_var;
 	env = ft_calloc(ft_lstsize_var(tmp) + 1, sizeof(char *));
+	if (!env)
+		return (NULL);
 	while (tmp)
 	{
 		if (tmp->name && tmp->content)

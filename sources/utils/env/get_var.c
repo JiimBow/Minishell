@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:38:33 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 17:39:48 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/26 14:17:15 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <stdlib.h>
 
 char	*get_env_name(char *line)
 {
@@ -27,11 +28,15 @@ char	*get_env_name(char *line)
 	if (line[len_name - 1] == '+')
 	{
 		name = ft_calloc(len_name, sizeof(char));
+		if (!name)
+			return (NULL);
 		ft_strlcpy(name, line, len_name);
 	}
 	else
 	{
 		name = ft_calloc(len_name + 1, sizeof(char));
+		if (!name)
+			return (NULL);
 		ft_strlcpy(name, line, len_name + 1);
 	}
 	return (name);
@@ -54,24 +59,36 @@ static char	*get_env_content(char *line)
 	while (line[++i])
 		len_content++;
 	content = ft_calloc(len_content + 1, sizeof(char));
+	if (!content)
+		return (NULL);
 	ft_strlcpy(content, line + start, len_content + 1);
 	return (content);
 }
 
-void	get_var(t_var **lst_var, char **envp)
+t_var	*get_var(char **envp)
 {
+	t_var	*lst_var;
 	int		i;
 	char	*name;
 	char	*content;
 
 	i = 0;
+	lst_var = NULL;
 	while (envp[i])
 	{
 		name = get_env_name(envp[i]);
+		if (!name)
+			error_memory_failed(NULL, lst_var);
 		content = get_env_content(envp[i]);
-		ft_lstadd_back_var(lst_var, ft_lst_new_var(name, content));
+		if (!content)
+		{
+			free(name);
+			error_memory_failed(NULL, lst_var);
+		}
+		ft_lstadd_back_var(&lst_var, ft_lst_new_var(name, content));
 		free(name);
 		free(content);
 		i++;
 	}
+	return (lst_var);
 }
