@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/26 16:43:06 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/26 16:50:45 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	r_in(t_pipe *child, char *content)
 
 int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
 {
-	char	*until_lim;
 	int		pipe_doc[2];
 
 	// struct termios t;
@@ -38,10 +37,9 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
 		perror("pipe");
 		return (1);
 	}
-	until_lim = NULL;
 	while (1)
 	{
-		if (here_doc_proc(line, until_lim, content, pipe_doc[1]) == 1)
+		if (hd_proc(line, lst_var, content, pipe_doc[1]) == 1)
 			break ;
 	}
 	close(pipe_doc[1]);

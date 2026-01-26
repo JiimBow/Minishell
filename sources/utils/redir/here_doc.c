@@ -6,14 +6,17 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 13:04:05 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/26 16:41:08 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/26 16:50:28 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
 
-int	here_doc_proc(t_line *line, char *until_lim, char *content, int pipe_doc)
+int	hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc)
 {
+	char	*until_lim;
+
+	until_lim = NULL;
 	write(0, "> ", 2);
 	until_lim = get_next_line(STDIN_FILENO);
 	if (!until_lim)
@@ -26,7 +29,7 @@ int	here_doc_proc(t_line *line, char *until_lim, char *content, int pipe_doc)
 		return (1);
 	}
 	if (line->quote == 0)
-		until_lim = substr_var(line, until_lim);
+		until_lim = substr_var(line, lst_var, until_lim);
 	write(pipe_doc, until_lim, ft_strlen(until_lim));
 	free(until_lim);
 	return (0);

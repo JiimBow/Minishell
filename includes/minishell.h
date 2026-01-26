@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/26 16:45:06 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/26 16:50:59 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void	close_fd(int fd);
 
 // REDIRECTION
 int		open_file(t_line *line, t_pipe *child, t_var *lst_var);
-int		here_doc_proc(t_line *line, char *until_lim, char *content, int pipe_doc);
+int		hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc);
 
 // SIGNAL
 void	global_handle(t_line *line, long g_sig);
