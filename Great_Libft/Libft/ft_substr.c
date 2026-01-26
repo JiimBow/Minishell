@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/16 10:57:56 by jodone            #+#    #+#             */
-/*   Updated: 2025/10/22 11:50:33 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/26 13:40:43 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	if (len > lensrc - start)
 		leng = lensrc - start;
-	result = malloc(leng * sizeof(char) + 1);
+	result = ft_calloc(sizeof(char), leng + 1);
 	if (!result)
 		return (NULL);
 	ft_strlcpy(result, (char *)s + start, leng + 1);

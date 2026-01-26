@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/25 21:21:02 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/26 14:29:05 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,16 +75,16 @@ extern long	g_sig;
 
 // INITIALIZATION
 t_pipe	pipe_init(void);
-t_line	*creation_line(void);
+t_var	*get_var(char **envp);
+t_line	*creation_line(t_var *lst_var);
 char	**ft_copy_env(t_var **lst_var);
-void	get_var(t_var **lst_var, char **envp);
 
 // PARSING
 int		is_quote(char c);
 int		is_space(char c);
 int		is_operator(char c);
 char	*get_name(const char *s);
-char	*parse_line(t_line *line);
+char	*parse_line(t_line *line, t_var *lst_var);
 char	**split_pipe(t_line *line);
 char	**split_spaces(char *line);
 int		skip_spaces(char *tab, int i);
@@ -128,6 +128,7 @@ void	free_double_tab(char **tab);
 void	free_all(t_line *line, t_var *lst_var);
 void	free_line_struct(t_line *line, int all);
 int		free_before_exit(t_line *line, t_var *lst_var);
+void	error_memory_failed(t_line *line, t_var *lst_var);
 
 // PIPE
 int		return_value(int status);
