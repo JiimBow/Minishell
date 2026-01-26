@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:09:31 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 11:17:33 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/26 15:17:08 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,14 @@ t_pipe	pipe_init(void)
 	child.pipefd[1] = -1;
 	child.prev_fd = -1;
 	return (child);
+}
+
+void	reinitialization(t_line *line, t_var *lst_var, t_pipe *child)
+{
+	line->env = ft_copy_env(&lst_var);
+	line->args = NULL;
+	line->block = NULL;
+	line->red = NULL;
+	*child = pipe_init();
+	line->line = readline("minishell> ");
 }
