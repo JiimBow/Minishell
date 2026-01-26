@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/26 15:59:54 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/26 16:45:06 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ t_pipe	pipe_init(void);
 t_var	*get_var(char **envp);
 t_line	*creation_line(t_var *lst_var);
 char	**ft_copy_env(t_var **lst_var);
+void	reinitialization(t_line *line, t_var *lst_var, t_pipe *child);
 
 // PARSING
 int		is_quote(char c);
@@ -135,9 +136,15 @@ int		return_value(int status);
 int		dup_and_close(int fd, int redirect);
 void	close_file(t_pipe *child, char *message);
 pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child);
+void	close_fd(int fd);
 
 // REDIRECTION
-char	*add_nl(char *limiter);
 int		open_file(t_line *line, t_pipe *child, t_var *lst_var);
+int		here_doc_proc(t_line *line, char *until_lim, char *content, int pipe_doc);
+
+// SIGNAL
+void	global_handle(t_line *line, long g_sig);
+void	handle_sigint(int signal);
+void	get_last_status(__pid_t pid, __pid_t last_pid, t_line *line);
 
 #endif

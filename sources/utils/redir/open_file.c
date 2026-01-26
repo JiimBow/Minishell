@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/26 15:47:36 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/26 16:43:06 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,16 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
 
 	// struct termios t;
 	// tcgetattr(STDIN_FILENO, &t);
-
 	if (pipe(pipe_doc) == -1)
 	{
 		perror("pipe");
 		return (1);
 	}
 	until_lim = NULL;
-	line->line = gnl_strjoin(line->line, "\n");
 	while (1)
 	{
-		write(0, "> ", 2);
-		until_lim = get_next_line(STDIN_FILENO);
-		if (!until_lim)
+		if (here_doc_proc(line, until_lim, content, pipe_doc[1]) == 1)
 			break ;
-		if (ft_strncmp(until_lim, content, ft_strlen(content)) == 0
-			&& (until_lim[ft_strlen(content)] == '\n'
-				|| until_lim[ft_strlen(content)] == '\0'))
-		{
-			free(until_lim);
-			break ;
-		}
-		line->line = gnl_strjoin(line->line, until_lim);
-		if (line->quote == 0)
-			until_lim = substr_var(line, lst_var, until_lim);
-		write(pipe_doc[1], until_lim, ft_strlen(until_lim));
-		free(until_lim);
 	}
 	close(pipe_doc[1]);
 	child->prev_fd = pipe_doc[0];

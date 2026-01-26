@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/26 15:58:44 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/26 16:43:52 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,6 @@
 #include <time.h>
 
 long	g_sig = 0;
-
-static void	global_handle(t_line *line)
-{
-	if (WIFSIGNALED(g_sig))
-		line->sig = WTERMSIG(g_sig) + 128;
-	g_sig = 0;
-}
-
-static void	handle_sigint(int signal)
-{
-	g_sig = SIGINT;
-	if (signal == SIGINT)
-	{
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		ft_printf("\n");
-		rl_redisplay();
-	}
-}
 
 void	assignement(t_line *line, t_var *lst_var, int is_fork)
 {
@@ -59,20 +40,6 @@ void	assignement(t_line *line, t_var *lst_var, int is_fork)
 		line->sig = ft_export(line, &lst_var, line->args);
 	else if (line->args)
 		line->sig = process(line, lst_var, is_fork);
-}
-
-static void	get_last_status(__pid_t pid, __pid_t last_pid, t_line *line)
-{
-	int	last_status;
-	int	status;
-
-	while (pid > 0)
-	{
-		if (pid == last_pid)
-			last_status = status;
-		pid = wait(&status);
-	}
-	line->sig = return_value(last_status);
 }
 
 static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
@@ -104,17 +71,6 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
 		get_last_status(pid, last_pid, line);
 }
 
-static void	initialization_struct(t_line *line, t_var *lst_var, t_pipe *child)
-{
-	line->env = ft_copy_env(&lst_var);
-	if (!line->env)
-		error_memory_failed(line, lst_var);
-	line->args = NULL;
-	line->block = NULL;
-	line->red = NULL;
-	*child = pipe_init();
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_line	*line;
@@ -129,18 +85,14 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		initialization_struct(line, lst_var, &child);
-		line->line = readline("minishell> ");
+		reinitialization(line, lst_var, &child);
 		if (g_sig == SIGINT)
-			global_handle(line);
+			global_handle(line, g_sig);
 		if (!line->line)
 			free_before_exit(line, lst_var);
-		else
-		{
-			minishell(line, lst_var, &child, 0);
-			add_history(line->line);
-			free_line_struct(line, 0);
-		}
+		minishell(line, lst_var, &child, 0);
+		add_history(line->line);
+		free_line_struct(line, 0);
 	}
 	return (0);
 }
