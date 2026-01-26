@@ -20,7 +20,8 @@ Use the pipe or redirection like: `echo "Hello world" | cat -e > out`.
 
 
 ##Resources
+
 The linux manual and ChatGPT are used for the explanation of each new external function that we never used.
 Our project pipex for the pipe process in minishell.
-Nda-cunh tester for check some tests that we didnt knew.
-
+We used the bash terminal to test the behavior of the different commands and Nda-cunh tester for check some tests that we didnt knew.
+We worked partly remotely and we used Github to share and distribute the work more efficiently.
