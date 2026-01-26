@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:36:41 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/23 22:30:21 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/26 15:48:48 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ static int	get_count(char **env, const char *s, int *i)
 		return (0);
 	count = 0;
 	name = get_name(s);
+	if (!name)
+		return (0);
 	content = get_content(env, name);
 	if (content)
 	{
@@ -78,13 +80,17 @@ static int	get_count(char **env, const char *s, int *i)
 	return (count);
 }
 
-static int	variable_size(t_line *line, const char *s, int *i, int count)
+static int	variable_size(t_line *line, const char *s, int *i)
 {
 	char	*tmp;
+	int		count;
 
+	count = 0;
 	if (s[*i + 1] == '?')
 	{
 		tmp = ft_itoa(line->sig);
+		if (!tmp)
+			return (0);
 		count = ft_strlen(tmp);
 		free(tmp);
 		(*i)++;
@@ -109,14 +115,14 @@ int	get_size_with_variable(t_line *line, const char *s, int count, int i)
 			while (s[i] != quote)
 			{
 				if (quote == '"' && s[i] == '$' && s[i + 1])
-					count += variable_size(line, s, &i, 0);
+					count += variable_size(line, s, &i);
 				else
 					count++;
 				i++;
 			}
 		}
 		else if (s[i] == '$' && s[i + 1])
-			count += variable_size(line, s, &i, 0);
+			count += variable_size(line, s, &i);
 		else
 			count++;
 		i++;

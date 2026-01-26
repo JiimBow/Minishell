@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/25 21:28:59 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/26 15:47:36 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	r_in(t_pipe *child, char *content)
 	return (0);
 }
 
-int	r_here_doc(t_pipe *child, t_line *line, char *content)
+int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
 {
 	char	*until_lim;
 	int		pipe_doc[2];
@@ -56,7 +56,7 @@ int	r_here_doc(t_pipe *child, t_line *line, char *content)
 		}
 		line->line = gnl_strjoin(line->line, until_lim);
 		if (line->quote == 0)
-			until_lim = substr_var(line, until_lim);
+			until_lim = substr_var(line, lst_var, until_lim);
 		write(pipe_doc[1], until_lim, ft_strlen(until_lim));
 		free(until_lim);
 	}
@@ -89,7 +89,7 @@ int	r_append(t_pipe *child, char *content)
 	return (0);
 }
 
-int	open_file(t_line *line, t_pipe *child)
+int	open_file(t_line *line, t_pipe *child, t_var *lst_var)
 {
 	t_var	*tmp;
 	int		file_sig;
@@ -101,7 +101,7 @@ int	open_file(t_line *line, t_pipe *child)
 		if (tmp->rank == REDIR_IN)
 			file_sig = r_in(child, tmp->content);
 		else if (tmp->rank == REDIR_HEREDOC)
-			file_sig = r_here_doc(child, line, tmp->content);
+			file_sig = r_here_doc(child, line, lst_var, tmp->content);
 		else if (tmp->rank == REDIR_OUT)
 			file_sig = r_out(child, tmp->content);
 		else if (tmp->rank == REDIR_APPEND)

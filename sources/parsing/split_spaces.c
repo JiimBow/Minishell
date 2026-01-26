@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:26:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/23 22:54:06 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/26 15:59:34 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,20 @@ static int	parse_word(char *line, int i)
 	return (i);
 }
 
-char	*strdup_unquote(char *s, int i, int j)
+char	*strdup_unquote(t_line *line, t_var *lst_var, char *s, int j)
 {
 	char	*new;
 	char	quote;
 	int		n;
+	int		i;
 
 	if (!s)
 		return (NULL);
 	n = ft_strlen(s);
 	new = ft_calloc(sizeof(char), n + 1);
 	if (!new)
-		return (NULL);
+		error_memory_failed(line, lst_var);
+	i = 0;
 	while (i < n)
 	{
 		if (is_quote(s[i]))
@@ -81,7 +83,7 @@ static char	**ft_add_lines(char **tab, char *line, int i, int row)
 	return (tab);
 }
 
-char	**split_spaces(char *line)
+char	**split_spaces(t_line *line, t_var *lst_var, char *block)
 {
 	char	**tab;
 	int		save_i;
@@ -90,20 +92,22 @@ char	**split_spaces(char *line)
 
 	i = 0;
 	row = 0;
-	if (!line)
+	if (!block)
 		return (NULL);
-	while (line[i])
+	while (block[i])
 	{
-		i = skip_spaces(line, i);
+		i = skip_spaces(block, i);
 		save_i = i;
-		i = parse_word(line, i);
+		i = parse_word(block, i);
 		if (i > save_i)
 			row++;
 	}
 	tab = (char **)malloc(sizeof(char *) * (row + 1));
 	if (!tab)
-		return (NULL);
+		error_memory_failed(line, lst_var);
 	tab[row] = NULL;
-	tab = ft_add_lines(tab, line, 0, 0);
+	tab = ft_add_lines(tab, block, 0, 0);
+	if (!tab)
+		error_memory_failed(line, lst_var);
 	return (tab);
 }

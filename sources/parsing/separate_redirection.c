@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 15:52:36 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/23 22:31:49 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/26 16:05:04 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	is_redirection(char *args)
 	return (0);
 }
 
-static char	**reduce_args(t_line *line, int i)
+static char	**reduce_args(t_line *line, t_var *lst_var, int i)
 {
 	char	**new_args;
 	int		len;
@@ -38,7 +38,7 @@ static char	**reduce_args(t_line *line, int i)
 			len += 2;
 	new_args = (char **)malloc(sizeof(char *) * (i - len + 1));
 	if (!new_args)
-		return (NULL);
+		error_memory_failed(line, lst_var);
 	new_args[i - len] = NULL;
 	i = 0;
 	len = 0;
@@ -53,16 +53,16 @@ static char	**reduce_args(t_line *line, int i)
 	return (new_args);
 }
 
-static void	replace_args_without_redirection(t_line *line)
+static void	replace_args_without_redirection(t_line *line, t_var *lst_var)
 {
 	char	*tmp;
 	int		i;
 
-	line->args = reduce_args(line, 0);
+	line->args = reduce_args(line, lst_var, 0);
 	i = 0;
 	while (line->args && line->args[i])
 	{
-		tmp = strdup_unquote(line->args[i], 0, 0);
+		tmp = strdup_unquote(line, lst_var, line->args[i], 0);
 		free(line->args[i]);
 		line->args[i] = ft_strdup(tmp);
 		free(tmp);
@@ -86,7 +86,7 @@ static int	is_quote_in_tab(char *tab)
 	return (0);
 }
 
-void	separate_redirection(t_line *line)
+void	separate_redirection(t_line *line, t_var *lst_var)
 {
 	t_var	*new;
 	char	*tmp;
@@ -98,7 +98,7 @@ void	separate_redirection(t_line *line)
 		if (is_redirection(line->args[i++]))
 		{
 			line->quote = is_quote_in_tab(line->args[i]);
-			tmp = strdup_unquote(line->args[i], 0, 0);
+			tmp = strdup_unquote(line, lst_var, line->args[i], 0);
 			new = ft_lst_new_var(NULL, tmp);
 			free(tmp);
 			if (ft_strncmp(line->args[i - 1], "<", 2) == 0)
@@ -112,5 +112,5 @@ void	separate_redirection(t_line *line)
 			ft_lstadd_back_var(&line->red, new);
 		}
 	}
-	replace_args_without_redirection(line);
+	replace_args_without_redirection(line, lst_var);
 }

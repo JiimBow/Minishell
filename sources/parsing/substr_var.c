@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:36:00 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/23 22:29:30 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/26 15:48:27 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static int	fill_tab(char **env, const char *s, char *tab, int *j)
 	if (!env || !*env || !tab)
 		return (0);
 	name = get_name(s);
+	if (!name)
+		return (0);
 	content = get_content(env, name);
 	n = 0;
 	while (content && content[n])
@@ -41,6 +43,8 @@ static int	change_variable(t_line *line, const char *s, char *tab, int *j)
 	if (s[i + 1] == '?')
 	{
 		tmp = ft_itoa(line->sig);
+		if (!tmp)
+			return (0);
 		count = 0;
 		while (tmp[count])
 			tab[(*j)++] = tmp[count++];
@@ -76,7 +80,7 @@ static int	change_var_in_quote(t_line *line, const char *s, char *tab, int *j)
 	return (i);
 }
 
-char	*substr_var(t_line *line, char *s)
+char	*substr_var(t_line *line, t_var *lst_var, char *s)
 {
 	char	*tab;
 	int		count;
@@ -86,9 +90,9 @@ char	*substr_var(t_line *line, char *s)
 	if (!line->env || !*line->env || !s)
 		return (NULL);
 	count = get_size_with_variable(line, s, 0, 0);
-	tab = ft_calloc(sizeof(char), (count + 1));
+	tab = ft_calloc(sizeof(char), count + 1);
 	if (!tab)
-		return (NULL);
+		error_memory_failed(line, lst_var);
 	i = 0;
 	j = 0;
 	while (s[i])

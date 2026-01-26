@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:16:08 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/21 18:47:08 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/26 15:31:41 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char	**ft_add_lines(char **tab, char *line, int i, int row)
 	return (tab);
 }
 
-char	**split_pipe(t_line *line)
+char	**split_pipe(t_line *line, t_var *lst_var)
 {
 	char	**tab;
 	int		save_i;
@@ -76,7 +76,7 @@ char	**split_pipe(t_line *line)
 	}
 	tab = (char **)malloc(sizeof(char *) * (line->row + 1));
 	if (!tab)
-		return (NULL);
+		error_memory_failed(line, lst_var);
 	tab[line->row] = NULL;
 	tab = ft_add_lines(tab, line->new, 0, 0);
 	return (tab);

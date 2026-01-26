@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/26 14:28:52 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/26 15:58:44 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,23 +81,24 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
 	__pid_t	last_pid;
 
 	line->new = parse_line(line, lst_var);
-	line->block = split_pipe(line);
+	line->block = split_pipe(line, lst_var);
 	while (line->block && line->block[i])
 	{
 		if (line->red)
 			ft_lstclear_var(&line->red, free);
 		pid = 1;
 		child->index = i + 1;
-		line->block[i] = substr_var(line, line->block[i]);
+		line->block[i] = substr_var(line, lst_var, line->block[i]);
 		line->sig = 0;
-		line->args = split_spaces(line->block[i++]);
-		separate_redirection(line);
+		line->args = split_spaces(line, lst_var, line->block[i]);
+		separate_redirection(line, lst_var);
 		if (line->red)
-			line->sig = open_file(line, child);
+			line->sig = open_file(line, child, lst_var);
 		if (line->sig != 1)
 			last_pid = pipe_process(line, lst_var, child);
 		free_double_tab(line->args);
 		line->args = NULL;
+		i++;
 	}
 	if (line->sig != 1 && (line->row > 1 || line->red))
 		get_last_status(pid, last_pid, line);

@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/26 14:29:05 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/26 15:59:54 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,16 @@ int		is_quote(char c);
 int		is_space(char c);
 int		is_operator(char c);
 char	*get_name(const char *s);
-char	*parse_line(t_line *line, t_var *lst_var);
-char	**split_pipe(t_line *line);
-char	**split_spaces(char *line);
 int		skip_spaces(char *tab, int i);
-char	*substr_var(t_line *line, char *s);
-void	separate_redirection(t_line *line);
 char	**ft_free_tab(char **tab, int line);
 char	*get_content(char **env, char *tab);
 int		parse_export(char *name, char *args);
-char	*strdup_unquote(char *s, int i, int j);
+char	*parse_line(t_line *line, t_var *lst_var);
+char	**split_pipe(t_line *line, t_var *lst_var);
+void	separate_redirection(t_line *line, t_var *lst_var);
+char	*substr_var(t_line *line, t_var *lst_var, char *s);
+char	**split_spaces(t_line *line, t_var *lst_var, char *block);
+char	*strdup_unquote(t_line *line, t_var *lst_var, char *s, int j);
 char	*find_cmd_path(t_line *line, char **paths, int i, char *full_path);
 int		get_size_with_variable(t_line *line, const char *s, int count, int i);
 
@@ -138,6 +138,6 @@ pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child);
 
 // REDIRECTION
 char	*add_nl(char *limiter);
-int		open_file(t_line *line, t_pipe *child);
+int		open_file(t_line *line, t_pipe *child, t_var *lst_var);
 
 #endif
