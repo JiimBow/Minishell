@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 15:40:49 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/27 15:45:26 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
 		close(pipe_doc[1]);
 		close(pipe_doc[0]);
 		free_all(line, lst_var);
-		exit(1);
+		exit(EXIT_SUCCESS);
 	}
 	else
 	{
