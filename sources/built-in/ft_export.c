@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:10:11 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 11:37:33 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/27 18:15:42 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	add_var(t_var **lst_var, char *arg, char *name)
 	if (var_exist(lst_var, name, content, 0))
 		var_exist(lst_var, name, content, 1);
 	else
-		ft_lstadd_back_var(lst_var, ft_lst_new_var(name, content));
+		ft_lstadd_back_var(lst_var, ft_lst_new_var(name, content, -1));
 	if (content)
 		free(content);
 }
