@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 15:08:01 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 16:16:54 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/27 17:14:18 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	handle_sign_here_d(int signal)
 {
-	g_sig = 130;
+	g_sig = signal;
 	if (signal == SIGINT)
 	{
 		ft_printf("\n");

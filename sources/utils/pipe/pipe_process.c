@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 15:00:58 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/27 17:19:07 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var)
 	int	exit_sig;
 	int	fdout_open;
 
-	signal(SIGINT, handle_sign_here_d);
 	fdout_open = dup_fd_file(child, line, lst_var);
 	if (child->index == line->row)
 		close_fd(child->pipefd[1]);
