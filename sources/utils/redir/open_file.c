@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 15:40:49 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/27 15:46:49 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
 	int		status;
 	pid_t	pid;
 
-	// struct termios t;
-	// tcgetattr(STDIN_FILENO, &t);
 	if (pipe(pipe_doc) == -1)
 	{
 		perror("pipe");
@@ -55,7 +53,7 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
 		close(pipe_doc[1]);
 		close(pipe_doc[0]);
 		free_all(line, lst_var);
-		exit(1);
+		exit(0);
 	}
 	else
 	{
