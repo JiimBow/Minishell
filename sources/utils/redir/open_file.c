@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 13:42:30 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/27 13:46:02 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,9 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
 	if (pid == 0)
 	{
 		signal(SIGINT, handle_sign_here_d);
-		signal(SIGQUIT, SIG_IGN);
 		while (1)
 		{
-			if (hd_proc(line, lst_var, content, pipe_doc[1]) == 1 || g_sig == SIGINT)
+			if (hd_proc(line, lst_var, content, pipe_doc[1]) == 1)
 				break ;
 		}
 		close(pipe_doc[1]);
