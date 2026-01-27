@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 15:08:01 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 13:35:09 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/27 14:47:48 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ void	handle_sign_here_d(int signal)
 {
 	g_sig = signal;
 	if (g_sig == SIGINT)
+	{
+		ft_printf("\n");
 		_exit(130);
+	}
 }
 
 void	global_handle(t_line *line, long g_sig)

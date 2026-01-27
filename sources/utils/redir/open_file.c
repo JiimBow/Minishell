@@ -6,13 +6,12 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 13:46:02 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/27 15:00:51 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <minishell.h>
-#include <unistd.h>
 
 int	r_in(t_pipe *child, char *content)
 {
@@ -60,6 +59,7 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
 	}
 	else
 	{
+		signal(SIGINT, SIG_IGN);
 		child->prev_fd = pipe_doc[0];
 		close(pipe_doc[1]);
 		waitpid(-1, &status, 0);
@@ -108,7 +108,7 @@ int	open_file(t_line *line, t_pipe *child, t_var *lst_var)
 			file_sig = r_out(child, tmp->content);
 		else if (tmp->rank == REDIR_APPEND)
 			file_sig = r_append(child, tmp->content);
-		if (file_sig == 1)
+		if (file_sig == 1 || file_sig == 130)
 			break ;
 		tmp = tmp->next;
 	}

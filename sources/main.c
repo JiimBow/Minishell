@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 11:29:02 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/27 14:46:05 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	lst_var = get_var(envp);
 	line = creation_line(lst_var);
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
+		signal(SIGINT, handle_sigint);
+		signal(SIGQUIT, SIG_IGN);
 		reinitialization(line, lst_var, &child);
 		if (g_sig == SIGINT)
 			global_handle(line, g_sig);
