@@ -6,11 +6,18 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 15:08:01 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/26 15:09:34 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/27 11:33:27 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <minishell.h>
+
+void	handle_sign_here_d(int signal)
+{
+	g_sig = signal;
+	if (g_sig == SIGINT)
+		exit(130);
+}
 
 void	global_handle(t_line *line, long g_sig)
 {
@@ -21,8 +28,8 @@ void	global_handle(t_line *line, long g_sig)
 
 void	handle_sigint(int signal)
 {
-	g_sig = SIGINT;
-	if (signal == SIGINT)
+	g_sig = signal;
+	if (g_sig == SIGINT)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();

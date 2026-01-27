@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 09:59:36 by jodone            #+#    #+#             */
-/*   Updated: 2025/11/18 10:45:07 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/27 11:08:39 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	gnl_strlen(const char *str)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 		i++;
 	return (i);
 }
@@ -93,7 +93,7 @@ char	*gnl_strjoin(char *s1, char *s2)
 		i++;
 	}
 	i = 0;
-	while (s2[i])
+	while (s2 && s2[i])
 		tab[lens1++] = s2[i++];
 	tab[lens1] = '\0';
 	free(s1);

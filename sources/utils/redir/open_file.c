@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/26 16:50:45 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/27 11:47:41 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	r_in(t_pipe *child, char *content)
 int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
 {
 	int		pipe_doc[2];
+	int		status;
+	pid_t	pid;
 
 	// struct termios t;
 	// tcgetattr(STDIN_FILENO, &t);
@@ -37,14 +39,32 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
 		perror("pipe");
 		return (1);
 	}
-	while (1)
+	pid = fork();
+	if (pid < 0)
 	{
-		if (hd_proc(line, lst_var, content, pipe_doc[1]) == 1)
-			break ;
+		perror("fork");
+		return (1);
 	}
-	close(pipe_doc[1]);
-	child->prev_fd = pipe_doc[0];
-	return (0);
+	if (pid == 0)
+	{
+		signal(SIGINT, handle_sign_here_d);
+		signal(SIGQUIT, SIG_IGN);
+		while (1)
+		{
+			if (hd_proc(line, lst_var, content, pipe_doc[1]) == 1 || g_sig == SIGINT)
+				break ;
+		}
+		close(pipe_doc[1]);
+		close(pipe_doc[0]);
+		exit(EXIT_SUCCESS);
+	}
+	else
+	{
+		child->prev_fd = pipe_doc[0];
+		close(pipe_doc[1]);
+		waitpid(-1, &status, 0);
+	}
+	return (return_value(status));
 }
 
 int	r_out(t_pipe *child, char *content)

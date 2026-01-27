@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/26 16:50:59 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/27 10:45:59 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,5 +146,6 @@ int		hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc);
 void	global_handle(t_line *line, long g_sig);
 void	handle_sigint(int signal);
 void	get_last_status(__pid_t pid, __pid_t last_pid, t_line *line);
+void	handle_sign_here_d(int signal);
 
 #endif
