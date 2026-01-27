@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_management.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 15:08:01 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 15:43:54 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/27 16:16:54 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	handle_sign_here_d(int signal)
 	{
 		ft_printf("\n");
 		close(0);
-		// _exit(130);
 	}
 }
 
