@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 11:47:41 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/27 13:42:38 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
 	if (pid == 0)
 	{
 		signal(SIGINT, handle_sign_here_d);
-		signal(SIGQUIT, SIG_IGN);
 		while (1)
 		{
-			if (hd_proc(line, lst_var, content, pipe_doc[1]) == 1 || g_sig == SIGINT)
+			if (hd_proc(line, lst_var, content, pipe_doc[1]) == 1)
 				break ;
 		}
 		close(pipe_doc[1]);
 		close(pipe_doc[0]);
-		exit(EXIT_SUCCESS);
+		free_all(line, lst_var);
+		_exit(EXIT_SUCCESS);
 	}
 	else
 	{
