@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 15:00:51 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/27 15:40:49 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
 		close(pipe_doc[1]);
 		close(pipe_doc[0]);
 		free_all(line, lst_var);
-		exit(EXIT_SUCCESS);
+		exit(1);
 	}
 	else
 	{
@@ -109,7 +109,11 @@ int	open_file(t_line *line, t_pipe *child, t_var *lst_var)
 		else if (tmp->rank == REDIR_APPEND)
 			file_sig = r_append(child, tmp->content);
 		if (file_sig == 1 || file_sig == 130)
+		{
+			if (child->prev_fd != -1)
+				close (child->prev_fd);
 			break ;
+		}
 		tmp = tmp->next;
 	}
 	return (file_sig);

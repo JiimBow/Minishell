@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 13:04:05 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 13:45:48 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/27 15:30:54 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc)
 	while (1)
 	{
 		until_lim = get_next_line(STDIN_FILENO);
+		if (g_sig == 130)
+			return (1);
 		if (until_lim && until_lim[ft_strlen(until_lim) - 1] == '\n')
 			break ;
 		if (line->quote == 0)
