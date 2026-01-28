@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 17:54:19 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 22:55:39 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ int	main(int argc, char **argv, char **envp)
 		if (!line->line)
 			free_before_exit(line, lst_var);
 		minishell(line, lst_var, &child);
-		add_history(line->line);
+		if (line->line[0] != '\0')
+			add_history(line->line);
 		free_line_struct(line, 0);
 		line->prev_sig = line->sig;
 	}

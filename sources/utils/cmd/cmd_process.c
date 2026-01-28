@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 15:58:23 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 22:53:25 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,20 @@ static void	exec_process(t_line *line, t_var *lst_var)
 		free(path_cmd);
 		if (line->is_dir == 1)
 		{
-			perror(line->args[0]);
+			ft_putstr_fd("minishell: ", 2);
+			ft_putstr_fd(line->args[0], 2);
+			ft_putstr_fd(": Is a directory\n", 2);
 			free_line_struct(line, 1);
 			exit(126);
 		}
 		if (!path_cmd)
 			write_error(line->args[0], 1);
+		else if (ft_strncmp(line->args[0], ".", 2) == 0)
+		{
+			ft_putstr_fd("minishell: .: \n", 2);
+			free_line_struct(line, 1);
+			exit(2);
+		}
 		else
 			write_error(line->args[0], 2);
 		free_line_struct(line, 1);
@@ -75,13 +83,12 @@ int	verif_if_first_argument_is_dir(t_line *line)
 {
 	struct stat	verif;
 
-	if (stat(line->args[0], &verif))
+	if (stat(line->args[0], &verif) != 0
+		|| !ft_strchr(line->args[0], '/'))
 		return (0);
-	if (S_ISDIR(verif.st_mode) && ft_strncmp(line->args[0], ".", 2) != 0
-		&& ft_strncmp(line->args[0], "..", 3))
+	if (S_ISDIR(verif.st_mode))
 		return (1);
-	else
-		return (0);
+	return (0);
 }
 
 int	process(t_line *line, t_var *lst_var, int is_fork)

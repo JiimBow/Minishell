@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 18:01:07 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/28 22:01:20 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <sys/stat.h>
 # include <termios.h>
 # include <time.h>
+# include <dirent.h>
 
 # define REDIR_IN 1
 # define REDIR_HEREDOC 2
