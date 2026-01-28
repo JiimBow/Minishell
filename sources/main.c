@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 10:33:52 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 11:10:25 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
 		line->sig = 0;
 		line->args = split_spaces(line, lst_var, line->block[i]);
 		separate_redirection(line, lst_var);
-		if (line->red)
-			line->sig = open_file(line, child, lst_var);
+		if (line->redirec)
+			line->sig = open_file(line, child, lst_var, i);
 		if (line->sig != 1)
 			last_pid = pipe_process(line, lst_var, child);
 		free_double_tab(line->args);

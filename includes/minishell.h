@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 10:31:39 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 11:10:12 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,8 @@ pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child);
 void	close_fd(int fd);
 
 // REDIRECTION
-int		open_file(t_line *line, t_pipe *child, t_var *lst_var);
-int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, t_var *redirec);
+int		open_file(t_line *line, t_pipe *child, t_var *lst_var, int index);
+int		r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, t_var *redirec);
 int		hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc);
 
 // SIGNAL
