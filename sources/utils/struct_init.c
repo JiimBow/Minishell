@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:09:31 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 15:57:29 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 17:54:59 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,6 @@ void	reinitialization(t_line *line, t_var *lst_var, t_pipe *child)
 	line->sig = 0;
 	*child = pipe_init();
 	line->line = readline("minishell> ");
+	if (g_sig == SIGINT)
+		global_handle(line);
 }

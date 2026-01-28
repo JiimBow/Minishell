@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 15:57:35 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 17:54:19 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ int	main(int argc, char **argv, char **envp)
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, SIG_IGN);
 		reinitialization(line, lst_var, &child);
-		if (g_sig == SIGINT)
-			global_handle(line, g_sig);
 		if (!line->line)
 			free_before_exit(line, lst_var);
 		minishell(line, lst_var, &child);

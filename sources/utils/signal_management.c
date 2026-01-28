@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 15:08:01 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 15:56:58 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 17:55:16 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	handle_sign_here_d(int signal)
 	}
 }
 
-void	global_handle(t_line *line, long g_sig)
+void	global_handle(t_line *line)
 {
 	if (WIFSIGNALED(g_sig))
-		line->sig = WTERMSIG(g_sig) + 128;
+		line->prev_sig = WTERMSIG(g_sig) + 128;
 	g_sig = 0;
 }
 

@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 16:06:20 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 17:55:26 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int		hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc);
 // SIGNAL
 void	handle_sigint(int signal);
 void	handle_sign_here_d(int signal);
-void	global_handle(t_line *line, long g_sig);
+void	global_handle(t_line *line);
 void	get_last_status(__pid_t pid, __pid_t last_pid, t_line *line);
 
 #endif
