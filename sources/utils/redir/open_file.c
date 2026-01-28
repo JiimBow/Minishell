@@ -6,14 +6,14 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 18:09:10 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/28 10:30:54 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <minishell.h>
 
-int	r_in(t_pipe *child, char *content)
+static int	r_in(t_pipe *child, char *content)
 {
 	child->prev_fd = open(content, O_RDONLY);
 	if (child->prev_fd < 0)
@@ -25,11 +25,12 @@ int	r_in(t_pipe *child, char *content)
 	return (0);
 }
 
-int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
+int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, t_var *redirec)
 {
 	int		pipe_doc[2];
 	int		status;
 	pid_t	pid;
+	char	*tmp;
 
 	if (pipe(pipe_doc) == -1)
 	{
@@ -42,12 +43,13 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
 		perror("fork");
 		return (1);
 	}
+	
 	if (pid == 0)
 	{
 		signal(SIGINT, handle_sign_here_d);
 		while (1)
 		{
-			if (hd_proc(line, lst_var, content, pipe_doc[1]) == 1)
+			if (hd_proc(line, lst_var, redirec->content, pipe_doc[1]) == 1)
 				break ;
 		}
 		close(pipe_doc[1]);
@@ -60,14 +62,24 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
 	else
 	{
 		signal(SIGINT, SIG_IGN);
-		child->prev_fd = pipe_doc[0];
+		// child->prev_fd = pipe_doc[0];
+		while (1)
+		{
+			tmp = get_next_line(pipe_doc[0]);
+			if (!tmp)
+				break ;
+			redirec->content = gnl_strjoin(redirec->content, tmp);
+			free(tmp);
+		}
+		// read(pipe_doc[0], redirec->content, )
 		close(pipe_doc[1]);
+		close(pipe_doc[0]);
 		waitpid(-1, &status, 0);
 	}
 	return (return_value(status));
 }
 
-int	r_out(t_pipe *child, char *content)
+static int	r_out(t_pipe *child, char *content)
 {
 	child->fdout = open(content, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	if (child->fdout < 0)
@@ -79,7 +91,7 @@ int	r_out(t_pipe *child, char *content)
 	return (0);
 }
 
-int	r_append(t_pipe *child, char *content)
+static int	r_append(t_pipe *child, char *content)
 {
 	child->fdout = open(content, O_CREAT | O_WRONLY | O_APPEND, 0666);
 	if (child->fdout < 0)
@@ -102,8 +114,8 @@ int	open_file(t_line *line, t_pipe *child, t_var *lst_var)
 	{
 		if (tmp->rank == REDIR_IN)
 			file_sig = r_in(child, tmp->content);
-		else if (tmp->rank == REDIR_HEREDOC)
-			file_sig = r_here_doc(child, line, lst_var, tmp->content);
+		// else if (tmp->rank == REDIR_HEREDOC)
+		// 	file_sig = r_here_doc(child, line, lst_var, tmp->content);
 		else if (tmp->rank == REDIR_OUT)
 			file_sig = r_out(child, tmp->content);
 		else if (tmp->rank == REDIR_APPEND)

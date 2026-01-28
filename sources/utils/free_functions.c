@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:00:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/26 14:08:19 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 10:14:03 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	free_line_struct(t_line *line, int all)
 		free(line->new);
 	line->new = NULL;
 	ft_lstclear_var(&line->red, free);
+	ft_lstclear_var(&line->redirec, free);
 	if (all == 1)
 		free(line);
 }
