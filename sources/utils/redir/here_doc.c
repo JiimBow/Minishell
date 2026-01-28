@@ -3,22 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 13:04:05 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 16:17:29 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 18:10:54 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	parent_doc(int pid, int *pipe_doc, int *status, t_var *redirec)
+{
+	char	*tmp;
+
+	close(pipe_doc[1]);
+	signal(SIGINT, SIG_IGN);
+	free(redirec->content);
+	redirec->content = NULL;
+	waitpid(pid, status, 0);
+	while (1)
+	{
+		tmp = get_next_line(pipe_doc[0]);
+		if (!tmp)
+			break ;
+		redirec->content = gnl_strjoin(redirec->content, tmp);
+		free(tmp);
+	}
+	close(pipe_doc[0]);
+}
+
+static void	child_doc(t_line *line, t_var *lst_var, t_var *redirec, int *pipe)
+{
+	close(pipe[0]);
+	signal(SIGINT, handle_sign_here_d);
+	while (1)
+	{
+		if (hd_proc(line, lst_var, redirec->content, pipe[1]) == 1)
+			break ;
+	}
+	close(pipe[1]);
+	free_all(line, lst_var);
+	if (g_sig == SIGINT)
+		exit(130);
+	exit(EXIT_SUCCESS);
+}
 
 int	r_here_doc(t_line *line, t_var *lst_var, t_var *redirec)
 {
 	int		pipe_doc[2];
 	int		status;
 	pid_t	pid;
-	char	*tmp;
 
+	status = 0;
 	if (pipe(pipe_doc) == -1)
 	{
 		perror("pipe");
@@ -31,37 +67,9 @@ int	r_here_doc(t_line *line, t_var *lst_var, t_var *redirec)
 		return (1);
 	}
 	if (pid == 0)
-	{
-		close(pipe_doc[0]);
-		signal(SIGINT, handle_sign_here_d);
-		while (1)
-		{
-			if (hd_proc(line, lst_var, redirec->content, pipe_doc[1]) == 1)
-				break ;
-		}
-		close(pipe_doc[1]);
-		free_all(line, lst_var);
-		if (g_sig == SIGINT)
-			exit(130);
-		exit(EXIT_SUCCESS);
-	}
+		child_doc(line, lst_var, redirec, pipe_doc);
 	else
-	{
-		close(pipe_doc[1]);
-		signal(SIGINT, SIG_IGN);
-		free(redirec->content);
-		redirec->content = NULL;
-		waitpid(pid, &status, 0);
-		while (1)
-		{
-			tmp = get_next_line(pipe_doc[0]);
-			if (!tmp)
-				break ;
-			redirec->content = gnl_strjoin(redirec->content, tmp);
-			free(tmp);
-		}
-		close(pipe_doc[0]);
-	}
+		parent_doc(pid, pipe_doc, &status, redirec);
 	return (return_value(status));
 }
 
