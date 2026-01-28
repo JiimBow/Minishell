@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 13:04:05 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 18:10:54 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/28 19:29:07 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*loop_readline(char *content, int empty_line)
 			break ;
 		if (!until_lim && empty_line == 0)
 		{
-			ft_putstr_fd("minishell: warning: here-document at line ", 2);
+			ft_putstr_fd("minishell: warning: here-document not", 2);
 			ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
 			ft_putstr_fd(content, 2);
 			ft_putstr_fd("')\n", 2);
