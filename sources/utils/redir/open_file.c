@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 10:34:43 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 10:58:15 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, t_var *redirec)
 	pid_t	pid;
 	char	*tmp;
 
+	(void)child;
 	if (pipe(pipe_doc) == -1)
 	{
 		perror("pipe");
@@ -46,6 +47,7 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, t_var *redirec)
 	
 	if (pid == 0)
 	{
+		close(pipe_doc[0]);
 		signal(SIGINT, handle_sign_here_d);
 		while (1)
 		{
@@ -53,7 +55,6 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, t_var *redirec)
 				break ;
 		}
 		close(pipe_doc[1]);
-		close(pipe_doc[0]);
 		free_all(line, lst_var);
 		if (g_sig == SIGINT)
 			exit(130);
@@ -61,7 +62,11 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, t_var *redirec)
 	}
 	else
 	{
+		close(pipe_doc[1]);
 		signal(SIGINT, SIG_IGN);
+		free(redirec->content);
+		redirec->content = NULL;
+		waitpid(pid, &status, 0);
 		// child->prev_fd = pipe_doc[0];
 		while (1)
 		{
@@ -72,9 +77,7 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, t_var *redirec)
 			free(tmp);
 		}
 		// read(pipe_doc[0], redirec->content, )
-		close(pipe_doc[1]);
 		close(pipe_doc[0]);
-		waitpid(-1, &status, 0);
 	}
 	return (return_value(status));
 }
@@ -108,6 +111,7 @@ int	open_file(t_line *line, t_pipe *child, t_var *lst_var)
 	t_var	*tmp;
 	int		file_sig;
 
+	(void)lst_var;
 	tmp = line->red;
 	file_sig = 0;
 	while (tmp)
