@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:36:41 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/26 15:48:48 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:25:24 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	variable_size(t_line *line, const char *s, int *i)
 	count = 0;
 	if (s[*i + 1] == '?')
 	{
-		tmp = ft_itoa(line->sig);
+		tmp = ft_itoa(line->prev_sig);
 		if (!tmp)
 			return (0);
 		count = ft_strlen(tmp);
