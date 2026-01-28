@@ -6,11 +6,11 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 13:23:57 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:57:50 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 static int	dup_fd_file(t_pipe *child, t_line *line, t_var *lst_var)
 {

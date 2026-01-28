@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 14:53:09 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/28 16:16:43 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include <minishell.h>
+#include "minishell.h"
 
 static int	r_in(t_pipe *child, char *content)
 {
@@ -49,11 +48,30 @@ static int	r_append(t_pipe *child, char *content)
 	return (0);
 }
 
+int	write_in_prev_fd(t_var *tmp, t_pipe *child)
+{
+	int		fd[2];
+
+	if (pipe(fd) == -1)
+	{
+		perror("pipe");
+		return (1);
+	}
+	else
+	{
+		write(fd[1], tmp->content, ft_strlen(tmp->content));
+		close(fd[1]);
+		if (child->prev_fd != -1)
+			close(child->prev_fd);
+		child->prev_fd = fd[0];
+	}
+	return (0);
+}
+
 int	open_file(t_line *line, t_pipe *child, int index)
 {
 	t_var	*tmp;
 	int		file_sig;
-	int		fd[2];
 
 	tmp = line->redirec;
 	file_sig = 0;
@@ -64,29 +82,17 @@ int	open_file(t_line *line, t_pipe *child, int index)
 			if (tmp->rank == REDIR_IN)
 				file_sig = r_in(child, tmp->content);
 			else if (tmp->rank == REDIR_HEREDOC)
-			{
-				pipe(fd);
-				write(fd[1], tmp->content, ft_strlen(tmp->content));
-				close(fd[1]);
-				if (child->prev_fd != -1)
-					close(child->prev_fd);
-				child->prev_fd = fd[0];
-			}
+				file_sig = write_in_prev_fd(tmp, child);
 			else if (tmp->rank == REDIR_OUT)
 				file_sig = r_out(child, tmp->content);
 			else if (tmp->rank == REDIR_APPEND)
 				file_sig = r_append(child, tmp->content);
 			if (file_sig == 1)
-			{
-				if (child->prev_fd != -1)
-				{
-					close (child->prev_fd);
-					child->prev_fd = -1;
-				}
 				break ;
-			}
 		}
 		tmp = tmp->next;
 	}
+	if (file_sig == 1)
+		child->prev_fd = close_fd(child->prev_fd);
 	return (file_sig);
 }

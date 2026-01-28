@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:26:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/26 15:59:34 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:53:24 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,35 +29,6 @@ static int	parse_word(char *line, int i)
 		}
 	}
 	return (i);
-}
-
-char	*strdup_unquote(t_line *line, t_var *lst_var, char *s, int j)
-{
-	char	*new;
-	char	quote;
-	int		n;
-	int		i;
-
-	if (!s)
-		return (NULL);
-	n = ft_strlen(s);
-	new = ft_calloc(sizeof(char), n + 1);
-	if (!new)
-		error_memory_failed(line, lst_var);
-	i = 0;
-	while (i < n)
-	{
-		if (is_quote(s[i]))
-		{
-			quote = s[i++];
-			while (i < n && s[i] != quote)
-				new[j++] = s[i++];
-			i++;
-		}
-		else
-			new[j++] = s[i++];
-	}
-	return (new);
 }
 
 static char	**ft_add_lines(char **tab, char *line, int i, int row)

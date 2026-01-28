@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 15:03:58 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/28 16:06:20 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <linux/limits.h>
 # include <sys/stat.h>
 # include <termios.h>
+# include <time.h>
 
 # define REDIR_IN 1
 # define REDIR_HEREDOC 2
@@ -87,14 +88,15 @@ int		is_quote(char c);
 int		is_space(char c);
 int		is_operator(char c);
 char	*get_name(const char *s);
+int		is_redirection(char *args);
 int		skip_spaces(char *tab, int i);
 char	**ft_free_tab(char **tab, int line);
 char	*get_content(char **env, char *tab);
 int		parse_export(char *name, char *args);
-void	parse_quote_and_operators(t_line *line, t_var *lst_var);
 void	split_pipe(t_line *line, t_var *lst_var);
 void	parse_redirection(t_line *line, t_var *lst_var);
 char	*substr_var(t_line *line, t_var *lst_var, char *s);
+void	parse_quote_and_operators(t_line *line, t_var *lst_var);
 char	**split_spaces(t_line *line, t_var *lst_var, char *block);
 char	*strdup_unquote(t_line *line, t_var *lst_var, char *s, int j);
 char	*find_cmd_path(t_line *line, char **paths, int i, char *full_path);
@@ -106,9 +108,9 @@ int		ft_lstsize_var(t_var *lst);
 void	write_error(char *cmd_name, int code);
 long	ft_atoll(const char *nptr, int *overf);
 char	*get_env_path(t_var *lst_var, char *str);
-t_var	*ft_lst_new_var(char *name, char *content, int index);
 void	ft_lstadd_back_var(t_var **lst, t_var *new);
 void	ft_lstclear_var(t_var **lst, void (*del)(void *));
+t_var	*ft_lst_new_var(char *name, char *content, int index);
 
 // RANKING
 void	rank_var(t_var **lst_var);
@@ -134,22 +136,22 @@ int		free_before_exit(t_line *line, t_var *lst_var);
 void	error_memory_failed(t_line *line, t_var *lst_var);
 
 // PIPE
+int		close_fd(int fd);
 int		return_value(int status);
 int		dup_and_close(int fd, int redirect);
 void	close_file(t_pipe *child, char *message);
 pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child);
-void	close_fd(int fd);
 
 // REDIRECTION
 int		open_file(t_line *line, t_pipe *child, int index);
 int		r_here_doc(t_line *line, t_var *lst_var, t_var *redirec);
-int		hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc);
 void	replace_args_without_redirection(t_line *line, t_var *lst_var);
+int		hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc);
 
 // SIGNAL
-void	global_handle(t_line *line, long g_sig);
 void	handle_sigint(int signal);
-void	get_last_status(__pid_t pid, __pid_t last_pid, t_line *line);
 void	handle_sign_here_d(int signal);
+void	global_handle(t_line *line, long g_sig);
+void	get_last_status(__pid_t pid, __pid_t last_pid, t_line *line);
 
 #endif

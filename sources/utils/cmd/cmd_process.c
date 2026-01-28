@@ -6,14 +6,11 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/25 20:01:49 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:58:23 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minishell.h"
-#include <fcntl.h>
-#include <sys/stat.h>
 
 void	write_error(char *cmd_name, int code)
 {

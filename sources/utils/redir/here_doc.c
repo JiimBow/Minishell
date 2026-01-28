@@ -6,11 +6,11 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 13:04:05 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 15:13:54 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 16:17:29 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 int	r_here_doc(t_line *line, t_var *lst_var, t_var *redirec)
 {
@@ -65,12 +65,10 @@ int	r_here_doc(t_line *line, t_var *lst_var, t_var *redirec)
 	return (return_value(status));
 }
 
-char	*loop_readline(char *content)
+char	*loop_readline(char *content, int empty_line)
 {
 	char	*until_lim;
-	int		empty_line;
 
-	empty_line = 0;
 	while (1)
 	{
 		until_lim = readline("> ");
@@ -82,7 +80,7 @@ char	*loop_readline(char *content)
 		}
 		if (until_lim)
 			break ;
-		if(!until_lim && empty_line == 0)
+		if (!until_lim && empty_line == 0)
 		{
 			ft_putstr_fd("minishell: warning: here-document at line ", 2);
 			ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
@@ -100,7 +98,7 @@ int	hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc)
 {
 	char	*until_lim;
 
-	until_lim = loop_readline(content);
+	until_lim = loop_readline(content, 0);
 	if (!until_lim)
 		return (1);
 	if (ft_strncmp(until_lim, content, ft_strlen(content)) == 0

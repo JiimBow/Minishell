@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 15:07:41 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/28 15:57:35 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <time.h>
 
 long	g_sig = 0;
 
@@ -44,19 +43,17 @@ void	assignement(t_line *line, t_var *lst_var, int is_fork)
 
 static void	minishell(t_line *line, t_var *lst_var, t_pipe *child)
 {
-	__pid_t	pid;
 	__pid_t	last_pid;
 	int		i;
 
 	parse_quote_and_operators(line, lst_var);
 	split_pipe(line, lst_var);
 	parse_redirection(line, lst_var);
-	i = 0;
 	if (line->sig == 130)
 		return ;
+	i = 0;
 	while (line->block && line->block[i])
 	{
-		pid = 1;
 		child->index = i + 1;
 		line->args = split_spaces(line, lst_var, line->block[i]);
 		replace_args_without_redirection(line, lst_var);
@@ -69,7 +66,7 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child)
 		i++;
 	}
 	if (line->sig != 1 && (line->row > 1 || line->redirec))
-		get_last_status(pid, last_pid, line);
+		get_last_status(1, last_pid, line);
 }
 
 int	main(int argc, char **argv, char **envp)

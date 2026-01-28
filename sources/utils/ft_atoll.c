@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoll.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 18:23:51 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 19:21:25 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/28 15:56:52 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <minishell.h>
+#include "minishell.h"
 
 static long	of_atoll(const char *nptr, t_atoll *atol, int i, int *overf)
 {

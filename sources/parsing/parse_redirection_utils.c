@@ -1,0 +1,87 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_redirection_utils.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/28 15:52:52 by mgarnier          #+#    #+#             */
+/*   Updated: 2026/01/28 15:53:52 by mgarnier         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+static char	**reduce_args(t_line *line, t_var *lst_var, int i)
+{
+	char	**new_args;
+	int		len;
+
+	len = 0;
+	if (!line->args)
+		return (NULL);
+	while (line->args[i])
+		if (is_redirection(line->args[i++]))
+			len += 2;
+	new_args = (char **)malloc(sizeof(char *) * (i - len + 1));
+	if (!new_args)
+		error_memory_failed(line, lst_var);
+	new_args[i - len] = NULL;
+	i = 0;
+	len = 0;
+	while (line->args[i])
+	{
+		if (is_redirection(line->args[i]))
+			i += 2;
+		else
+			new_args[len++] = ft_strdup(line->args[i++]);
+	}
+	free_double_tab(line->args);
+	return (new_args);
+}
+
+void	replace_args_without_redirection(t_line *line, t_var *lst_var)
+{
+	char	*tmp;
+	int		i;
+
+	line->args = reduce_args(line, lst_var, 0);
+	i = 0;
+	while (line->args && line->args[i])
+	{
+		tmp = strdup_unquote(line, lst_var, line->args[i], 0);
+		free(line->args[i]);
+		line->args[i] = ft_strdup(tmp);
+		free(tmp);
+		i++;
+	}
+}
+
+char	*strdup_unquote(t_line *line, t_var *lst_var, char *s, int j)
+{
+	char	*new;
+	char	quote;
+	int		n;
+	int		i;
+
+	if (!s)
+		return (NULL);
+	n = ft_strlen(s);
+	new = ft_calloc(sizeof(char), n + 1);
+	if (!new)
+		error_memory_failed(line, lst_var);
+	i = 0;
+	while (i < n)
+	{
+		if (is_quote(s[i]))
+		{
+			quote = s[i++];
+			while (i < n && s[i] != quote)
+				new[j++] = s[i++];
+			i++;
+		}
+		else
+			new[j++] = s[i++];
+	}
+	return (new);
+}
