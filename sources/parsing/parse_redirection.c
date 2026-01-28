@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 13:46:37 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/28 13:46:38 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 14:55:45 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	parse_redirection(t_line *line, t_var *lst_var)
 	while (tmp)
 	{
 		if (tmp->rank == 2)
-			r_here_doc(line, lst_var, tmp);
+			line->sig = r_here_doc(line, lst_var, tmp);
 		tmp = tmp->next;
 	}
 }

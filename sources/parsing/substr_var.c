@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substr_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:36:00 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/26 15:48:27 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:05:53 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	change_variable(t_line *line, const char *s, char *tab, int *j)
 	i = 0;
 	if (s[i + 1] == '?')
 	{
-		tmp = ft_itoa(line->sig);
+		tmp = ft_itoa(line->prev_sig);
 		if (!tmp)
 			return (0);
 		count = 0;

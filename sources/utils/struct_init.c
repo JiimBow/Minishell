@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:09:31 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 13:24:16 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:06:14 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_line	*creation_line(t_var *lst_var)
 	line->new = NULL;
 	line->block = NULL;
 	line->sig = 0;
+	line->prev_sig = 0;
 	return (line);
 }
 
@@ -46,6 +47,7 @@ void	reinitialization(t_line *line, t_var *lst_var, t_pipe *child)
 	line->args = NULL;
 	line->block = NULL;
 	line->redirec = NULL;
+	line->sig = 0;
 	*child = pipe_init();
 	line->line = readline("minishell> ");
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 13:58:11 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 15:07:41 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,12 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child)
 	split_pipe(line, lst_var);
 	parse_redirection(line, lst_var);
 	i = 0;
+	if (line->sig == 130)
+		return ;
 	while (line->block && line->block[i])
 	{
 		pid = 1;
 		child->index = i + 1;
-		line->sig = 0;
 		line->args = split_spaces(line, lst_var, line->block[i]);
 		replace_args_without_redirection(line, lst_var);
 		if (line->redirec)
@@ -93,6 +94,7 @@ int	main(int argc, char **argv, char **envp)
 		minishell(line, lst_var, &child);
 		add_history(line->line);
 		free_line_struct(line, 0);
+		line->prev_sig = line->sig;
 	}
 	return (0);
 }
