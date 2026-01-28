@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 18:17:56 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 10:31:18 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,13 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
 		free_double_tab(line->args);
 		line->args = NULL;
 		i++;
+	}
+	t_var *tmp = line->redirec;
+	while (tmp)
+	{
+		if (tmp->rank == 2)
+			r_here_doc(child, line, lst_var, tmp);
+		tmp = tmp->next;
 	}
 	while (line->redirec)
 	{

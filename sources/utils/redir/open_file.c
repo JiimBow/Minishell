@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 16:32:27 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/28 10:31:52 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	r_in(t_pipe *child, char *content)
 	return (0);
 }
 
-int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
+int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, t_var *redirec)
 {
 	int		pipe_doc[2];
 	int		status;
@@ -47,7 +47,7 @@ int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, char *content)
 		signal(SIGINT, handle_sign_here_d);
 		while (1)
 		{
-			if (hd_proc(line, lst_var, content, pipe_doc[1]) == 1)
+			if (hd_proc(line, lst_var, redirec->content, pipe_doc[1]) == 1)
 				break ;
 		}
 		close(pipe_doc[1]);
@@ -101,8 +101,8 @@ int	open_file(t_line *line, t_pipe *child, t_var *lst_var)
 		if (tmp->rank == REDIR_IN)
 			file_sig = r_in(child, tmp->content);
 		else if (tmp->rank == REDIR_HEREDOC)
-			file_sig = r_here_doc(child, line, lst_var, tmp->content);
-		else if (tmp->rank == REDIR_OUT)
+		// 	file_sig = r_here_doc(child, line, lst_var, tmp->content);
+		// else if (tmp->rank == REDIR_OUT)
 			file_sig = r_out(child, tmp->content);
 		else if (tmp->rank == REDIR_APPEND)
 			file_sig = r_append(child, tmp->content);
