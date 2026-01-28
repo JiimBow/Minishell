@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 12:02:46 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 13:58:11 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,55 +42,32 @@ void	assignement(t_line *line, t_var *lst_var, int is_fork)
 		line->sig = process(line, lst_var, is_fork);
 }
 
-static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
+static void	minishell(t_line *line, t_var *lst_var, t_pipe *child)
 {
 	__pid_t	pid;
 	__pid_t	last_pid;
+	int		i;
 
-	line->new = parse_line(line, lst_var);
-	line->block = split_pipe(line, lst_var);
-
-	while (line->block && line->block[i])
-	{
-		line->block[i] = substr_var(line, lst_var, line->block[i]);
-		line->args = split_spaces(line, lst_var, line->block[i]);
-		separate_redirection_2(line, lst_var, i);
-		free_double_tab(line->args);
-		line->args = NULL;
-		i++;
-	}
-	t_var *tmp = line->redirec;
-	while (tmp)
-	{
-		if (tmp->rank == 2)
-			r_here_doc(child, line, lst_var, tmp);
-		tmp = tmp->next;
-	}
-	// while (line->redirec)
-	// {
-	// 	printf("redirec->index=%d\nredirec->name=%d\nredirec->content=%s\n", line->redirec->index, line->redirec->rank, line->redirec->content);
-	// 	line->redirec = line->redirec->next;
-	// }
+	parse_quote_and_operators(line, lst_var);
+	split_pipe(line, lst_var);
+	parse_redirection(line, lst_var);
 	i = 0;
 	while (line->block && line->block[i])
 	{
-		if (line->red)
-			ft_lstclear_var(&line->red, free);
 		pid = 1;
 		child->index = i + 1;
-		line->block[i] = substr_var(line, lst_var, line->block[i]);
 		line->sig = 0;
 		line->args = split_spaces(line, lst_var, line->block[i]);
-		separate_redirection(line, lst_var);
+		replace_args_without_redirection(line, lst_var);
 		if (line->redirec)
-			line->sig = open_file(line, child, lst_var, i);
+			line->sig = open_file(line, child, i);
 		if (line->sig != 1)
 			last_pid = pipe_process(line, lst_var, child);
 		free_double_tab(line->args);
 		line->args = NULL;
 		i++;
 	}
-	if (line->sig != 1 && (line->row > 1 || line->red))
+	if (line->sig != 1 && (line->row > 1 || line->redirec))
 		get_last_status(pid, last_pid, line);
 }
 
@@ -113,7 +90,7 @@ int	main(int argc, char **argv, char **envp)
 			global_handle(line, g_sig);
 		if (!line->line)
 			free_before_exit(line, lst_var);
-		minishell(line, lst_var, &child, 0);
+		minishell(line, lst_var, &child);
 		add_history(line->line);
 		free_line_struct(line, 0);
 	}

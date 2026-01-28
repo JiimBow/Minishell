@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 11:59:41 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 13:23:57 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child)
 			return (1);
 		}
 	}
-	if (line->row == 1 && !line->red)
+	if (line->row == 1 && !line->redirec)
 	{
 		assignement(line, lst_var, 0);
 		return (0);

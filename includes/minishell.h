@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 11:10:12 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 13:58:21 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ typedef struct s_var
 
 typedef struct s_line
 {
-	t_var	*red;
 	t_var	*redirec;
 	char	*line;
 	char	*new;
@@ -83,8 +82,6 @@ char	**ft_copy_env(t_var **lst_var);
 void	reinitialization(t_line *line, t_var *lst_var, t_pipe *child);
 
 // PARSING
-void	separate_redirection_2(t_line *line, t_var *lst_var, int index);
-
 int		is_quote(char c);
 int		is_space(char c);
 int		is_operator(char c);
@@ -93,9 +90,9 @@ int		skip_spaces(char *tab, int i);
 char	**ft_free_tab(char **tab, int line);
 char	*get_content(char **env, char *tab);
 int		parse_export(char *name, char *args);
-char	*parse_line(t_line *line, t_var *lst_var);
-char	**split_pipe(t_line *line, t_var *lst_var);
-void	separate_redirection(t_line *line, t_var *lst_var);
+void	parse_quote_and_operators(t_line *line, t_var *lst_var);
+void	split_pipe(t_line *line, t_var *lst_var);
+void	parse_redirection(t_line *line, t_var *lst_var);
 char	*substr_var(t_line *line, t_var *lst_var, char *s);
 char	**split_spaces(t_line *line, t_var *lst_var, char *block);
 char	*strdup_unquote(t_line *line, t_var *lst_var, char *s, int j);
@@ -143,9 +140,10 @@ pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child);
 void	close_fd(int fd);
 
 // REDIRECTION
-int		open_file(t_line *line, t_pipe *child, t_var *lst_var, int index);
-int		r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, t_var *redirec);
+int		open_file(t_line *line, t_pipe *child, int index);
+int		r_here_doc(t_line *line, t_var *lst_var, t_var *redirec);
 int		hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc);
+void	replace_args_without_redirection(t_line *line, t_var *lst_var);
 
 // SIGNAL
 void	global_handle(t_line *line, long g_sig);

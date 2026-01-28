@@ -6,7 +6,7 @@
 #    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/27 18:08:46 by mgarnier         ###   ########.fr        #
+#    Updated: 2026/01/28 13:46:44 by mgarnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,8 +43,7 @@ SRC			= $(DIR)main.c \
 			$(PARSING)split_pipe.c \
 			$(PARSING)substr_var.c \
 			$(PARSING)substr_var_utils.c \
-			$(PARSING)separate_redirection.c \
-			$(DIR)separate_redirection_2.c \
+			$(PARSING)parse_redirection.c \
 			$(CMD)find_path.c \
 			$(CMD)cmd_process.c \
 			$(ENV)get_env.c \

@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 12:06:38 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 13:29:18 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@ static int	r_in(t_pipe *child, char *content)
 	return (0);
 }
 
-int	r_here_doc(t_pipe *child, t_line *line, t_var *lst_var, t_var *redirec)
+int	r_here_doc(t_line *line, t_var *lst_var, t_var *redirec)
 {
 	int		pipe_doc[2];
 	int		status;
 	pid_t	pid;
 	char	*tmp;
 
-	(void)child;
 	if (pipe(pipe_doc) == -1)
 	{
 		perror("pipe");
@@ -106,13 +105,12 @@ static int	r_append(t_pipe *child, char *content)
 	return (0);
 }
 
-int	open_file(t_line *line, t_pipe *child, t_var *lst_var, int index)
+int	open_file(t_line *line, t_pipe *child, int index)
 {
 	t_var	*tmp;
 	int		file_sig;
 	int		fd[2];
 
-	(void)lst_var;
 	tmp = line->redirec;
 	file_sig = 0;
 	while (tmp)

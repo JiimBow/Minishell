@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   separate_redirection.c                             :+:      :+:    :+:   */
+/*   parse_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/23 15:52:36 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/27 18:14:42 by mgarnier         ###   ########.fr       */
+/*   Created: 2026/01/28 13:46:37 by mgarnier          #+#    #+#             */
+/*   Updated: 2026/01/28 13:46:38 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	**reduce_args(t_line *line, t_var *lst_var, int i)
 	return (new_args);
 }
 
-static void	replace_args_without_redirection(t_line *line, t_var *lst_var)
+void	replace_args_without_redirection(t_line *line, t_var *lst_var)
 {
 	char	*tmp;
 	int		i;
@@ -86,7 +86,7 @@ static int	is_quote_in_tab(char *tab)
 	return (0);
 }
 
-void	separate_redirection(t_line *line, t_var *lst_var)
+static void	separate_redirection(t_line *line, t_var *lst_var, int index)
 {
 	t_var	*new;
 	char	*tmp;
@@ -99,7 +99,7 @@ void	separate_redirection(t_line *line, t_var *lst_var)
 		{
 			line->quote = is_quote_in_tab(line->args[i]);
 			tmp = strdup_unquote(line, lst_var, line->args[i], 0);
-			new = ft_lst_new_var(NULL, tmp, -1);
+			new = ft_lst_new_var(NULL, tmp, index);
 			free(tmp);
 			if (ft_strncmp(line->args[i - 1], "<", 2) == 0)
 				new->rank = REDIR_IN;
@@ -109,8 +109,30 @@ void	separate_redirection(t_line *line, t_var *lst_var)
 				new->rank = REDIR_OUT;
 			else if (ft_strncmp(line->args[i - 1], ">>", 3) == 0)
 				new->rank = REDIR_APPEND;
-			ft_lstadd_back_var(&line->red, new);
+			ft_lstadd_back_var(&line->redirec, new);
 		}
 	}
-	replace_args_without_redirection(line, lst_var);
+}
+
+void	parse_redirection(t_line *line, t_var *lst_var)
+{
+	int	i;
+
+	i = 0;
+	while (line->block && line->block[i])
+	{
+		line->block[i] = substr_var(line, lst_var, line->block[i]);
+		line->args = split_spaces(line, lst_var, line->block[i]);
+		separate_redirection(line, lst_var, i);
+		free_double_tab(line->args);
+		line->args = NULL;
+		i++;
+	}
+	t_var *tmp = line->redirec;
+	while (tmp)
+	{
+		if (tmp->rank == 2)
+			r_here_doc(line, lst_var, tmp);
+		tmp = tmp->next;
+	}
 }

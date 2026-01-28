@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/26 14:59:30 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 13:55:02 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,30 +117,29 @@ static char	*set_parsed_line(char *line, char *new, int i, int j)
 	return (new);
 }
 
-char	*parse_line(t_line *line, t_var *lst_var)
+void	parse_quote_and_operators(t_line *line, t_var *lst_var)
 {
-	char	*new;
 	int		syntax;
 
 	if (quotes_unclosed(line->line))
 	{
 		write(2, "minishell: syntax error unclosed quote\n", 39);
 		line->sig = 2;
-		return (NULL);
+		return ;
 	}
-	new = ft_calloc(sizeof(char), get_parsed_line_lenght(line->line) + 1);
-	if (!new)
+	line->new = ft_calloc(sizeof(char), get_parsed_line_lenght(line->line) + 1);
+	if (!line->new)
 		error_memory_failed(line, lst_var);
-	new = set_parsed_line(line->line, new, 0, 0);
-	syntax = syntax_error(new, 't', 'q', 0);
+	line->new = set_parsed_line(line->line, line->new, 0, 0);
+	syntax = syntax_error(line->new, 't', 'q', 0);
 	if (syntax != 0)
 	{
 		write(2, "minishell: syntax error near unexpected token \" ", 48);
-		write(2, &new[syntax], 1);
+		write(2, &line->new[syntax], 1);
 		write(2, " \"\n", 3);
-		free(new);
+		free(line->new);
+		line->new = NULL;
 		line->sig = 2;
-		return (NULL);
+		return ;
 	}
-	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:00:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 10:34:02 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 13:24:07 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	free_line_struct(t_line *line, int all)
 	if (line->new)
 		free(line->new);
 	line->new = NULL;
-	ft_lstclear_var(&line->red, free);
 	ft_lstclear_var(&line->redirec, free);
 	if (all == 1)
 		free(line);

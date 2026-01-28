@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:09:31 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 10:34:10 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 13:24:16 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	reinitialization(t_line *line, t_var *lst_var, t_pipe *child)
 		error_memory_failed(line, lst_var);
 	line->args = NULL;
 	line->block = NULL;
-	line->red = NULL;
 	line->redirec = NULL;
 	*child = pipe_init();
 	line->line = readline("minishell> ");
