@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 11:10:25 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 12:02:46 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
 			r_here_doc(child, line, lst_var, tmp);
 		tmp = tmp->next;
 	}
-	while (line->redirec)
-	{
-		printf("redirec->index=%d\nredirec->name=%d\nredirec->content=%s\n", line->redirec->index, line->redirec->rank, line->redirec->content);
-		line->redirec = line->redirec->next;
-	}
+	// while (line->redirec)
+	// {
+	// 	printf("redirec->index=%d\nredirec->name=%d\nredirec->content=%s\n", line->redirec->index, line->redirec->rank, line->redirec->content);
+	// 	line->redirec = line->redirec->next;
+	// }
 	i = 0;
 	while (line->block && line->block[i])
 	{

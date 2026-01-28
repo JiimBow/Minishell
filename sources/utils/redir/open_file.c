@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 11:21:07 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/28 12:06:38 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int	open_file(t_line *line, t_pipe *child, t_var *lst_var, int index)
 {
 	t_var	*tmp;
 	int		file_sig;
+	int		fd[2];
 
 	(void)lst_var;
 	tmp = line->redirec;
@@ -122,8 +123,12 @@ int	open_file(t_line *line, t_pipe *child, t_var *lst_var, int index)
 				file_sig = r_in(child, tmp->content);
 			else if (tmp->rank == REDIR_HEREDOC)
 			{
-				child->prev_fd = dup(STDIN_FILENO);
-				write(child->prev_fd, tmp->content, ft_strlen(tmp->content));
+				pipe(fd);
+				write(fd[1], tmp->content, ft_strlen(tmp->content));
+				close(fd[1]);
+				if (child->prev_fd != -1)
+					close(child->prev_fd);
+				child->prev_fd = fd[0];
 			}
 			else if (tmp->rank == REDIR_OUT)
 				file_sig = r_out(child, tmp->content);
