@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 17:55:26 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 18:01:07 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,5 +153,6 @@ void	handle_sigint(int signal);
 void	handle_sign_here_d(int signal);
 void	global_handle(t_line *line);
 void	get_last_status(__pid_t pid, __pid_t last_pid, t_line *line);
+void	handle_sig_cmd(int signal);
 
 #endif

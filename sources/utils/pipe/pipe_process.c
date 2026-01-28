@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 15:57:50 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 18:03:04 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	fork_process(t_line *line, t_var *lst_var, t_pipe *child, int pid)
 	else
 	{
 		close_fd(child->pipefd[1]);
-		signal(SIGINT, SIG_IGN);
+		signal(SIGINT, handle_sig_cmd);
 		close_fd(child->prev_fd);
 		if (child->index != line->row)
 			child->prev_fd = child->pipefd[0];

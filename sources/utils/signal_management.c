@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   signal_management.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 15:08:01 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 17:55:16 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/28 18:01:00 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	handle_sig_cmd(int signal)
+{
+	g_sig = signal;
+	if (g_sig == SIGINT)
+		ft_printf("\n");
+}
 
 void	handle_sign_here_d(int signal)
 {
