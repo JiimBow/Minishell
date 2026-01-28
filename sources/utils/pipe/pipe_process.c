@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 18:03:04 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/28 18:31:36 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static int	dup_fd_file(t_pipe *child, t_line *line, t_var *lst_var)
 			free_all(line, lst_var);
 			close_file(child, "dup error\n");
 		}
+		close_fd(child->pipefd[1]);
 		return (1);
 	}
 	return (0);
