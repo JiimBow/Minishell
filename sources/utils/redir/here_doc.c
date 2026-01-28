@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 13:04:05 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 14:46:49 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/28 15:13:54 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,18 +65,21 @@ int	r_here_doc(t_line *line, t_var *lst_var, t_var *redirec)
 	return (return_value(status));
 }
 
-int	hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc)
+char	*loop_readline(char *content)
 {
 	char	*until_lim;
 	int		empty_line;
 
 	empty_line = 0;
-	until_lim = NULL;
 	while (1)
 	{
 		until_lim = readline("> ");
 		if (g_sig == SIGINT)
-			return (1);
+		{
+			if (until_lim)
+				free(until_lim);
+			return (NULL);
+		}
 		if (until_lim)
 			break ;
 		if(!until_lim && empty_line == 0)
@@ -85,11 +88,21 @@ int	hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc)
 			ft_putstr_fd(" delimited by end-of-file (wanted `", 2);
 			ft_putstr_fd(content, 2);
 			ft_putstr_fd("')\n", 2);
-			return (1);
+			return (NULL);
 		}
 		free(until_lim);
 		empty_line = 1;
-	}	
+	}
+	return (until_lim);
+}
+
+int	hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc)
+{
+	char	*until_lim;
+
+	until_lim = loop_readline(content);
+	if (!until_lim)
+		return (1);
 	if (ft_strncmp(until_lim, content, ft_strlen(content)) == 0
 		&& (until_lim[ft_strlen(content)] == '\n'
 			|| until_lim[ft_strlen(content)] == '\0'))
