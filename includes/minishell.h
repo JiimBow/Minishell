@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 10:45:59 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/27 18:17:39 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,14 @@ typedef struct s_var
 	char			*name;
 	char			*content;
 	int				rank;
+	int				index;
 	struct s_var	*next;
 }	t_var;
 
 typedef struct s_line
 {
 	t_var	*red;
+	t_var	*redirec;
 	char	*line;
 	char	*new;
 	char	**block;
@@ -81,6 +83,8 @@ char	**ft_copy_env(t_var **lst_var);
 void	reinitialization(t_line *line, t_var *lst_var, t_pipe *child);
 
 // PARSING
+void	separate_redirection_2(t_line *line, t_var *lst_var, int index);
+
 int		is_quote(char c);
 int		is_space(char c);
 int		is_operator(char c);
@@ -104,7 +108,7 @@ int		ft_lstsize_var(t_var *lst);
 void	write_error(char *cmd_name, int code);
 long	ft_atoll(const char *nptr, int *overf);
 char	*get_env_path(t_var *lst_var, char *str);
-t_var	*ft_lst_new_var(char *name, char *content);
+t_var	*ft_lst_new_var(char *name, char *content, int index);
 void	ft_lstadd_back_var(t_var **lst, t_var *new);
 void	ft_lstclear_var(t_var **lst, void (*del)(void *));
 

@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:30:58 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/22 13:10:10 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/27 18:17:09 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_lstsize_var(t_var *lst)
 	return (count);
 }
 
-t_var	*ft_lst_new_var(char *name, char *content)
+t_var	*ft_lst_new_var(char *name, char *content, int index)
 {
 	t_var	*newnode;
 
@@ -38,6 +38,7 @@ t_var	*ft_lst_new_var(char *name, char *content)
 	newnode->name = ft_strdup(name);
 	newnode->content = ft_strdup(content);
 	newnode->rank = -1;
+	newnode->index = index;
 	newnode->next = NULL;
 	return (newnode);
 }

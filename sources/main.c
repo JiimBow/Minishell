@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 18:05:38 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/28 10:01:10 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,22 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int i)
 
 	line->new = parse_line(line, lst_var);
 	line->block = split_pipe(line, lst_var);
+
+	while (line->block && line->block[i])
+	{
+		line->block[i] = substr_var(line, lst_var, line->block[i]);
+		line->args = split_spaces(line, lst_var, line->block[i]);
+		separate_redirection_2(line, lst_var, i);
+		free_double_tab(line->args);
+		line->args = NULL;
+		i++;
+	}
+	while (line->redirec)
+	{
+		printf("redirec->index=%d\nredirec->name=%d\nredirec->content=%s\n", line->redirec->index, line->redirec->rank, line->redirec->content);
+		line->redirec = line->redirec->next;
+	}
+	i = 0;
 	while (line->block && line->block[i])
 	{
 		if (line->red)

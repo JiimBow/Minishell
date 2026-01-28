@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:38:33 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/26 14:17:15 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/27 18:15:23 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_var	*get_var(char **envp)
 			free(name);
 			error_memory_failed(NULL, lst_var);
 		}
-		ft_lstadd_back_var(&lst_var, ft_lst_new_var(name, content));
+		ft_lstadd_back_var(&lst_var, ft_lst_new_var(name, content, -1));
 		free(name);
 		free(content);
 		i++;
