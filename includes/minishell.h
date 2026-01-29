@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 16:39:39 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/29 17:39:47 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ void	close_file(t_pipe *child, char *message);
 pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child);
 
 // REDIRECTION
-int		open_file(t_line *line, t_pipe *child, int index);
+int		open_file(t_line *line, t_var *lst_var, t_pipe *child, int index);
 int		r_here_doc(t_line *line, t_var *lst_var, t_var *redirec);
 void	replace_args_without_redirection(t_line *line, t_var *lst_var);
 int		hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 16:39:44 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/29 17:40:22 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child)
 	if (parse_pipe(line, 'q') == 1)
 	{
 		write(2, "minishell: syntax error near unexpected token \" | \"\n", 52);
+		line->sig = 2;
 		return ;
 	}
 	// parse_quote_and_operators(line, lst_var);
@@ -68,7 +69,7 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child)
 		line->args = split_spaces(line, lst_var, line->block[i]);
 		replace_args_without_redirection(line, lst_var);
 		if (line->redirec)
-			line->sig = open_file(line, child, i);
+			line->sig = open_file(line, lst_var, child, i);
 		if (line->sig != 1)
 			last_pid = pipe_process(line, lst_var, child);
 		free_double_tab(line->args);

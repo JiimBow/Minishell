@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 13:46:37 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/29 16:39:49 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/29 17:35:02 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	separate_redirection(t_line *line, t_var *lst_var, int index)
 {
 	t_var	*new;
 	char	*tmp;
+	char	*tmp2;
 	int		i;
 
 	i = 0;
@@ -60,7 +61,11 @@ static void	separate_redirection(t_line *line, t_var *lst_var, int index)
 			}
 			else
 				tmp = strdup_unquote(line, lst_var, line->args[i], 0);
-			new = ft_lst_new_var(NULL, tmp, index);
+			// tmp2 = ft_strdup(line->args[i]);
+			// tmp2 = substr_var_unquote(line, lst_var, tmp2, 0);
+			tmp2 = strdup_unquote(line, lst_var, line->args[i], 0);
+			new = ft_lst_new_var(tmp2, tmp, index);
+			free(tmp2);
 			free(tmp);
 			if (ft_strncmp(line->args[i - 1], "<", 2) == 0)
 				new->rank = REDIR_IN;
