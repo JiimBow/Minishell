@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 18:51:15 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/29 18:54:11 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	r_in(t_line *line, t_var *lst_var, t_pipe *child, char *content)
 {
 	char	*content_unquote;
+
 	content_unquote = strdup_unquote(line, lst_var, content, 0);
 	close_fd(child->prev_fd);
 	child->prev_fd = open(content_unquote, O_RDONLY);
