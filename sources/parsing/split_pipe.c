@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   split_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:16:08 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/28 13:58:38 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 21:38:36 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	parse_word(char *line, int i)
+int	parse_word(char *line, int i)
 {
 	char	quote;
 

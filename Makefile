@@ -6,7 +6,7 @@
 #    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/29 18:45:21 by jodone           ###   ########.fr        #
+#    Updated: 2026/01/29 21:08:34 by jodone           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRC			= $(DIR)main.c \
 			$(PARSING)substr_var_utils.c \
 			$(PARSING)parse_redirection.c \
 			$(PARSING)parse_redirection_utils.c \
+			$(PARSING)conca_split.c \
 			$(CMD)find_path.c \
 			$(CMD)cmd_process.c \
 			$(ENV)get_env.c \

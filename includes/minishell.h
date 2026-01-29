@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 19:58:27 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/29 21:38:44 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	reinitialization(t_line *line, t_var *lst_var, t_pipe *child);
 int		is_quote(char c);
 int		is_space(char c);
 int		is_operator(char c);
+int		parse_word(char *line, int i);
 char	*get_name(const char *s);
 int		is_redirection(char *args);
 int		quotes_unclosed(char *line);
@@ -109,7 +110,7 @@ int		syntax_error(char *line, char token, char quote, size_t i);
 char	*strdup_unquote(t_line *line, t_var *lst_var, char *s, int j);
 char	*find_cmd_path(t_line *line, char **paths, int i, char *full_path);
 int		get_size_with_variable(t_line *line, const char *s, int count, int i);
-char	*substr_var_unquote(t_line *line, t_var *lst_var, char *s);
+char	*substr_var_unquote(t_line *line, t_var *lst_var, char *s, int *expand);
 
 // UTILITIES
 char	*get_env_name(char *line);
@@ -161,5 +162,8 @@ void	handle_sig_cmd(int signal);
 void	global_handle(t_line *line);
 void	handle_sign_here_d(int signal);
 void	get_last_status(__pid_t pid, __pid_t last_pid, t_line *line);
+
+// CONCA_SPLIT
+int		ft_count_args(char **args);
 
 #endif
