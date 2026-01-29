@@ -6,13 +6,13 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:26:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/29 11:03:04 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 21:41:52 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	parse_word(char *line, int i)
+int	parse_word(char *line, int i)
 {
 	char	quote;
 
