@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 18:35:24 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/29 19:59:41 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,18 @@ void	ex_block_process(t_line *line, t_var *lst_var, t_pipe *child)
 	line->ex_block = ft_split(line->line, '\n');
 	while (line->ex_block[i])
 	{
+		if (i > 0)
+		{
+			line->env = ft_copy_env(&lst_var);
+			if (!line->env)
+				error_memory_failed(line, lst_var);
+			*child = pipe_init();
+		}
 		if (line->ex_block[i][0] != '\0')
 			add_history(line->ex_block[i]);
 		minishell(line, lst_var, child, i);
 		i++;
+		free_line_struct(line, 0);
 	}
 }
 
@@ -99,7 +107,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!line->line)
 			free_before_exit(line, lst_var);
 		ex_block_process(line, lst_var, &child);
-		free_line_struct(line, 0);
+		free_double_tab(line->ex_block);
 		line->prev_sig = line->sig;
 	}
 	return (0);
