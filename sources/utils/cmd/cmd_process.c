@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 14:32:00 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 18:17:31 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,20 @@ void	write_error(char *cmd_name, int code)
 {
 	if (code == 1)
 	{
-		write(2, cmd_name, ft_strlen(cmd_name));
-		write(2, ": command not found\n", 20);
+		ft_putstr_fd(cmd_name, 2);
+		ft_putstr_fd(": command not found\n", 2);
 	}
-	if (code == 2)
+	else if (code == 2)
 	{
-		write(2, "minishell: ", 11);
-		write(2, cmd_name, ft_strlen(cmd_name));
-		write(2, ": No such file or directory\n", 28);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd_name, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+	}
+	else if (code == 3)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd_name, 2);
+		ft_putstr_fd(": ambiguous redirect\n", 2);
 	}
 }
 

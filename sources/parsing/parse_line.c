@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/29 16:19:54 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/29 18:10:17 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,10 +156,6 @@ void	parse_quote_and_operators(t_line *line, t_var *lst_var)
 		line->sig = 2;
 		return ;
 	}
-	// line->new = ft_calloc(sizeof(char), get_parsed_line_lenght(line->line) + 1);
-	// if (!line->new)
-	// 	error_memory_failed(line, lst_var);
-	// line->new = set_parsed_line(line->line, line->new, 0, 0);
 	syntax = syntax_error(line->new, 't', 'q', 0);
 	if (syntax != 0)
 	{

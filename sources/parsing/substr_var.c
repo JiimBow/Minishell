@@ -6,13 +6,13 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:36:00 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/29 16:36:18 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 18:06:39 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	fill_tab(char **env, const char *s, char *tab, int *j, int ex)
+static int	fill_tab(char **env, const char *s, char *tab, int *j)
 {
 	char	*name;
 	char	*content;
@@ -25,19 +25,15 @@ static int	fill_tab(char **env, const char *s, char *tab, int *j, int ex)
 		return (0);
 	content = get_content(env, name);
 	n = 0;
-	if (ex == 1)
-		tab[(*j)++] = '"';
 	while (content && content[n])
 		tab[(*j)++] = content[n++];
-	if (ex == 1)
-		tab[(*j)++] = '"';
 	n = ft_strlen(name);
 	free(name);
 	free(content);
 	return (n);
 }
 
-static int	change_variable(t_line *line, const char *s, char *tab, int *j, int ex)
+static int	change_variable(t_line *line, const char *s, char *tab, int *j)
 {
 	char	*tmp;
 	int		count;
@@ -56,7 +52,7 @@ static int	change_variable(t_line *line, const char *s, char *tab, int *j, int e
 		free(tmp);
 	}
 	else if ((s[i + 1] == '_' || ft_isalpha(s[i + 1])))
-		i += fill_tab(line->env, s + i + 1, tab, j, ex) + 1;
+		i += fill_tab(line->env, s + i + 1, tab, j) + 1;
 	else if (is_quote(s[i + 1]))
 		i++;
 	else
@@ -64,7 +60,7 @@ static int	change_variable(t_line *line, const char *s, char *tab, int *j, int e
 	return (i);
 }
 
-static int	change_var_in_quote(t_line *line, const char *s, char *tab, int *j, int ex)
+static int	change_var_in_quote(t_line *line, const char *s, char *tab, int *j)
 {
 	char	quote;
 	int		i;
@@ -76,7 +72,7 @@ static int	change_var_in_quote(t_line *line, const char *s, char *tab, int *j, i
 	{
 		if (quote == '"' && s[i] == '$' && s[i + 1]
 			&& !is_quote(s[i + 1]))
-			i += change_variable(line, s + i, tab, j, ex);
+			i += change_variable(line, s + i, tab, j);
 		else
 			tab[(*j)++] = s[i++];
 	}
@@ -84,7 +80,7 @@ static int	change_var_in_quote(t_line *line, const char *s, char *tab, int *j, i
 	return (i);
 }
 
-char	*substr_var(t_line *line, t_var *lst_var, char *s, int ex)
+char	*substr_var(t_line *line, t_var *lst_var, char *s)
 {
 	char	*tab;
 	int		count;
@@ -102,9 +98,9 @@ char	*substr_var(t_line *line, t_var *lst_var, char *s, int ex)
 	while (s[i])
 	{
 		if (is_quote(s[i]))
-			i += change_var_in_quote(line, s + i, tab, &j, ex);
+			i += change_var_in_quote(line, s + i, tab, &j);
 		else if (s[i] == '$' && s[i + 1])
-			i += change_variable(line, s + i, tab, &j, ex);
+			i += change_variable(line, s + i, tab, &j);
 		else
 			tab[j++] = s[i++];
 	}
@@ -112,7 +108,7 @@ char	*substr_var(t_line *line, t_var *lst_var, char *s, int ex)
 	return (tab);
 }
 
-static int	change_var_sup_quote(t_line *line, const char *s, char *tab, int *j, int ex)
+static int	change_var_sup_quote(t_line *line, const char *s, char *tab, int *j)
 {
 	char	quote;
 	int		i;
@@ -123,14 +119,14 @@ static int	change_var_sup_quote(t_line *line, const char *s, char *tab, int *j, 
 	{
 		if (quote == '"' && s[i] == '$' && s[i + 1]
 			&& !is_quote(s[i + 1]))
-			i += change_variable(line, s + i, tab, j, ex);
+			i += change_variable(line, s + i, tab, j);
 		else
 			tab[(*j)++] = s[i++];
 	}
 	return (i + 1);
 }
 
-char	*substr_var_unquote(t_line *line, t_var *lst_var, char *s, int ex)
+char	*substr_var_unquote(t_line *line, t_var *lst_var, char *s)
 {
 	char	*tab;
 	int		count;
@@ -148,9 +144,9 @@ char	*substr_var_unquote(t_line *line, t_var *lst_var, char *s, int ex)
 	while (s[i])
 	{
 		if (is_quote(s[i]))
-			i += change_var_sup_quote(line, s + i, tab, &j, ex);
+			i += change_var_sup_quote(line, s + i, tab, &j);
 		else if (s[i] == '$' && s[i + 1])
-			i += change_variable(line, s + i, tab, &j, ex);
+			i += change_variable(line, s + i, tab, &j);
 		else
 			tab[j++] = s[i++];
 	}
