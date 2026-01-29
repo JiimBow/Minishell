@@ -3,27 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 18:54:11 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/29 19:01:02 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	r_in(t_line *line, t_var *lst_var, t_pipe *child, char *content)
+static int	r_in(t_line *line, t_var *lst_var, t_pipe *child, t_var *tmp)
 {
-	char	*content_unquote;
-
-	content_unquote = strdup_unquote(line, lst_var, content, 0);
+	if (tmp->content && tmp->content[0] == '\0')
+	{
+		write_error(tmp->name, 3);
+		return (1);
+	}
+	tmp->content = strdup_unquote(line, lst_var, tmp->content, 0);
 	close_fd(child->prev_fd);
-	child->prev_fd = open(content_unquote, O_RDONLY);
+	child->prev_fd = open(tmp->content_unquote, O_RDONLY);
 	if (child->prev_fd < 0)
 	{
 		write(2, "minishell: ", 11);
-		perror(content_unquote);
-		free(content_unquote);
+		perror(tmp->content);
 		return (1);
 	}
 	free(content_unquote);
@@ -60,6 +62,7 @@ int	write_in_prev_fd(t_var *tmp, t_pipe *child)
 
 	if (pipe(fd) == -1)
 	{
+		write(2, "minishell: ", 11);
 		perror("pipe");
 		return (1);
 	}
@@ -86,17 +89,7 @@ int	open_file(t_line *line, t_var *lst_var, t_pipe *child, int index)
 		if (tmp->index == index)
 		{
 			if (tmp->rank == REDIR_IN)
-			{
-				if (tmp->content && tmp->content[0] == '\0')
-				{
-					ft_putstr_fd("minishell: ", 2);
-					ft_putstr_fd(tmp->name, 2);
-					ft_putstr_fd(": ambiguous redirect\n", 2);
-					file_sig = 1;
-				}
-				else
-					file_sig = r_in(line, lst_var, child, tmp->content);
-			}
+				file_sig = r_in(line, lst_var, child, tmp);
 			else if (tmp->rank == REDIR_HEREDOC)
 				file_sig = write_in_prev_fd(tmp, child);
 			else if (tmp->rank == REDIR_OUT)

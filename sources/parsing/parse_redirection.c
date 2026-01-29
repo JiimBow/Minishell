@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 13:46:37 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/29 17:35:02 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 18:55:01 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,29 @@ static int	is_quote_in_tab(char *tab)
 	return (0);
 }
 
-static void	separate_redirection(t_line *line, t_var *lst_var, int index)
+static t_var	*crea_node_red(t_line *line, t_var *lst_var, int index, int i)
 {
 	t_var	*new;
 	char	*tmp;
 	char	*tmp2;
+
+	if (ft_strncmp(line->args[i - 1], "<<", 3) != 0)
+	{
+		tmp = ft_strdup(line->args[i]);
+		tmp = substr_var(line, lst_var, tmp);
+	}
+	else
+		tmp = strdup_unquote(line, lst_var, line->args[i], 0);
+	tmp2 = strdup_unquote(line, lst_var, line->args[i], 0);
+	new = ft_lst_new_var(tmp2, tmp, index);
+	free(tmp2);
+	free(tmp);
+	return (new);
+}
+
+static void	separate_redirection(t_line *line, t_var *lst_var, int index)
+{
+	t_var	*new;
 	int		i;
 
 	i = 0;
@@ -54,19 +72,7 @@ static void	separate_redirection(t_line *line, t_var *lst_var, int index)
 		if (is_redirection(line->args[i++]))
 		{
 			line->quote = is_quote_in_tab(line->args[i]);
-			if (ft_strncmp(line->args[i - 1], "<<", 3) != 0)
-			{
-				tmp = ft_strdup(line->args[i]);
-				tmp = substr_var(line, lst_var, tmp, 0);
-			}
-			else
-				tmp = strdup_unquote(line, lst_var, line->args[i], 0);
-			// tmp2 = ft_strdup(line->args[i]);
-			// tmp2 = substr_var_unquote(line, lst_var, tmp2, 0);
-			tmp2 = strdup_unquote(line, lst_var, line->args[i], 0);
-			new = ft_lst_new_var(tmp2, tmp, index);
-			free(tmp2);
-			free(tmp);
+			new = crea_node_red(line, lst_var, index, i);
 			if (ft_strncmp(line->args[i - 1], "<", 2) == 0)
 				new->rank = REDIR_IN;
 			else if (ft_strncmp(line->args[i - 1], "<<", 3) == 0)
@@ -83,6 +89,8 @@ static void	separate_redirection(t_line *line, t_var *lst_var, int index)
 int	parse_redirection(t_line *line, t_var *lst_var)
 {
 	t_var	*tmp;
+	int		syntax;
+	int		index;
 	int		i;
 
 	i = 0;
@@ -90,13 +98,12 @@ int	parse_redirection(t_line *line, t_var *lst_var)
 	{
 		line->args = split_spaces(line, lst_var, line->block[i]);
 		separate_redirection(line, lst_var, i);
-		// line->block[i] = substr_var(line, lst_var, line->block[i], 0);
 		free_double_tab(line->args);
 		line->args = NULL;
 		i++;
 	}
 	tmp = line->redirec;
-	int	index = 0;
+	index = 0;
 	while (index < i && line->sig != 130)
 	{
 		if (tmp && tmp->index == index)
@@ -111,7 +118,6 @@ int	parse_redirection(t_line *line, t_var *lst_var)
 			line->sig = 2;
 			return (1);
 		}
-		int syntax = 0;
 		syntax = syntax_error(line->new, 't', 'q', 0);
 		if (syntax != 0)
 		{
@@ -126,10 +132,4 @@ int	parse_redirection(t_line *line, t_var *lst_var)
 		index++;
 	}
 	return (0);
-	// while (tmp && line->sig != 130)
-	// {
-	// 	if (tmp->rank == 2)
-	// 		line->sig = r_here_doc(line, lst_var, tmp);
-	// 	tmp = tmp->next;
-	// }
 }
