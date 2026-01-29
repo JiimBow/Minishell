@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:36:00 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/29 14:25:29 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 16:36:18 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,52 @@ char	*substr_var(t_line *line, t_var *lst_var, char *s, int ex)
 	{
 		if (is_quote(s[i]))
 			i += change_var_in_quote(line, s + i, tab, &j, ex);
+		else if (s[i] == '$' && s[i + 1])
+			i += change_variable(line, s + i, tab, &j, ex);
+		else
+			tab[j++] = s[i++];
+	}
+	free(s);
+	return (tab);
+}
+
+static int	change_var_sup_quote(t_line *line, const char *s, char *tab, int *j, int ex)
+{
+	char	quote;
+	int		i;
+
+	i = 0;
+	quote = s[i++];
+	while (s[i] && s[i] != quote)
+	{
+		if (quote == '"' && s[i] == '$' && s[i + 1]
+			&& !is_quote(s[i + 1]))
+			i += change_variable(line, s + i, tab, j, ex);
+		else
+			tab[(*j)++] = s[i++];
+	}
+	return (i + 1);
+}
+
+char	*substr_var_unquote(t_line *line, t_var *lst_var, char *s, int ex)
+{
+	char	*tab;
+	int		count;
+	int		j;
+	int		i;
+
+	if (!line->env || !*line->env || !s)
+		return (NULL);
+	count = get_size_with_variable(line, s, 0, 0);
+	tab = ft_calloc(sizeof(char), count + 1);
+	if (!tab)
+		error_memory_failed(line, lst_var);
+	i = 0;
+	j = 0;
+	while (s[i])
+	{
+		if (is_quote(s[i]))
+			i += change_var_sup_quote(line, s + i, tab, &j, ex);
 		else if (s[i] == '$' && s[i + 1])
 			i += change_variable(line, s + i, tab, &j, ex);
 		else

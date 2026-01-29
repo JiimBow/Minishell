@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 14:25:58 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 15:04:44 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ char	**split_spaces(t_line *line, t_var *lst_var, char *block);
 char	*strdup_unquote(t_line *line, t_var *lst_var, char *s, int j);
 char	*find_cmd_path(t_line *line, char **paths, int i, char *full_path);
 int		get_size_with_variable(t_line *line, const char *s, int count, int i);
+char	*substr_var_unquote(t_line *line, t_var *lst_var, char *s, int ex);
 
 // UTILITIES
 char	*get_env_name(char *line);
@@ -151,9 +152,9 @@ int		hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc);
 
 // SIGNAL
 void	handle_sigint(int signal);
-void	handle_sign_here_d(int signal);
-void	global_handle(t_line *line);
-void	get_last_status(__pid_t pid, __pid_t last_pid, t_line *line);
 void	handle_sig_cmd(int signal);
+void	global_handle(t_line *line);
+void	handle_sign_here_d(int signal);
+void	get_last_status(__pid_t pid, __pid_t last_pid, t_line *line);
 
 #endif

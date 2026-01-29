@@ -6,11 +6,26 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 15:52:52 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/29 11:01:52 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 16:28:41 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	variable_not_existed(t_line *line, t_var *lst_var, char *tab)
+{
+	char	*tmp;
+
+	tmp = ft_substr(tab, 0, ft_strlen(tab));
+	tmp = substr_var(line, lst_var, tmp, 0);
+	if (tmp && tmp[0] == '\0')
+	{
+		free(tmp);
+		return (1);
+	}
+	free(tmp);
+	return (0);
+}
 
 static char	**reduce_args(t_line *line, t_var *lst_var, int i)
 {
@@ -21,8 +36,13 @@ static char	**reduce_args(t_line *line, t_var *lst_var, int i)
 	if (!line->args)
 		return (NULL);
 	while (line->args[i])
-		if (is_redirection(line->args[i++]))
+	{
+		if (is_redirection(line->args[i]))
 			len += 2;
+		else if (line->args[i][0] == '$')
+			len += variable_not_existed(line, lst_var, line->args[i]);
+		i++;
+	}
 	new_args = (char **)malloc(sizeof(char *) * (i - len + 1));
 	if (!new_args)
 		error_memory_failed(line, lst_var);
@@ -33,6 +53,8 @@ static char	**reduce_args(t_line *line, t_var *lst_var, int i)
 	{
 		if (is_redirection(line->args[i]))
 			i += 2;
+		else if (variable_not_existed(line, lst_var, line->args[i]))
+			i++;
 		else
 			new_args[len++] = ft_strdup(line->args[i++]);
 	}
@@ -49,8 +71,9 @@ void	replace_args_without_redirection(t_line *line, t_var *lst_var)
 	i = 0;
 	while (line->args && line->args[i])
 	{
-		tmp = strdup_unquote(line, lst_var, line->args[i], 0);
-		free(line->args[i]);
+		// tmp = strdup_unquote(line, lst_var, line->args[i], 0);
+		tmp = substr_var_unquote(line, lst_var, line->args[i], 0);
+		// free(line->args[i]);
 		line->args[i] = ft_strdup(tmp);
 		free(tmp);
 		i++;
