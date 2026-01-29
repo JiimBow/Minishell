@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 19:01:02 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 19:05:51 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,21 @@
 
 static int	r_in(t_line *line, t_var *lst_var, t_pipe *child, t_var *tmp)
 {
+	char	*content_unquote;
+
 	if (tmp->content && tmp->content[0] == '\0')
 	{
-		write_error(tmp->name, 3);
+		write_error(tmp->name, 4);
 		return (1);
 	}
-	tmp->content = strdup_unquote(line, lst_var, tmp->content, 0);
+	content_unquote = strdup_unquote(line, lst_var, tmp->content, 0);
 	close_fd(child->prev_fd);
-	child->prev_fd = open(tmp->content_unquote, O_RDONLY);
+	child->prev_fd = open(content_unquote, O_RDONLY);
 	if (child->prev_fd < 0)
 	{
 		write(2, "minishell: ", 11);
 		perror(tmp->content);
+		free(content_unquote);
 		return (1);
 	}
 	free(content_unquote);

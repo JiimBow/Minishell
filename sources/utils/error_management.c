@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_management.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 18:44:00 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 18:44:34 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/29 19:09:34 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,11 @@ void	write_error(char *cmd_name, int code)
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(cmd_name, 2);
 		ft_putstr_fd(": Is a directory\n", 2);
+	}
+	if (code == 4)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd_name, 2);
+		ft_putstr_fd(": ambiguous redirect\n", 2);
 	}
 }
