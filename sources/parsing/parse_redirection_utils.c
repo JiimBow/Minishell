@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 15:52:52 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/29 18:42:43 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 19:31:13 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,19 @@ static int	variable_not_existed(t_line *line, t_var *lst_var, char *tab)
 	return (0);
 }
 
-static int	count_size_no_redirection(t_line *line, t_var *lst_var, char **tab)
+static int	count_size_no_redirection(t_line *line, t_var *lst_var, int *i)
 {
-	int	i;
 	int	count;
 
-	i = 0;
+	*i = 0;
 	count = 0;
-	while (tab[i])
+	while (line->args[*i])
 	{
-		if (is_redirection(tab[i]))
+		if (is_redirection(line->args[*i]))
 			count += 2;
-		else if (variable_not_existed(line, lst_var, tab[i]))
+		else if (variable_not_existed(line, lst_var, line->args[*i]))
 			count++;
-		i++;
+		(*i)++;
 	}
 	return (count);
 }
@@ -52,7 +51,7 @@ static char	**reduce_args(t_line *line, t_var *lst_var, int i)
 
 	if (!line->args)
 		return (NULL);
-	len = count_size_no_redirection(line, lst_var, line->args);
+	len = count_size_no_redirection(line, lst_var, &i);
 	new_args = (char **)malloc(sizeof(char *) * (i - len + 1));
 	if (!new_args)
 		error_memory_failed(line, lst_var);
