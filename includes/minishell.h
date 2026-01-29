@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 15:04:44 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 16:39:39 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,20 @@ int		is_space(char c);
 int		is_operator(char c);
 char	*get_name(const char *s);
 int		is_redirection(char *args);
+int		quotes_unclosed(char *line);
 int		skip_spaces(char *tab, int i);
+int		get_parsed_line_lenght(char *line);
 char	**ft_free_tab(char **tab, int line);
 char	*get_content(char **env, char *tab);
 int		parse_export(char *name, char *args);
+int		parse_pipe(t_line *line, char quote);
 void	split_pipe(t_line *line, t_var *lst_var);
-void	parse_redirection(t_line *line, t_var *lst_var);
-char	*substr_var(t_line *line, t_var *lst_var, char *s, int ex);
+int		parse_redirection(t_line *line, t_var *lst_var);
+char	*set_parsed_line(char *line, char *new, int i, int j);
 void	parse_quote_and_operators(t_line *line, t_var *lst_var);
 char	**split_spaces(t_line *line, t_var *lst_var, char *block);
+char	*substr_var(t_line *line, t_var *lst_var, char *s, int ex);
+int		syntax_error(char *line, char token, char quote, size_t i);
 char	*strdup_unquote(t_line *line, t_var *lst_var, char *s, int j);
 char	*find_cmd_path(t_line *line, char **paths, int i, char *full_path);
 int		get_size_with_variable(t_line *line, const char *s, int count, int i);

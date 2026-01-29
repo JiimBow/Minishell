@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 13:46:37 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/29 15:05:15 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 16:39:49 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	separate_redirection(t_line *line, t_var *lst_var, int index)
 	}
 }
 
-void	parse_redirection(t_line *line, t_var *lst_var)
+int	parse_redirection(t_line *line, t_var *lst_var)
 {
 	t_var	*tmp;
 	int		i;
@@ -91,10 +91,40 @@ void	parse_redirection(t_line *line, t_var *lst_var)
 		i++;
 	}
 	tmp = line->redirec;
-	while (tmp && line->sig != 130)
+	int	index = 0;
+	while (index < i && line->sig != 130)
 	{
-		if (tmp->rank == 2)
-			line->sig = r_here_doc(line, lst_var, tmp);
-		tmp = tmp->next;
+		if (tmp && tmp->index == index)
+		{
+			if (tmp->rank == 2)
+				line->sig = r_here_doc(line, lst_var, tmp);
+			tmp = tmp->next;
+		}
+		if (quotes_unclosed(line->line))
+		{
+			write(2, "minishell: syntax error unclosed quote\n", 39);
+			line->sig = 2;
+			return (1);
+		}
+		int syntax = 0;
+		syntax = syntax_error(line->new, 't', 'q', 0);
+		if (syntax != 0)
+		{
+			write(2, "minishell: syntax error near unexpected token \" ", 48);
+			write(2, &line->new[syntax], 1);
+			write(2, " \"\n", 3);
+			free(line->new);
+			line->new = NULL;
+			line->sig = 2;
+			return (1);
+		}
+		index++;
 	}
+	return (0);
+	// while (tmp && line->sig != 130)
+	// {
+	// 	if (tmp->rank == 2)
+	// 		line->sig = r_here_doc(line, lst_var, tmp);
+	// 	tmp = tmp->next;
+	// }
 }
