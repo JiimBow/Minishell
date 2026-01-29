@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:53:10 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/21 15:55:25 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/29 18:31:12 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*find_cmd_path(t_line *line, char **paths, int i, char *full_path)
 			free(full_path);
 			full_path = NULL;
 		}
-		pointer_free(paths);
+		free_double_tab(paths);
 	}
 	else
 		full_path = ft_strdup("fail");

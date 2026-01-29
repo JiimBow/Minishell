@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 17:41:26 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 18:51:15 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,18 @@
 
 static int	r_in(t_line *line, t_var *lst_var, t_pipe *child, char *content)
 {
-	content = strdup_unquote(line, lst_var, content, 0);
+	char	*content_unquote;
+	content_unquote = strdup_unquote(line, lst_var, content, 0);
 	close_fd(child->prev_fd);
-	child->prev_fd = open(content, O_RDONLY);
+	child->prev_fd = open(content_unquote, O_RDONLY);
 	if (child->prev_fd < 0)
 	{
 		write(2, "minishell: ", 11);
-		perror(content);
+		perror(content_unquote);
+		free(content_unquote);
 		return (1);
 	}
+	free(content_unquote);
 	return (0);
 }
 

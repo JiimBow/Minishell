@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:09:31 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 17:54:59 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 18:28:18 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	reinitialization(t_line *line, t_var *lst_var, t_pipe *child)
 		error_memory_failed(line, lst_var);
 	line->args = NULL;
 	line->block = NULL;
+	line->ex_block = NULL;
 	line->redirec = NULL;
 	line->sig = 0;
 	*child = pipe_init();

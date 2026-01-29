@@ -3,44 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 14:32:00 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 18:44:38 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	write_error(char *cmd_name, int code)
+static void	exec_error(t_line *line, char *path_cmd)
 {
-	if (code == 1)
+	if (!path_cmd)
+		write_error(line->args[0], 1);
+	else if (ft_strncmp(line->args[0], ".", 2) == 0)
 	{
-		write(2, cmd_name, ft_strlen(cmd_name));
-		write(2, ": command not found\n", 20);
+		ft_putstr_fd("minishell: .: filename argument required\n", 2);
+		free_line_struct(line, 1);
+		exit(2);
 	}
-	if (code == 2)
-	{
-		write(2, "minishell: ", 11);
-		write(2, cmd_name, ft_strlen(cmd_name));
-		write(2, ": No such file or directory\n", 28);
-	}
-}
-
-void	pointer_free(char **str)
-{
-	int	i;
-
-	i = 0;
-	if (str)
-	{
-		while (str[i])
-		{
-			free(str[i]);
-			i++;
-		}
-		free(str);
-	}
+	else
+		write_error(line->args[0], 2);
+	free_line_struct(line, 1);
+	exit(127);
 }
 
 static void	exec_process(t_line *line, t_var *lst_var)
@@ -59,24 +44,11 @@ static void	exec_process(t_line *line, t_var *lst_var)
 		free(path_cmd);
 		if (line->is_dir == 1)
 		{
-			ft_putstr_fd("minishell: ", 2);
-			ft_putstr_fd(line->args[0], 2);
-			ft_putstr_fd(": Is a directory\n", 2);
+			write_error(line->args[0], 3);
 			free_line_struct(line, 1);
 			exit(126);
 		}
-		if (!path_cmd)
-			write_error(line->args[0], 1);
-		else if (ft_strncmp(line->args[0], ".", 2) == 0)
-		{
-			ft_putstr_fd("minishell: .: filename argument required\n", 2);
-			free_line_struct(line, 1);
-			exit(2);
-		}
-		else
-			write_error(line->args[0], 2);
-		free_line_struct(line, 1);
-		exit(127);
+		exec_error(line, path_cmd);
 	}
 }
 
@@ -92,7 +64,7 @@ int	verif_if_first_argument_is_dir(t_line *line)
 	return (0);
 }
 
-int	process(t_line *line, t_var *lst_var, int is_fork)
+static int	process(t_line *line, t_var *lst_var, int is_fork)
 {
 	__pid_t	pid;
 	int		status;
@@ -117,4 +89,31 @@ int	process(t_line *line, t_var *lst_var, int is_fork)
 	else
 		exec_process(line, lst_var);
 	return (return_value(status));
+}
+
+void	assignement(t_line *line, t_var *lst_var, int is_fork)
+{
+	if (line->args && line->args[0]
+		&& ft_strncmp(line->args[0], "cd", 3) == 0)
+		line->sig = ft_cd(line, lst_var);
+	else if (line->args && line->args[0]
+		&& ft_strncmp(line->args[0], "pwd", 4) == 0)
+		line->sig = ft_pwd(lst_var);
+	else if (line->args && line->args[0] && !line->args[1]
+		&& ft_strncmp(line->args[0], "env", 4) == 0)
+		line->sig = ft_env(line->env);
+	else if (line->args && line->args[0]
+		&& ft_strncmp(line->args[0], "echo", 5) == 0)
+		line->sig = ft_echo(line->args);
+	else if (line->args && line->args[0]
+		&& ft_strncmp(line->args[0], "unset", 6) == 0)
+		line->sig = ft_unset(line, &lst_var);
+	else if (line->args && line->args[0]
+		&& ft_strncmp(line->args[0], "exit", 5) == 0)
+		line->sig = free_before_exit(line, lst_var);
+	else if (line->args && line->args[0]
+		&& ft_strncmp(line->args[0], "export", 7) == 0)
+		line->sig = ft_export(line, &lst_var, line->args);
+	else if (line->args)
+		line->sig = process(line, lst_var, is_fork);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 17:39:47 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 18:32:50 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_line
 	t_var	*redirec;
 	char	*line;
 	char	*new;
+	char	**ex_block;
 	char	**block;
 	char	**args;
 	char	**env;
@@ -82,6 +83,7 @@ t_pipe	pipe_init(void);
 t_var	*get_var(char **envp);
 t_line	*creation_line(t_var *lst_var);
 char	**ft_copy_env(t_var **lst_var);
+void	ex_block_process(t_line *line, t_var *lst_var, t_pipe *child);
 void	reinitialization(t_line *line, t_var *lst_var, t_pipe *child);
 
 // PARSING
@@ -130,12 +132,10 @@ int		ft_pwd(t_var *lst_var);
 void	display_export(t_var **lst_var);
 int		ft_cd(t_line *line, t_var *lst_var);
 int		ft_unset(t_line *line, t_var **lst_var);
-int		process(t_line *line, t_var *lst_var, int is_fork);
 int		ft_export(t_line *line, t_var **lst_var, char **args);
 void	assignement(t_line *line, t_var *lst_var, int is_fork);
 
 // MEMORY MANAGEMENT
-void	pointer_free(char **str);
 void	free_double_tab(char **tab);
 void	free_all(t_line *line, t_var *lst_var);
 void	free_line_struct(t_line *line, int all);
