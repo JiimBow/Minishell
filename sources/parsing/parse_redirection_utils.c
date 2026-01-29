@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 15:52:52 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/28 15:53:52 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 11:01:52 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*strdup_unquote(t_line *line, t_var *lst_var, char *s, int j)
 	i = 0;
 	while (i < n)
 	{
-		if (is_quote(s[i]))
+		if (is_quote(s[i]) && s[i + 1])
 		{
 			quote = s[i++];
 			while (i < n && s[i] != quote)

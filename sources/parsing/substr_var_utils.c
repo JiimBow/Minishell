@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:36:41 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/28 15:25:24 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 14:05:27 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int	variable_size(t_line *line, const char *s, int *i)
 		(*i)++;
 	}
 	else if (s[*i + 1] == '_' || ft_isalnum(s[*i + 1]))
-		count = get_count(line->env, s + *i + 1, i);
+		count = get_count(line->env, s + *i + 1, i) + 2;
 	else
 		count = 1;
 	return (count);

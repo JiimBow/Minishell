@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 22:53:25 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 14:32:00 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	write_error(char *cmd_name, int code)
 	}
 	if (code == 2)
 	{
+		write(2, "minishell: ", 11);
 		write(2, cmd_name, ft_strlen(cmd_name));
 		write(2, ": No such file or directory\n", 28);
 	}
@@ -68,7 +69,7 @@ static void	exec_process(t_line *line, t_var *lst_var)
 			write_error(line->args[0], 1);
 		else if (ft_strncmp(line->args[0], ".", 2) == 0)
 		{
-			ft_putstr_fd("minishell: .: \n", 2);
+			ft_putstr_fd("minishell: .: filename argument required\n", 2);
 			free_line_struct(line, 1);
 			exit(2);
 		}

@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 22:01:20 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 14:25:58 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ char	*get_content(char **env, char *tab);
 int		parse_export(char *name, char *args);
 void	split_pipe(t_line *line, t_var *lst_var);
 void	parse_redirection(t_line *line, t_var *lst_var);
-char	*substr_var(t_line *line, t_var *lst_var, char *s);
+char	*substr_var(t_line *line, t_var *lst_var, char *s, int ex);
 void	parse_quote_and_operators(t_line *line, t_var *lst_var);
 char	**split_spaces(t_line *line, t_var *lst_var, char *block);
 char	*strdup_unquote(t_line *line, t_var *lst_var, char *s, int j);

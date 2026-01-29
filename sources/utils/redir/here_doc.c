@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 13:04:05 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 19:29:07 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 14:26:12 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc)
 		return (1);
 	}
 	if (line->quote == 0)
-		until_lim = substr_var(line, lst_var, until_lim);
+		until_lim = substr_var(line, lst_var, until_lim, 1);
 	write(pipe_doc, until_lim, ft_strlen(until_lim));
 	write(pipe_doc, "\n", 1);
 	free(until_lim);

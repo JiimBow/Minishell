@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/23 22:26:28 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/28 15:53:24 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 11:03:04 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static int	parse_word(char *line, int i)
 			quote = line[i++];
 			while (line[i] && line[i] != quote)
 				i++;
-			i++;
+			if (line[i])
+				i++;
 		}
 	}
 	return (i);

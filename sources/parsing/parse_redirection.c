@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 13:46:37 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/29 00:30:29 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 14:28:36 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	separate_redirection(t_line *line, t_var *lst_var, int index)
 			if (ft_strncmp(line->args[i - 1], "<<", 3) != 0)
 			{
 				tmp = ft_strdup(line->args[i]);
-				tmp = substr_var(line, lst_var, tmp);
+				tmp = substr_var(line, lst_var, tmp, 0);
 			}
 			else
 				tmp = strdup_unquote(line, lst_var, line->args[i], 0);
@@ -85,7 +85,7 @@ void	parse_redirection(t_line *line, t_var *lst_var)
 	{
 		line->args = split_spaces(line, lst_var, line->block[i]);
 		separate_redirection(line, lst_var, i);
-		line->block[i] = substr_var(line, lst_var, line->block[i]);
+		line->block[i] = substr_var(line, lst_var, line->block[i], 0);
 		free_double_tab(line->args);
 		line->args = NULL;
 		i++;
