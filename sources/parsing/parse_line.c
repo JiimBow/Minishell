@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/28 13:55:02 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 16:19:54 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	quotes_unclosed(char *line)
+int	quotes_unclosed(char *line)
 {
 	char	quote;
 	int		i;
@@ -33,7 +33,7 @@ static int	quotes_unclosed(char *line)
 	return (0);
 }
 
-static int	syntax_error(char *line, char token, char quote, size_t i)
+int	syntax_error(char *line, char token, char quote, size_t i)
 {
 	i = skip_spaces(line, i);
 	if (line[i] && line[i] == '|')
@@ -62,7 +62,7 @@ static int	syntax_error(char *line, char token, char quote, size_t i)
 	return (0);
 }
 
-static int	get_parsed_line_lenght(char *line)
+int	get_parsed_line_lenght(char *line)
 {
 	char	quote;
 	int		add;
@@ -89,7 +89,7 @@ static int	get_parsed_line_lenght(char *line)
 	return (i + add);
 }
 
-static char	*set_parsed_line(char *line, char *new, int i, int j)
+char	*set_parsed_line(char *line, char *new, int i, int j)
 {
 	char	quote;
 
@@ -117,20 +117,49 @@ static char	*set_parsed_line(char *line, char *new, int i, int j)
 	return (new);
 }
 
+int	parse_pipe(t_line *line, char quote)
+{
+	int	i;
+
+	i = 0;
+	i = skip_spaces(line->new, i);
+	if (line->new[i] && line->new[i] == '|')
+		return (1);
+	while (line->new && line->new[i])
+	{
+		if (is_quote(line->new[i]))
+		{
+			quote = line->new[i++];
+			while (line->new[i] && line->new[i] != quote)
+				i++;
+		}
+		if (line->new[i] == '|')
+		{
+			i = skip_spaces(line->new, i + 1);
+			if (line->new[i] && line->new[i] == '|')
+				return (1);
+		}
+		else
+			i++;
+	}
+	return (0);
+}
+
 void	parse_quote_and_operators(t_line *line, t_var *lst_var)
 {
 	int		syntax;
 
+	(void)lst_var;
 	if (quotes_unclosed(line->line))
 	{
 		write(2, "minishell: syntax error unclosed quote\n", 39);
 		line->sig = 2;
 		return ;
 	}
-	line->new = ft_calloc(sizeof(char), get_parsed_line_lenght(line->line) + 1);
-	if (!line->new)
-		error_memory_failed(line, lst_var);
-	line->new = set_parsed_line(line->line, line->new, 0, 0);
+	// line->new = ft_calloc(sizeof(char), get_parsed_line_lenght(line->line) + 1);
+	// if (!line->new)
+	// 	error_memory_failed(line, lst_var);
+	// line->new = set_parsed_line(line->line, line->new, 0, 0);
 	syntax = syntax_error(line->new, 't', 'q', 0);
 	if (syntax != 0)
 	{

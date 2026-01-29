@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 10:13:22 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/29 16:24:30 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,19 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child)
 	__pid_t	last_pid;
 	int		i;
 
-	parse_quote_and_operators(line, lst_var);
+	line->new = ft_calloc(sizeof(char), get_parsed_line_lenght(line->line) + 1);
+	if (!line->new)
+		error_memory_failed(line, lst_var);
+	line->new = set_parsed_line(line->line, line->new, 0, 0);
+	if (parse_pipe(line, 'q') == 1)
+	{
+		write(2, "minishell: syntax error near unexpected token \" | \"\n", 52);
+		return ;
+	}
+	// parse_quote_and_operators(line, lst_var);
 	split_pipe(line, lst_var);
-	parse_redirection(line, lst_var);
+	if (parse_redirection(line, lst_var) == 1)
+		return ;
 	if (line->sig == 130)
 		return ;
 	i = 0;
