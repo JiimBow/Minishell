@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/30 16:46:48 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/30 17:26:10 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int index)
 
 	pipe_error_block = 0;
 	line->new = ft_calloc(sizeof(char),
-			get_parsed_line_lenght(line->ex_block[index]) + 2);
+			get_parsed_line_lenght(line->ex_block[index]) + 1);
 	if (!line->new)
 		error_memory_failed(line, lst_var);
 	line->new = set_parsed_line(line->ex_block[index], line->new, 0, 0);

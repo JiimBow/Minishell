@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/30 13:11:33 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 17:37:09 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	get_parsed_line_lenght(char *line)
 
 	i = 0;
 	add = 0;
-	while (line[i])
+	while (line && line[i])
 	{
 		if (is_quote(line[i]))
 		{
@@ -92,7 +92,7 @@ char	*set_parsed_line(char *line, char *new, int i, int j)
 {
 	char	quote;
 
-	while (line[i])
+	while (line && line[i])
 	{
 		if (is_quote(line[i]))
 		{
@@ -100,7 +100,8 @@ char	*set_parsed_line(char *line, char *new, int i, int j)
 			new[j++] = line[i++];
 			while (line[i] && line[i] != quote)
 				new[j++] = line[i++];
-			new[j++] = line[i++];
+			if (line[i])
+				new[j++] = line[i++];
 		}
 		else if (is_operator(line[i]))
 		{
@@ -132,7 +133,7 @@ int	parse_pipe(t_line *line, char quote, int *pipe_error_block)
 			while (line->new[i] && line->new[i] != quote)
 				i++;
 		}
-		if (line->new[i] == '|')
+		else if (line->new[i] == '|')
 		{
 			(*pipe_error_block)++;
 			i = skip_spaces(line->new, i + 1);

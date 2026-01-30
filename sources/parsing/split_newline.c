@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 16:05:24 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/30 16:37:21 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/30 16:55:53 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,9 @@ char	**split_newline(t_line *line, t_var *lst_var, char *s)
 	int		row;
 	int		i;
 
-	if (!s)
-		return NULL;
 	i = 0;
 	row = 0;
-	while (s[i])
+	while (s && s[i])
 	{
 		while (s[i] && s[i] == '\n')
 			i++;
