@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/30 11:18:03 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 12:17:16 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	parse_pipe(t_line *line, char quote, int *pipe_error_block)
 		{
 			(*pipe_error_block)++;
 			i = skip_spaces(line->new, i + 1);
-			if (line->new[i] && line->new[i] == '|')
+			if ((line->new[i] && line->new[i] == '|') || !line->new[i])
 				return (1);
 		}
 		else
