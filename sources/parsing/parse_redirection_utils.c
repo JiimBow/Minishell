@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirection_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 15:52:52 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/29 21:37:07 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 11:21:29 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 
 static int	variable_not_existed(t_line *line, t_var *lst_var, char *tab)
@@ -27,18 +28,63 @@ static int	variable_not_existed(t_line *line, t_var *lst_var, char *tab)
 	return (0);
 }
 
+int	variable_with_spaces(t_line *line, t_var *lst_var, char *arg, int *pos)
+{
+	char	*name;
+	char	*content;
+	int		count;
+	int		i;
+	int		j;
+	int		save_j;
+
+	count = 0;
+	i = 0;
+	while (arg[i])
+	{
+		if (arg[i] == '$' && arg[i + 1]
+			&& (arg[i + 1] == '_' || ft_isalnum(arg[i + 1])))
+		{
+			name = get_name(arg + i + 1);
+			if (!name)
+				error_memory_failed(line, lst_var);
+			content = get_content(line->env, name);
+			if (!content)
+				error_memory_failed(line, lst_var);
+			j = 0;
+			while (content[j])
+			{
+				j = skip_spaces(content, j);
+				save_j = j;
+				j = parse_word(content, j);
+				if (j > save_j)
+					count++;
+			}
+			*pos += i + ft_strlen(name);
+			free(name);
+			free(content);
+			break;
+		}
+		i++;
+	}
+	return (count);
+}
+
 static int	count_size_no_redirection(t_line *line, t_var *lst_var, int *i)
 {
 	int	count;
 
-	*i = 0;
 	count = 0;
 	while (line->args[*i])
 	{
 		if (is_redirection(line->args[*i]))
-			count += 2;
+		{
+			(*i)++;
+			count -= 2;
+		}
 		else if (variable_not_existed(line, lst_var, line->args[*i]))
-			count++;
+			count--;
+		else
+			count += variable_with_spaces(line, lst_var, line->args[*i], i);
 		(*i)++;
 	}
 	return (count);
@@ -52,7 +98,8 @@ static char	**reduce_args(t_line *line, t_var *lst_var, int i)
 	if (!line->args)
 		return (NULL);
 	len = count_size_no_redirection(line, lst_var, &i);
-	new_args = (char **)malloc(sizeof(char *) * (i - len + 1));
+	ft_printf("nb de arg=%d\n", i + len);
+	new_args = (char **)malloc(sizeof(char *) * (i + len + 1));
 	if (!new_args)
 		error_memory_failed(line, lst_var);
 	new_args[i - len] = NULL;
