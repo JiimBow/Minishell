@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 21:20:27 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 11:02:57 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,23 @@ static pid_t	line_block_process(t_line *line, t_var *lst_var, t_pipe *child)
 static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int index)
 {
 	pid_t	last_pid;
+	int		pipe_error_block;
 
+	pipe_error_block = 0;
 	line->new = ft_calloc(sizeof(char),
 			get_parsed_line_lenght(line->ex_block[index]) + 1);
 	if (!line->new)
 		error_memory_failed(line, lst_var);
 	line->new = set_parsed_line(line->ex_block[index], line->new, 0, 0);
-	if (parse_pipe(line, 'q') == 1)
+	if (parse_pipe(line, 'q', &pipe_error_block) == 1)
 	{
-		write(2, "minishell: syntax error near unexpected token \" | \"\n", 52);
+		write(2, "minishell: syntax error near unexpected token `|'\n", 50);
 		line->sig = 2;
-		return ;
 	}
 	split_pipe(line, lst_var);
-	if (parse_redirection(line, lst_var) == 1)
+	if (parse_redirection(line, lst_var, pipe_error_block) == 1)
 		return ;
-	if (line->sig == 130)
+	if (line->sig == 130 || line->sig == 2)
 		return ;
 	last_pid = line_block_process(line, lst_var, child);
 	if (line->sig != 1 && (line->row > 1 || line->redirec))

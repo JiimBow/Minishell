@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 13:46:37 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/29 19:27:24 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/30 11:13:22 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	separate_redirection(t_line *line, t_var *lst_var, int index)
 	}
 }
 
-int	parse_redirection(t_line *line, t_var *lst_var)
+int	parse_redirection(t_line *line, t_var *lst_var, int pipe_error_block)
 {
 	t_var	*tmp;
 	int		syntax;
@@ -104,7 +104,7 @@ int	parse_redirection(t_line *line, t_var *lst_var)
 	}
 	tmp = line->redirec;
 	index = 0;
-	while (index < i && line->sig != 130)
+	while (index < i && line->sig != 130 && index <= pipe_error_block)
 	{
 		if (tmp && tmp->index == index)
 		{
@@ -114,18 +114,17 @@ int	parse_redirection(t_line *line, t_var *lst_var)
 		}
 		if (quotes_unclosed(line->line))
 		{
-			write(2, "minishell: syntax error unclosed quote\n", 39);
+			ft_putstr_fd("minishell: syntax error unclosed quote\n", 2);
 			line->sig = 2;
 			return (1);
 		}
-		syntax = syntax_error(line->new, 't', 'q', 0);
+		syntax = syntax_error(line->block[index], 't', 'q', 0);
 		if (syntax != 0)
 		{
-			write(2, "minishell: syntax error near unexpected token \" ", 48);
-			write(2, &line->new[syntax], 1);
-			write(2, " \"\n", 3);
-			free(line->new);
-			line->new = NULL;
+			ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
+			ft_putstr_fd("`newline'\n", 2);
+			// free(line->new);
+			// line->new = NULL;
 			line->sig = 2;
 			return (1);
 		}
