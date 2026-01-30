@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 19:03:06 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/30 11:35:41 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	exec_process(t_line *line, t_var *lst_var)
 			free_line_struct(line, 1);
 			exit(126);
 		}
-		exec_error(line, path_cmd);
+		exec_error(line, NULL);
 	}
 }
 
