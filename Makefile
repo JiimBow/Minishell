@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
+#    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/01/29 21:08:34 by jodone           ###   ########.fr        #
+#    Updated: 2026/01/30 16:33:55 by mgarnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,8 @@ SRC			= $(DIR)main.c \
 			$(PARSING)parse_redirection.c \
 			$(PARSING)parse_redirection_utils.c \
 			$(PARSING)conca_split.c \
+			$(PARSING)replace_args.c \
+			$(PARSING)split_newline.c \
 			$(CMD)find_path.c \
 			$(CMD)cmd_process.c \
 			$(ENV)get_env.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/30 12:11:06 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 16:33:12 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void	ex_block_process(t_line *line, t_var *lst_var, t_pipe *child)
 	int	i;
 
 	i = 0;
-	line->ex_block = ft_split(line->line, '\n');
-	while (line->ex_block[i])
+	line->ex_block = split_newline(line, lst_var, line->line);
+	while (line->ex_block && line->ex_block[i])
 	{
 		if (i > 0)
 		{

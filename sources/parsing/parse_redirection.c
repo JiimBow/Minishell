@@ -3,43 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 13:46:37 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/30 12:06:56 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 13:58:45 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_redirection(char *args)
-{
-	if (ft_strncmp(args, "<", 2) == 0)
-		return (1);
-	else if (ft_strncmp(args, "<<", 3) == 0)
-		return (1);
-	else if (ft_strncmp(args, ">", 2) == 0)
-		return (1);
-	else if (ft_strncmp(args, ">>", 3) == 0)
-		return (1);
-	return (0);
-}
-
-static int	is_quote_in_tab(char *tab)
-{
-	int	i;
-
-	if (!tab)
-		return (0);
-	i = 0;
-	while (tab[i])
-	{
-		if (is_quote(tab[i]))
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 static t_var	*crea_node_red(t_line *line, t_var *lst_var, int index, int i)
 {

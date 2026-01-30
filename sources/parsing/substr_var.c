@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substr_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:36:00 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/29 21:37:32 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 13:43:11 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ char	*substr_var(t_line *line, t_var *lst_var, char *s)
 	return (tab);
 }
 
-static int	change_var_sup_quote(t_line *line, const char *s, char *tab, int *j, int *expand)
+static int	change_var_sup_quote(t_line *line, const char *s, char *tab, int *j)
 {
 	char	quote;
 	int		i;
@@ -119,17 +119,14 @@ static int	change_var_sup_quote(t_line *line, const char *s, char *tab, int *j, 
 	{
 		if (quote == '"' && s[i] == '$' && s[i + 1]
 			&& !is_quote(s[i + 1]))
-			{
 				i += change_variable(line, s + i, tab, j);
-				*expand = 1;
-			}
 		else
 			tab[(*j)++] = s[i++];
 	}
 	return (i + 1);
 }
 
-char	*substr_var_unquote(t_line *line, t_var *lst_var, char *s, int *expand)
+char	*substr_var_unquote(t_line *line, t_var *lst_var, char *s)
 {
 	char	*tab;
 	int		count;
@@ -147,12 +144,9 @@ char	*substr_var_unquote(t_line *line, t_var *lst_var, char *s, int *expand)
 	while (s[i])
 	{
 		if (is_quote(s[i]))
-			i += change_var_sup_quote(line, s + i, tab, &j, expand);
+			i += change_var_sup_quote(line, s + i, tab, &j);
 		else if (s[i] == '$' && s[i + 1])
-		{
 			i += change_variable(line, s + i, tab, &j);
-			*expand = 1;
-		}
 		else
 			tab[j++] = s[i++];
 	}
