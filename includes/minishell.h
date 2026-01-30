@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/30 13:34:55 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 16:46:26 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,29 +87,36 @@ void	ex_block_process(t_line *line, t_var *lst_var, t_pipe *child);
 void	reinitialization(t_line *line, t_var *lst_var, t_pipe *child);
 
 // PARSING
+int		parse_export(char *name, char *args);
+int		parse_pipe(t_line *line, char quote, int *pipe_error_block);
+int		parse_redirection(t_line *line, t_var *lst_var, int pipe_error_block);
+int		quotes_unclosed(char *line);
+char	*set_parsed_line(char *line, char *new, int i, int j);
+int		syntax_error(char *line, char token, char quote, size_t i);
+
+// PARSING SPLIT
+void	split_pipe(t_line *line, t_var *lst_var);
+char	**split_spaces(t_line *line, t_var *lst_var, char *block);
+char	**split_newline(t_line *line, t_var *lst_var, char *s);
+
+// PARSING VARIABLE
+char	*substr_var(t_line *line, t_var *lst_var, char *s);
+char	*substr_var_unquote(t_line *line, t_var *lst_var, char *s);
+char	*strdup_unquote(t_line *line, t_var *lst_var, char *s, int j);
+
+// PARSING UTILS
 int		is_quote(char c);
 int		is_space(char c);
 int		is_operator(char c);
-int		parse_word(char *line, int i);
-char	*get_name(const char *s);
+int		is_quote_in_tab(char *tab);
 int		is_redirection(char *args);
-int		quotes_unclosed(char *line);
+int		skip_word(char *line, int i);
 int		skip_spaces(char *tab, int i);
-int		get_parsed_line_lenght(char *line);
-char	**ft_free_tab(char **tab, int line);
+char	*get_name(const char *s);
 char	*get_content(char **env, char *tab);
-int		parse_export(char *name, char *args);
-int		parse_pipe(t_line *line, char quote, int *pipe_error_block);
-void	split_pipe(t_line *line, t_var *lst_var);
-int		parse_redirection(t_line *line, t_var *lst_var, int pipe_error_block);
-char	*set_parsed_line(char *line, char *new, int i, int j);
-char	**split_spaces(t_line *line, t_var *lst_var, char *block);
-char	*substr_var(t_line *line, t_var *lst_var, char *s);
-int		syntax_error(char *line, char token, char quote, size_t i);
-char	*strdup_unquote(t_line *line, t_var *lst_var, char *s, int j);
-char	*find_cmd_path(t_line *line, char **paths, int i, char *full_path);
+int		get_parsed_line_lenght(char *line);
 int		get_size_with_variable(t_line *line, const char *s, int count, int i);
-char	*substr_var_unquote(t_line *line, t_var *lst_var, char *s, int *expand);
+char	*find_cmd_path(t_line *line, char **paths, int i, char *full_path);
 
 // UTILITIES
 char	*get_env_name(char *line);
@@ -130,6 +137,7 @@ int		ft_env(char	**envp, char **args);
 int		ft_echo(char **args);
 int		ft_pwd(t_var *lst_var);
 void	display_export(t_var **lst_var);
+char	**ft_free_tab(char **tab, int line);
 int		ft_cd(t_line *line, t_var *lst_var);
 int		ft_unset(t_line *line, t_var **lst_var);
 int		ft_export(t_line *line, t_var **lst_var, char **args);
@@ -150,9 +158,9 @@ void	close_file(t_pipe *child, char *message);
 pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child);
 
 // REDIRECTION
-int		open_file(t_line *line, t_var *lst_var, t_pipe *child, int index);
 int		r_here_doc(t_line *line, t_var *lst_var, t_var *redirec);
 void	replace_args_without_redirection(t_line *line, t_var *lst_var);
+int		open_file(t_line *line, t_var *lst_var, t_pipe *child, int index);
 int		hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc);
 int		parse_here_doc(t_line *line, t_var *lst_var, t_var *tmp, int index);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conca_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/29 20:54:52 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 21:39:23 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 15:16:58 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	count_words_quotes(char *arg)
 	{
 		i = skip_spaces(arg, i);
 		save_i = i;
-		i = parse_word(arg, i);
+		i = skip_word(arg, i);
 		if (i > save_i)
 			count++;
 	}

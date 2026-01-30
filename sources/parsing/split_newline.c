@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_pipe.c                                       :+:      :+:    :+:   */
+/*   split_newline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/19 15:16:08 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/30 16:37:37 by mgarnier         ###   ########.fr       */
+/*   Created: 2026/01/30 16:05:24 by mgarnier          #+#    #+#             */
+/*   Updated: 2026/01/30 16:37:21 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	parse_word_pipe(char *line, int i)
+static int	parse_word_newline(char *line, int i)
 {
 	char	quote;
 
-	while (line[i] && line[i] != '|')
+	while (line[i] && line[i] != '\n')
 	{
 		if (is_quote(line[i]))
 		{
@@ -36,10 +36,11 @@ static char	**ft_add_lines(char **tab, char *line, int i, int row)
 
 	while (line && line[i])
 	{
-		i = skip_spaces(line, i);
+		while (line[i] && line[i] == '\n')
+			i++;
 		save_i = i;
-		i = parse_word_pipe(line, i);
-		if (i > save_i || line[i] == '|')
+		i = parse_word_newline(line, i);
+		if (i > save_i)
 		{
 			tab[row] = ft_substr(line + save_i, 0, i - save_i);
 			if (!tab[row])
@@ -55,28 +56,32 @@ static char	**ft_add_lines(char **tab, char *line, int i, int row)
 	return (tab);
 }
 
-void	split_pipe(t_line *line, t_var *lst_var)
+char	**split_newline(t_line *line, t_var *lst_var, char *s)
 {
+	char	**tab;
 	int		save_i;
+	int		row;
 	int		i;
 
+	if (!s)
+		return NULL;
 	i = 0;
-	line->row = 0;
-	if (!line->new)
-		return ;
-	while (line->new[i])
+	row = 0;
+	while (s[i])
 	{
-		i = skip_spaces(line->new, i);
+		while (s[i] && s[i] == '\n')
+			i++;
 		save_i = i;
-		i = parse_word_pipe(line->new, i);
-		if (i > save_i || line->new[i] == '|')
-			line->row++;
-		if (line->new[i])
+		i = parse_word_newline(s, i);
+		if (i > save_i)
+			row++;
+		if (s[i])
 			i++;
 	}
-	line->block = (char **)malloc(sizeof(char *) * (line->row + 1));
-	if (!line->block)
+	tab = (char **)malloc(sizeof(char *) * (row + 1));
+	if (!tab)
 		error_memory_failed(line, lst_var);
-	line->block[line->row] = NULL;
-	line->block = ft_add_lines(line->block, line->new, 0, 0);
+	tab[row] = NULL;
+	tab = ft_add_lines(tab, s, 0, 0);
+	return (tab);
 }
