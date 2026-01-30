@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 13:46:37 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/30 12:06:56 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 12:31:20 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ static void	separate_redirection(t_line *line, t_var *lst_var, int index)
 int	parse_redirection(t_line *line, t_var *lst_var, int pipe_error_block)
 {
 	t_var	*tmp;
-	int		syntax;
 	int		index;
 	int		i;
 
@@ -106,26 +105,8 @@ int	parse_redirection(t_line *line, t_var *lst_var, int pipe_error_block)
 	index = 0;
 	while (index < i && line->sig != 130 && index <= pipe_error_block)
 	{
-		while (tmp && tmp->index == index)
-		{
-			if (tmp->rank == 2)
-				line->sig = r_here_doc(line, lst_var, tmp);
-			tmp = tmp->next;
-		}
-		if (quotes_unclosed(line->line))
-		{
-			ft_putstr_fd("minishell: syntax error unclosed quote\n", 2);
-			line->sig = 2;
+		if (parse_here_doc(line, lst_var, tmp, index) == 1)
 			return (1);
-		}
-		syntax = syntax_error(line->block[index], 't', 'q', 0);
-		if (syntax != 0)
-		{
-			ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
-			ft_putstr_fd("`newline'\n", 2);
-			line->sig = 2;
-			return (1);
-		}
 		index++;
 	}
 	return (0);

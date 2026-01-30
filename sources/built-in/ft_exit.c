@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:53:51 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 15:14:37 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 12:57:03 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static int	arg_isnum(char *args)
 	i = 0;
 	if (args && (args[0] == '-' || args[0] == '+'))
 		i++;
+	if (!args[i])
+		return (0);
 	while (args && args[i])
 	{
 		if (!ft_isdigit(args[i]))
@@ -54,21 +56,21 @@ int	free_before_exit(t_line *line, t_var *lst_var)
 
 	overflow = 0;
 	write(2, "exit\n", 5);
-	if (line->args && line->args[1] && line->args[2])
+	if (line->args && !arg_isnum(line->args[1]))
+		write_exit(line, 0);
+	else if (line->args && line->args[1] && line->args[2])
 	{
 		write(2, "minishell: exit: too many arguments\n", 37);
 		return (1);
 	}
-	rl_clear_history();
-	ft_lstclear_var(&lst_var, free);
-	if (line->args && !arg_isnum(line->args[1]))
-		write_exit(line, 0);
-	else if (line->args && !line->prev_sig)
+	if (line->args && !line->prev_sig)
 	{
 		line->prev_sig = ft_atoll(line->args[1], &overflow);
 		if (overflow == -1)
 			write_exit(line, 1);
 	}
+	rl_clear_history();
+	ft_lstclear_var(&lst_var, free);
 	if (line->line)
 		free_and_exit(line);
 	overflow = line->prev_sig;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/30 11:35:41 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/30 13:35:33 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ void	assignement(t_line *line, t_var *lst_var, int is_fork)
 	else if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "pwd", 4) == 0)
 		line->sig = ft_pwd(lst_var);
-	else if (line->args && line->args[0] && !line->args[1]
+	else if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "env", 4) == 0)
-		line->sig = ft_env(line->env);
+		line->sig = ft_env(line->env, line->args);
 	else if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "echo", 5) == 0)
 		line->sig = ft_echo(line->args);

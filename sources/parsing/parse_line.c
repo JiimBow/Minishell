@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/30 12:17:16 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 13:11:33 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int	get_parsed_line_lenght(char *line)
 			if (line[i + 1] && line[i + 1] != '|' && line[i + 1] == line[i])
 				i++;
 		}
-		i++;
+		if (line[i])
+			i++;
 	}
 	return (i + add);
 }

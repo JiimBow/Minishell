@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/30 11:07:43 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 13:34:55 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ void	rank_var(t_var **lst_var);
 int		already_sorted(t_var **lst_var);
 
 // EXECUTING
-int		ft_env(char	**envp);
+int		ft_env(char	**envp, char **args);
 int		ft_echo(char **args);
 int		ft_pwd(t_var *lst_var);
 void	display_export(t_var **lst_var);
@@ -154,6 +154,7 @@ int		open_file(t_line *line, t_var *lst_var, t_pipe *child, int index);
 int		r_here_doc(t_line *line, t_var *lst_var, t_var *redirec);
 void	replace_args_without_redirection(t_line *line, t_var *lst_var);
 int		hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc);
+int		parse_here_doc(t_line *line, t_var *lst_var, t_var *tmp, int index);
 
 // SIGNAL
 void	handle_sigint(int signal);

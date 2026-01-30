@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:44:39 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 23:00:02 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/30 13:53:36 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,17 @@ char	*get_env_path(t_var *lst_var, char *str)
 {
 	t_var	*tmp;
 	int		len_str;
+	char	*new_path;
 
 	tmp = lst_var;
 	len_str = ft_strlen(str) + 1;
 	while (tmp)
 	{
 		if (ft_strncmp(str, tmp->name, len_str) == 0)
-			return (tmp->content);
+		{
+			new_path = ft_strdup(tmp->content);
+			return (new_path);
+		}
 		tmp = tmp->next;
 	}
 	return (NULL);
@@ -69,15 +73,19 @@ int	ft_cd(t_line *line, t_var *lst_var)
 	}
 	if (!line->args[1] || ft_strncmp(line->args[1], "~", 2) == 0)
 		path = get_env_path(lst_var, "HOME");
+	else if (ft_strncmp(line->args[1], ".", 2) == 0)
+		path = get_env_path(lst_var, "OLDPWD");
 	else
-		path = line->args[1];
+		path = ft_strdup(line->args[1]);
 	update_path(lst_var, 1);
 	if (chdir(path) == -1)
 	{
 		write(2, "minishell: cd: ", 15);
 		perror(path);
+		free(path);
 		return (1);
 	}
 	update_path(lst_var, 0);
+	free(path);
 	return (0);
 }

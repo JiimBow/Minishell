@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:59:27 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/20 19:11:01 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 13:52:00 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ int	ft_pwd(t_var *lst_var)
 	}
 	else
 		ft_printf("%s\n", path);
+	free(path);
 	return (0);
 }
