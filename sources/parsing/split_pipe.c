@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:16:08 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/29 21:44:22 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/30 11:35:17 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	**ft_add_lines(char **tab, char *line, int i, int row)
 		i = skip_spaces(line, i);
 		save_i = i;
 		i = parse_word_pipe(line, i);
-		if (i > save_i)
+		if (i > save_i || line[i] == '|')
 		{
 			tab[row] = ft_substr(line + save_i, 0, i - save_i);
 			if (!tab[row])
@@ -68,7 +68,7 @@ void	split_pipe(t_line *line, t_var *lst_var)
 		i = skip_spaces(line->new, i);
 		save_i = i;
 		i = parse_word_pipe(line->new, i);
-		if (i > save_i)
+		if (i > save_i || line->new[i] == '|')
 			line->row++;
 		if (line->new[i])
 			i++;

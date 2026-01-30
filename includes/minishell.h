@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 21:38:44 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 11:07:43 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,10 @@ int		get_parsed_line_lenght(char *line);
 char	**ft_free_tab(char **tab, int line);
 char	*get_content(char **env, char *tab);
 int		parse_export(char *name, char *args);
-int		parse_pipe(t_line *line, char quote);
+int		parse_pipe(t_line *line, char quote, int *pipe_error_block);
 void	split_pipe(t_line *line, t_var *lst_var);
-int		parse_redirection(t_line *line, t_var *lst_var);
+int		parse_redirection(t_line *line, t_var *lst_var, int pipe_error_block);
 char	*set_parsed_line(char *line, char *new, int i, int j);
-void	parse_quote_and_operators(t_line *line, t_var *lst_var);
 char	**split_spaces(t_line *line, t_var *lst_var, char *block);
 char	*substr_var(t_line *line, t_var *lst_var, char *s);
 int		syntax_error(char *line, char token, char quote, size_t i);

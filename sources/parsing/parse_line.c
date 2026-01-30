@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/29 18:10:17 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/01/30 11:18:03 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int	quotes_unclosed(char *line)
 int	syntax_error(char *line, char token, char quote, size_t i)
 {
 	i = skip_spaces(line, i);
-	if (line[i] && line[i] == '|')
-		return (i);
 	while (i < ft_strlen(line) + 1 && line[i])
 	{
 		if (is_quote(line[i]))
@@ -46,7 +44,7 @@ int	syntax_error(char *line, char token, char quote, size_t i)
 			while (line[i] && line[i] != quote)
 				i++;
 		}
-		else if (is_operator(line[i]))
+		else if (is_operator(line[i]) && line[i] != '|')
 		{
 			token = line[i++];
 			if ((line[i] == '>' || line[i] == '<') && token == line[i])
@@ -55,7 +53,7 @@ int	syntax_error(char *line, char token, char quote, size_t i)
 			if (line[i] && token == '|' && (line[i] == '>' || line[i] == '<'))
 				continue ;
 			if (line[i] == '\0' || is_operator(line[i]))
-				return (i - 2);
+				return (i - 1);
 		}
 		i++;
 	}
@@ -117,7 +115,7 @@ char	*set_parsed_line(char *line, char *new, int i, int j)
 	return (new);
 }
 
-int	parse_pipe(t_line *line, char quote)
+int	parse_pipe(t_line *line, char quote, int *pipe_error_block)
 {
 	int	i;
 
@@ -135,6 +133,7 @@ int	parse_pipe(t_line *line, char quote)
 		}
 		if (line->new[i] == '|')
 		{
+			(*pipe_error_block)++;
 			i = skip_spaces(line->new, i + 1);
 			if (line->new[i] && line->new[i] == '|')
 				return (1);
@@ -143,28 +142,4 @@ int	parse_pipe(t_line *line, char quote)
 			i++;
 	}
 	return (0);
-}
-
-void	parse_quote_and_operators(t_line *line, t_var *lst_var)
-{
-	int		syntax;
-
-	(void)lst_var;
-	if (quotes_unclosed(line->line))
-	{
-		write(2, "minishell: syntax error unclosed quote\n", 39);
-		line->sig = 2;
-		return ;
-	}
-	syntax = syntax_error(line->new, 't', 'q', 0);
-	if (syntax != 0)
-	{
-		write(2, "minishell: syntax error near unexpected token \" ", 48);
-		write(2, &line->new[syntax], 1);
-		write(2, " \"\n", 3);
-		free(line->new);
-		line->new = NULL;
-		line->sig = 2;
-		return ;
-	}
 }
