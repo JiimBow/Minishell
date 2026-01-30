@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 13:46:37 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/30 11:13:22 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 12:06:56 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	parse_redirection(t_line *line, t_var *lst_var, int pipe_error_block)
 	index = 0;
 	while (index < i && line->sig != 130 && index <= pipe_error_block)
 	{
-		if (tmp && tmp->index == index)
+		while (tmp && tmp->index == index)
 		{
 			if (tmp->rank == 2)
 				line->sig = r_here_doc(line, lst_var, tmp);
@@ -123,8 +123,6 @@ int	parse_redirection(t_line *line, t_var *lst_var, int pipe_error_block)
 		{
 			ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
 			ft_putstr_fd("`newline'\n", 2);
-			// free(line->new);
-			// line->new = NULL;
 			line->sig = 2;
 			return (1);
 		}

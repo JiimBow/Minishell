@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/30 11:02:57 by jodone           ###   ########.fr       */
+/*   Updated: 2026/01/30 11:58:10 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int index)
 {
 	pid_t	last_pid;
 	int		pipe_error_block;
+	int		last_sig;
 
 	pipe_error_block = 0;
 	line->new = ft_calloc(sizeof(char),
@@ -54,8 +55,11 @@ static void	minishell(t_line *line, t_var *lst_var, t_pipe *child, int index)
 		line->sig = 2;
 	}
 	split_pipe(line, lst_var);
+	last_sig = line->sig;
 	if (parse_redirection(line, lst_var, pipe_error_block) == 1)
 		return ;
+	if (last_sig != 0)
+		line->sig = last_sig;
 	if (line->sig == 130 || line->sig == 2)
 		return ;
 	last_pid = line_block_process(line, lst_var, child);
