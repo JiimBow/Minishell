@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 13:46:37 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/30 16:46:59 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/02 13:33:40 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int	parse_redirection(t_line *line, t_var *lst_var, int pipe_error_block)
 	{
 		if (parse_here_doc(line, lst_var, tmp, index) == 1)
 			return (1);
+		while (tmp && tmp->index == index)
+			tmp = tmp->next;
 		index++;
 	}
 	return (0);
