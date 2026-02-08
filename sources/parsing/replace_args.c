@@ -6,10 +6,11 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 13:56:57 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/30 16:40:13 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/08 19:42:54 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "minishell.h"
 
 static int	variable_not_existed(t_line *line, t_var *lst_var, char *tab)
@@ -31,6 +32,7 @@ static int	variable_with_spaces(t_line *line, char *arg)
 {
 	char	*name;
 	char	*content;
+	char	quote;
 	int		count;
 	int		i;
 	int		j;
@@ -42,7 +44,7 @@ static int	variable_with_spaces(t_line *line, char *arg)
 	{
 		if (is_quote(arg[i]))
 		{
-			char	quote = arg[i++];
+			quote = arg[i++];
 			while (arg[i] && arg[i] != quote)
 				i++;
 		}
@@ -94,7 +96,7 @@ static int	count_size_no_redirection(t_line *line, t_var *lst_var)
 	return (i + count);
 }
 
-static char	**reduce_args(t_line *line, t_var *lst_var, int *size)
+static char	**reduce_args(t_line *line, t_var *lst_var)
 {
 	char	**new_args;
 	int		len;
@@ -103,7 +105,6 @@ static char	**reduce_args(t_line *line, t_var *lst_var, int *size)
 	if (!line->args)
 		return (NULL);
 	len = count_size_no_redirection(line, lst_var);
-	*size = len;
 	new_args = (char **)malloc(sizeof(char *) * (len + 1));
 	if (!new_args)
 		error_memory_failed(line, lst_var);
@@ -123,35 +124,44 @@ static char	**reduce_args(t_line *line, t_var *lst_var, int *size)
 	return (new_args);
 }
 
+// char	**manage_spaces_in_variables(t_line *line, t_var *lst_var)
+// {
+// 	t_token	*variable;
+// 	char	**new_args;
+// 	int		len;
+// 	int		i;
+
+// 	i = 0;
+// 	while (line->args[i])
+// 	{
+// 		i++;
+// 	}
+	
+// 	len = count_size_with_spaces(line, lst_var);
+// 	new_args = (char **)malloc(sizeof(char *) * (len + 1));
+// 	if (!new_args)
+// 		error_memory_failed(line, lst_var);
+// 	free_double_tab(line->args);
+// 	return (new_args);
+// }
+
 void	replace_args_without_redirection(t_line *line, t_var *lst_var)
 {
-	char	**new_args;
 	char	*tmp;
 	int		i;
-	int		size;
 
-	size = 0;
-	line->args = reduce_args(line, lst_var, &size);
-	// ft_printf("size=%d\n", size);
+	line->args = reduce_args(line, lst_var);
+	// ici la nouvelle version pour gérer les espaces dans les $VAR
+	//line->args = manage_spaces_in_variables(line, lst_var);
+	
+	// ci-dessous, l'ancienne version qui fonctionne mais sans la gestion
+	// des espaces dans les $VAR
 	i = 0;
 	while (line->args && line->args[i])
 	{
 		tmp = substr_var_unquote(line, lst_var, line->args[i]);
 		line->args[i] = ft_strdup(tmp);
-		// if (expand == 1)
-			// fonction qui change line-args; <----------------------------------------------------
 		free(tmp);
 		i++;
 	}
-	new_args = (char **)malloc(sizeof(char *) * (size + 1));
-	if (!new_args)
-		error_memory_failed(line, lst_var);
-	i = 0;
-	while (line->args && line->args[i])
-	{
-		//remplir le new_args en fonction des variables
-		
-		i++;
-	}
-	free(new_args);
 }

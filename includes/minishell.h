@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/30 16:46:26 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/08 19:35:57 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,16 @@ typedef struct s_atoll
 	long	result;
 	int		sign;
 }	t_atoll;
+
+typedef struct s_token
+{
+	char			*line;
+	char			**line_unspaces;
+	int				quoted;
+	int				space_at_start;
+	int				space_at_end;
+	struct s_token	*next;
+}	t_token;
 
 extern long	g_sig;
 
