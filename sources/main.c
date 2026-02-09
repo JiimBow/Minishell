@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/30 17:26:10 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/09 16:47:30 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static pid_t	line_block_process(t_line *line, t_var *lst_var, t_pipe *child)
 	{
 		child->index = i + 1;
 		line->args = split_spaces(line, lst_var, line->block[i]);
-		replace_args_without_redirection(line, lst_var);
+		line->args = reduce_args_without_redirection(line, lst_var);
+		replace_variables(line, lst_var);
 		if (line->redirec)
 			line->sig = open_file(line, lst_var, child, i);
 		if (line->sig != 1)

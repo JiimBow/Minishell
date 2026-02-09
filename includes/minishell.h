@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/30 16:46:26 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/09 12:44:31 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,16 @@ typedef struct s_atoll
 	long	result;
 	int		sign;
 }	t_atoll;
+
+typedef struct s_token
+{
+	char			*line;
+	char			**line_unspaces;
+	int				quoted;
+	int				space_at_start;
+	int				space_at_end;
+	struct s_token	*next;
+}	t_token;
 
 extern long	g_sig;
 
@@ -159,10 +169,14 @@ pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child);
 
 // REDIRECTION
 int		r_here_doc(t_line *line, t_var *lst_var, t_var *redirec);
-void	replace_args_without_redirection(t_line *line, t_var *lst_var);
+char	**reduce_args_without_redirection(t_line *line, t_var *lst_var);
 int		open_file(t_line *line, t_var *lst_var, t_pipe *child, int index);
 int		hd_proc(t_line *line, t_var *lst_var, char *content, int pipe_doc);
 int		parse_here_doc(t_line *line, t_var *lst_var, t_var *tmp, int index);
+
+// VARIABLES
+void	replace_variables(t_line *line, t_var *lst_var);
+char	**split_words(t_line *line, t_var *lst_var, char *s);
 
 // SIGNAL
 void	handle_sigint(int signal);

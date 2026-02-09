@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:36:00 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/30 13:43:11 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/09 19:37:48 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*substr_var(t_line *line, t_var *lst_var, char *s)
 	{
 		if (is_quote(s[i]))
 			i += change_var_in_quote(line, s + i, tab, &j);
-		else if (s[i] == '$' && s[i + 1])
+		else if (s[i] == '$')
 			i += change_variable(line, s + i, tab, &j);
 		else
 			tab[j++] = s[i++];
@@ -119,7 +119,7 @@ static int	change_var_sup_quote(t_line *line, const char *s, char *tab, int *j)
 	{
 		if (quote == '"' && s[i] == '$' && s[i + 1]
 			&& !is_quote(s[i + 1]))
-				i += change_variable(line, s + i, tab, j);
+			i += change_variable(line, s + i, tab, j);
 		else
 			tab[(*j)++] = s[i++];
 	}
