@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/09 15:01:46 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/09 16:47:30 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,6 @@ static pid_t	line_block_process(t_line *line, t_var *lst_var, t_pipe *child)
 		child->index = i + 1;
 		line->args = split_spaces(line, lst_var, line->block[i]);
 		line->args = reduce_args_without_redirection(line, lst_var);
-		int	j = 0;
-		while (line->args[j])
-		{
-			char	**tab = split_words(line, lst_var, line->args[j]);
-			int	x = 0;
-			// ft_printf("newtab=>\n");
-			while (tab[x])
-			{
-				// ft_printf("tab[%d]=%s\n", x, tab[x]);
-				x++;
-			}
-			free_double_tab(tab);
-			j++;
-		}
 		replace_variables(line, lst_var);
 		if (line->redirec)
 			line->sig = open_file(line, lst_var, child, i);

@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 13:29:08 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/02/09 14:52:11 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/09 19:05:53 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ static int	count_variable_size(t_line *line, char *arg)
 		if (i > save_i)
 			count++;
 	}
-	if (content)
-		count--;
 	free(name);
 	free(content);
 	return (count);
@@ -128,16 +126,4 @@ char	**reduce_args_without_redirection(t_line *line, t_var *lst_var)
 	new_args[len] = NULL;
 	free_double_tab(line->args);
 	return (new_args);
-}
-
-void	replace_variables(t_line *line, t_var *lst_var)
-{
-	int	i;
-
-	i = 0;
-	while (line->args[i])
-	{
-		line->args[i] = substr_var_unquote(line, lst_var, line->args[i]);
-		i++;
-	}
 }
