@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/30 17:37:09 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/09 14:55:52 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,7 @@ int	parse_pipe(t_line *line, char quote, int *pipe_error_block)
 			if ((line->new[i] && line->new[i] == '|') || !line->new[i])
 				return (1);
 		}
-		else
-			i++;
+		i++;
 	}
 	return (0);
 }
