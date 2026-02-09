@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 11:55:03 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/02/09 13:11:24 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/09 15:13:25 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ static int	find_words(char *s, int *i)
 	else
 	{
 		quote = s[(*i)++];
-		if (s[*i] != quote)
-			row++;
+		row++;
 		while (s[*i] && s[*i] != quote)
 			(*i)++;
 		if (s[*i])

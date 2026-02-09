@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 13:29:08 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/02/09 13:29:13 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/09 14:52:11 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,38 @@ static int	variable_not_existed(t_line *line, t_var *lst_var, char *tab)
 	return (0);
 }
 
-static int	variable_with_spaces(t_line *line, char *arg)
+static int	count_variable_size(t_line *line, char *arg)
 {
 	char	*name;
 	char	*content;
+	int		i;
+	int		save_i;
+	int		count;
+
+	name = get_name(arg);
+	content = get_content(line->env, name);
+	i = 0;
+	count = 0;
+	while (content && content[i])
+	{
+		i = skip_spaces(content, i);
+		save_i = i;
+		i = skip_word(content, i);
+		if (i > save_i)
+			count++;
+	}
+	if (content)
+		count--;
+	free(name);
+	free(content);
+	return (count);
+}
+
+static int	variable_with_spaces(t_line *line, char *arg)
+{
 	char	quote;
 	int		count;
 	int		i;
-	int		j;
-	int		save_j;
 
 	count = 0;
 	i = 0;
@@ -49,23 +72,7 @@ static int	variable_with_spaces(t_line *line, char *arg)
 		}
 		else if (arg[i] == '$' && arg[i + 1]
 			&& (arg[i + 1] == '_' || ft_isalnum(arg[i + 1])))
-		{
-			name = get_name(arg + i + 1);
-			content = get_content(line->env, name);
-			j = 0;
-			while (content && content[j])
-			{
-				j = skip_spaces(content, j);
-				save_j = j;
-				j = skip_word(content, j);
-				if (j > save_j)
-					count++;
-			}
-			if (content)
-				count--;
-			free(name);
-			free(content);
-		}
+			count += count_variable_size(line, arg + i + 1);
 		if (arg[i])
 			i++;
 	}

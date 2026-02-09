@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/09 12:53:40 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/09 15:01:46 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ static pid_t	line_block_process(t_line *line, t_var *lst_var, t_pipe *child)
 		{
 			char	**tab = split_words(line, lst_var, line->args[j]);
 			int	x = 0;
-			ft_printf("newtab=>\n");
+			// ft_printf("newtab=>\n");
 			while (tab[x])
 			{
-				ft_printf("tab[%d]=%s\n", x, tab[x]);
+				// ft_printf("tab[%d]=%s\n", x, tab[x]);
 				x++;
 			}
 			free_double_tab(tab);
