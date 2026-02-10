@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_variables.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 16:46:45 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/02/10 15:13:03 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/10 15:24:37 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	fill_args(t_line *line, t_var *lst_var, char **word, int *i)
 				return (-1);
 			line->args[*i] = gnl_strjoin(line->args[*i], word[x]);
 		}
-		else if (ft_strnstr(word[x], "$", 2) && word[x + 1] != NULL)
+		else if (ft_strncmp(word[x], "$", 2) == 0 && word[x + 1] != NULL)
 			;
 		else
 		{
