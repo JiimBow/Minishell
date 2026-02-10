@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/30 16:47:15 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 16:10:19 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,10 @@ int	verif_if_first_argument_is_dir(t_line *line)
 	return (0);
 }
 
-static int	process(t_line *line, t_var *lst_var, int is_fork)
+static int	process(t_line *line, t_var *lst_var, int is_fork, int status)
 {
 	__pid_t	pid;
-	int		status;
 
-	status = 0;
 	if (!line->args || !*line->args)
 		return (0);
 	line->is_dir = verif_if_first_argument_is_dir(line);
@@ -84,7 +82,10 @@ static int	process(t_line *line, t_var *lst_var, int is_fork)
 		if (pid == 0)
 			exec_process(line, lst_var);
 		else
+		{
+			signal(SIGINT, handle_sig_cmd);
 			waitpid(-1, &status, 0);
+		}
 	}
 	else
 		exec_process(line, lst_var);
@@ -115,5 +116,5 @@ void	assignement(t_line *line, t_var *lst_var, int is_fork)
 		&& ft_strncmp(line->args[0], "export", 7) == 0)
 		line->sig = ft_export(line, &lst_var, line->args);
 	else if (line->args)
-		line->sig = process(line, lst_var, is_fork);
+		line->sig = process(line, lst_var, is_fork, 0);
 }

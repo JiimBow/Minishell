@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:53:51 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/30 12:57:03 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/10 16:03:44 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,15 @@ static void	free_and_exit(t_line *line)
 	exit(exit_code);
 }
 
-static int	arg_isnum(char *args)
+static int	arg_isvalid(char *args)
 {
 	int	i;
 
 	i = 0;
 	if (args && (args[0] == '-' || args[0] == '+'))
 		i++;
+	if (!args)
+		return (1);
 	if (!args[i])
 		return (0);
 	while (args && args[i])
@@ -55,8 +57,9 @@ int	free_before_exit(t_line *line, t_var *lst_var)
 	int	overflow;
 
 	overflow = 0;
-	write(2, "exit\n", 5);
-	if (line->args && !arg_isnum(line->args[1]))
+	if (!line->line || (line->block && !line->block[1]))
+		write(2, "exit\n", 5);
+	if (line->args && !arg_isvalid(line->args[1]))
 		write_exit(line, 0);
 	else if (line->args && line->args[1] && line->args[2])
 	{
