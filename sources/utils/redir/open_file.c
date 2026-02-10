@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 19:05:51 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 18:10:01 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static int	r_in(t_line *line, t_var *lst_var, t_pipe *child, t_var *tmp)
 		return (1);
 	}
 	content_unquote = strdup_unquote(line, lst_var, tmp->content, 0);
-	close_fd(child->prev_fd);
+	if (child->prev_fd != -1)
+		close_fd(child->prev_fd);
 	child->prev_fd = open(content_unquote, O_RDONLY);
 	if (child->prev_fd < 0)
 	{
@@ -37,6 +38,8 @@ static int	r_in(t_line *line, t_var *lst_var, t_pipe *child, t_var *tmp)
 
 static int	r_out(t_pipe *child, char *content)
 {
+	if (child->fdout != -1)
+		close(child->fdout);
 	child->fdout = open(content, O_CREAT | O_WRONLY | O_TRUNC, 0666);
 	if (child->fdout < 0)
 	{
@@ -49,6 +52,8 @@ static int	r_out(t_pipe *child, char *content)
 
 static int	r_append(t_pipe *child, char *content)
 {
+	if (child->fdout != -1)
+		close(child->fdout);
 	child->fdout = open(content, O_CREAT | O_WRONLY | O_APPEND, 0666);
 	if (child->fdout < 0)
 	{
