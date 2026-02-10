@@ -1,7 +1,0 @@
--Wall
--Werror
--Wextra
--Iincludes
--IGreat_Libft/ft_printf
--IGreat_Libft/GNL
--IGreat_Libft/Libft
