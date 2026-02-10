@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:44:39 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/30 13:53:36 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/10 11:24:14 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ char	*get_env_path(t_var *lst_var, char *str)
 	char	*new_path;
 
 	tmp = lst_var;
-	len_str = ft_strlen(str) + 1;
+	len_str = ft_strlen(str);
 	while (tmp)
 	{
-		if (ft_strncmp(str, tmp->name, len_str) == 0)
+		if (ft_strncmp(str, tmp->name, len_str + 1) == 0)
 		{
 			new_path = ft_strdup(tmp->content);
 			return (new_path);
