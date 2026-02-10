@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 11:55:03 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/02/10 10:01:23 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 12:12:53 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	**ft_add_lines(char **tab, char *line)
 	return (tab);
 }
 
-char	**split_words(t_line *line, t_var *lst_var, char *s)
+char	**split_words(char *s)
 {
 	char	**tab;
 	int		row;
@@ -74,7 +74,7 @@ char	**split_words(t_line *line, t_var *lst_var, char *s)
 		row += find_words(s, &i);
 	tab = (char **)malloc(sizeof(char *) * (row + 1));
 	if (!tab)
-		error_memory_failed(line, lst_var);
+		return (NULL);
 	tab[row] = NULL;
 	tab = ft_add_lines(tab, s);
 	return (tab);

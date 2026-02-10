@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/09 12:44:31 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 12:12:47 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ int		parse_here_doc(t_line *line, t_var *lst_var, t_var *tmp, int index);
 
 // VARIABLES
 void	replace_variables(t_line *line, t_var *lst_var);
-char	**split_words(t_line *line, t_var *lst_var, char *s);
+char	**split_words(char *s);
 
 // SIGNAL
 void	handle_sigint(int signal);
