@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 16:10:19 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/10 16:54:09 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	exec_error(t_line *line, char *path_cmd)
 		write_error(line->args[0], 1);
 	else if (ft_strncmp(line->args[0], ".", 2) == 0)
 	{
+		free(path_cmd);
 		ft_putstr_fd("minishell: .: filename argument required\n", 2);
 		free_line_struct(line, 1);
 		exit(2);
@@ -25,6 +26,7 @@ static void	exec_error(t_line *line, char *path_cmd)
 	else
 		write_error(line->args[0], 2);
 	free_line_struct(line, 1);
+	free(path_cmd);
 	exit(127);
 }
 
@@ -41,14 +43,14 @@ static void	exec_process(t_line *line, t_var *lst_var)
 		|| line->is_dir == 1)
 	{
 		ft_lstclear_var(&lst_var, free);
-		free(path_cmd);
 		if (line->is_dir == 1)
 		{
+			free(path_cmd);
 			write_error(line->args[0], 3);
 			free_line_struct(line, 1);
 			exit(126);
 		}
-		exec_error(line, NULL);
+		exec_error(line, path_cmd);
 	}
 }
 

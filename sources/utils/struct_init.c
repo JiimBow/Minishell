@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:09:31 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 15:10:17 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/10 16:34:44 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ t_pipe	pipe_init(void)
 void	reinitialization(t_line *line, t_var *lst_var, t_pipe *child)
 {
 	line->env = ft_copy_env(&lst_var);
-	if (!line->env)
-		error_memory_failed(line, lst_var);
 	line->args = NULL;
 	line->block = NULL;
 	line->ex_block = NULL;

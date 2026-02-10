@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substr_var_unquote.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/10 14:36:36 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/02/10 14:37:04 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 16:44:54 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*substr_var_unquote(t_line *line, t_var *lst_var, char *s)
 	int		j;
 	int		i;
 
-	if (!line->env || !*line->env || !s)
+	if (!s)
 		return (NULL);
 	count = get_size_with_variable(line, s, 0, 0);
 	tab = ft_calloc(sizeof(char), count + 1);

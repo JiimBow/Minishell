@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_var.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 16:38:33 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 15:58:11 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 16:25:51 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_var	*get_var(char **envp)
 
 	i = 0;
 	lst_var = NULL;
-	while (envp[i])
+	while (envp && envp[i])
 	{
 		name = get_env_name(envp[i]);
 		if (!name)

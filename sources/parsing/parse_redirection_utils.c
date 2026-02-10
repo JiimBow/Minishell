@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirection_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 15:52:52 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/30 13:58:56 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 16:39:17 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

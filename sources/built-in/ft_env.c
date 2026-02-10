@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:03:16 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/30 13:38:57 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/10 16:31:26 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ int	ft_env(char	**envp, char **args)
 		ft_printf("%s\n", envp[i]);
 		i++;
 	}
+	if (!envp)
+		ft_printf("minishell : no env\n");
 	return (0);
 }
