@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:10:11 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 17:53:10 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/10 20:08:37 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static int	var_exist(t_var **lst_var, char *name, char *content, int update)
 		{
 			if (update && content)
 			{
-				free(tmp->content);
+				if (tmp->content)
+					free(tmp->content);
 				tmp->content = ft_strdup(content);
 				return (0);
 			}
@@ -46,6 +47,7 @@ static char	*content_cat(t_var **lst_var, char *name, char *content)
 		if (ft_strncmp(tmp->name, name, ft_strlen(name) + 1) == 0)
 		{
 			new_content = gnl_strjoin(tmp->content, content);
+			tmp->content = NULL;
 			free(content);
 			return (new_content);
 		}

@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 16:46:45 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/02/10 15:24:37 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 19:53:06 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	split_situational(t_line *line, t_var *lst_var, char *word, int *i)
 	x = 0;
 	if (ft_strlen(ft_strchr(word, '='))
 		< ft_strlen(ft_strchr(word, ' ')))
-		var = split_spaces(line, lst_var, word);
+		var = split_spaces_unquote(line, lst_var, word);
 	else
 		var = ft_split(word, '\0');
 	if (!var)

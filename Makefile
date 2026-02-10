@@ -6,7 +6,7 @@
 #    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/02/10 14:37:37 by mgarnier         ###   ########.fr        #
+#    Updated: 2026/02/10 19:55:22 by mgarnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC			= $(DIR)main.c \
 			$(PARSING)replace_variables.c \
 			$(PARSING)split_newline.c \
 			$(PARSING)split_words.c \
+			$(PARSING)split_spaces_unquote.c \
 			$(CMD)find_path.c \
 			$(CMD)cmd_process.c \
 			$(ENV)get_env.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 17:28:28 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/10 19:55:02 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ int		parse_here_doc(t_line *line, t_var *lst_var, t_var *tmp, int index);
 // VARIABLES
 void	replace_variables(t_line *line, t_var *lst_var);
 char	**split_words(char *s);
+char	**split_spaces_unquote(t_line *line, t_var *lst_var, char *block);
 
 // SIGNAL
 void	handle_sigint(int signal);
