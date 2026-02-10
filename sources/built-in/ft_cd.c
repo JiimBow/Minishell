@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:44:39 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 11:24:14 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/10 17:09:13 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,32 @@ static void	update_path(t_var *lst_var, int is_old)
 		replace_content(lst_var, "PWD", curr_path);
 }
 
-int	ft_cd(t_line *line, t_var *lst_var)
+static char	*get_path(t_line *line, t_var *lst_var)
 {
-	char	*path;
+	char *path;
 
-	if (line->args[2])
-	{
-		write(2, "minishell: cd: too many arguments\n", 34);
-		return (1);
-	}
+	path = NULL;
 	if (!line->args[1] || ft_strncmp(line->args[1], "~", 2) == 0)
 		path = get_env_path(lst_var, "HOME");
 	else if (ft_strncmp(line->args[1], ".", 2) == 0)
 		path = get_env_path(lst_var, "OLDPWD");
 	else
 		path = ft_strdup(line->args[1]);
+	return (path);
+}
+
+int	ft_cd(t_line *line, t_var *lst_var)
+{
+	char	*path;
+
+	if (line->args[1] && line->args[2])
+	{
+		write(2, "minishell: cd: too many arguments\n", 34);
+		return (1);
+	}
+	path = get_path(line, lst_var);
+	if (!path)
+		return (0);
 	update_path(lst_var, 1);
 	if (chdir(path) == -1)
 	{
