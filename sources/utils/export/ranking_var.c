@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ranking_var.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 11:33:43 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/19 17:13:51 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/10 11:19:22 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	rank_var(t_var **lst_var)
 		low_name = get_first_name(lst_var);
 		while (tmp)
 		{
-			if (ft_strncmp(low_name, tmp->name, ft_strlen(low_name)) == 0)
+			if (ft_strncmp(low_name, tmp->name, ft_strlen(low_name) + 1) == 0)
 			{
 				tmp->rank = rank;
 				rank++;

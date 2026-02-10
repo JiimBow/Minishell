@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 16:46:45 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/02/09 19:19:01 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 10:48:56 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 void	replace_variables(t_line *line, t_var *lst_var)
 {
 	char	**copy;
+	char	**tab;
 	char	**var;
 	int		i;
 	int		j;
+	int		x;
+	int		y;
 
 	j = 0;
-	while(line->args[j])
+	while (line->args[j])
 		j++;
 	copy = (char **)malloc(sizeof(char *) * (j + 1));
 	if (!copy)
@@ -38,8 +41,8 @@ void	replace_variables(t_line *line, t_var *lst_var)
 	i = 0;
 	while (copy[j])
 	{
-		char	**tab = split_words(line, lst_var, copy[j]);
-		int	x = 0;
+		tab = split_words(line, lst_var, copy[j]);
+		x = 0;
 		while (tab[x])
 		{
 			if (is_quote(tab[x][0]))
@@ -49,10 +52,18 @@ void	replace_variables(t_line *line, t_var *lst_var)
 			}
 			else
 			{
+				if (tab[x][0] == '$' && tab[x][1] == '\0' && tab[x + 1] != NULL)
+				{
+					x++;
+					continue ;
+				}
 				tab[x] = substr_var_unquote(line, lst_var, tab[x]);
-			 	var = split_spaces(line, lst_var, tab[x]);
-				int y = 0;
-				while (var[y])
+				if (ft_strchr(tab[x], '=') > ft_strchr(tab[x], ' '))
+					var = split_spaces(line, lst_var, tab[x]);
+				else
+					var = ft_split(tab[x], '\0');
+				y = 0;
+				while (var && var[y])
 				{
 					if (y == 0 || ft_strchr(var[0], '='))
 						line->args[i] = gnl_strjoin(line->args[i], var[y]);

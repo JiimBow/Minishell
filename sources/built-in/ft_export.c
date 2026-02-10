@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:10:11 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 18:15:42 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 11:05:03 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	var_exist(t_var **lst_var, char *name, char *content, int update)
 	tmp = *lst_var;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->name, name, ft_strlen(name)) == 0)
+		if (ft_strncmp(tmp->name, name, ft_strlen(name) + 1) == 0)
 		{
 			if (update && content)
 			{
