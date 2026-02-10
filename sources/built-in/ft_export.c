@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:10:11 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 11:05:03 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 11:24:54 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*content_cat(t_var **lst_var, char *name, char *content)
 	tmp = *lst_var;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->name, name, ft_strlen(name)) == 0)
+		if (ft_strncmp(tmp->name, name, ft_strlen(name) + 1) == 0)
 		{
 			new_content = ft_strjoin(tmp->content, content);
 			free(content);
