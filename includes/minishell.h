@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 15:05:17 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/10 17:28:28 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_line
 	char	**block;
 	char	**args;
 	char	**env;
+	char	*home;
 	long	sig;
 	long	prev_sig;
 	int		row;

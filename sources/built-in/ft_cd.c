@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:44:39 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 17:24:13 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/10 17:37:20 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,16 @@ static char	*get_path(t_line *line, t_var *lst_var)
 	char	*path;
 
 	path = NULL;
-	if (!line->args[1] || ft_strncmp(line->args[1], "~", 1) == 0)
-	{
+	if (!line->args[1])
 		path = get_env_path(lst_var, "HOME");
+	else if (ft_strncmp(line->args[1], "~", 1) == 0)
+	{
+		path = ft_strdup(line->home);
 		if (line->args[1] && line->args[1][1])
 			path = gnl_strjoin(path, line->args[1] + 1);
 	}
 	else if (ft_strncmp(line->args[1], ".", 2) == 0)
-		path = get_env_path(lst_var, "OLDPWD");
+		path = get_env_path(lst_var, "PWD");
 	else
 		path = ft_strdup(line->args[1]);
 	return (path);
