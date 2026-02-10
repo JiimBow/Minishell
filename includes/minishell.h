@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 12:12:47 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 14:36:17 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,6 @@ typedef struct s_atoll
 	int		sign;
 }	t_atoll;
 
-typedef struct s_token
-{
-	char			*line;
-	char			**line_unspaces;
-	int				quoted;
-	int				space_at_start;
-	int				space_at_end;
-	struct s_token	*next;
-}	t_token;
-
 extern long	g_sig;
 
 // INITIALIZATION
@@ -113,6 +103,7 @@ char	**split_newline(t_line *line, t_var *lst_var, char *s);
 char	*substr_var(t_line *line, t_var *lst_var, char *s);
 char	*substr_var_unquote(t_line *line, t_var *lst_var, char *s);
 char	*strdup_unquote(t_line *line, t_var *lst_var, char *s, int j);
+int		change_variable(t_line *line, const char *s, char *tab, int *j);
 
 // PARSING UTILS
 int		is_quote(char c);
