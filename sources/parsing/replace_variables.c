@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_variables.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 16:46:45 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/02/10 13:00:04 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 15:13:03 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	split_situational(t_line *line, t_var *lst_var, char *word, int *i)
 			line->args[++(*i)] = ft_strdup(var[y]);
 		y++;
 	}
-	free_double_tab(var);
+	var = free_double_tab(var);
 	return (0);
 }
 
@@ -106,14 +106,14 @@ void	replace_variables(t_line *line, t_var *lst_var)
 		word = split_words(copy[j]);
 		if (!word || fill_args(line, lst_var, word, &i) == -1)
 		{
-			free_double_tab(word);
-			free_double_tab(copy);
+			word = free_double_tab(word);
+			copy = free_double_tab(copy);
 			error_memory_failed(line, lst_var);
 		}
-		free_double_tab(word);
+		word = free_double_tab(word);
 		j++;
 		i++;
 	}
 	line->args[i] = NULL;
-	free_double_tab(copy);
+	copy = free_double_tab(copy);
 }

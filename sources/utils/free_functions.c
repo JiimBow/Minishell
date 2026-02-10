@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:00:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/09 18:07:16 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 15:13:14 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_double_tab(char **tab)
+char	**free_double_tab(char **tab)
 {
 	int	i;
 
 	i = 0;
 	if (!tab)
-		return ;
+		return (NULL);
 	while (tab[i])
 	{
 		free(tab[i]);
@@ -26,24 +26,28 @@ void	free_double_tab(char **tab)
 		i++;
 	}
 	free(tab);
-	tab = NULL;
+	return (NULL);
 }
 
 void	free_line_struct(t_line *line, int all)
 {
-	free_double_tab(line->env);
-	free_double_tab(line->args);
-	free_double_tab(line->block);
+	line->env = free_double_tab(line->env);
+	line->args = free_double_tab(line->args);
+	line->block = free_double_tab(line->block);
 	if (line->line)
+	{
 		free(line->line);
-	line->line = NULL;
+		line->line = NULL;
+	}
 	if (line->new)
+	{
 		free(line->new);
-	line->new = NULL;
+		line->new = NULL;
+	}
 	ft_lstclear_var(&line->redirec, free);
 	if (all == 1)
 	{
-		free_double_tab(line->ex_block);
+		line->ex_block = free_double_tab(line->ex_block);
 		free(line);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 14:36:17 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 15:05:17 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int		ft_export(t_line *line, t_var **lst_var, char **args);
 void	assignement(t_line *line, t_var *lst_var, int is_fork);
 
 // MEMORY MANAGEMENT
-void	free_double_tab(char **tab);
+char	**free_double_tab(char **tab);
 void	free_all(t_line *line, t_var *lst_var);
 void	free_line_struct(t_line *line, int all);
 int		free_before_exit(t_line *line, t_var *lst_var);

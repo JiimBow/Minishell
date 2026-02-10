@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/09 16:47:30 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 15:12:21 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static pid_t	line_block_process(t_line *line, t_var *lst_var, t_pipe *child)
 			line->sig = open_file(line, lst_var, child, i);
 		if (line->sig != 1)
 			last_pid = pipe_process(line, lst_var, child);
-		free_double_tab(line->args);
+		line->args = free_double_tab(line->args);
 		line->args = NULL;
 		i++;
 	}
@@ -88,6 +88,7 @@ void	ex_block_process(t_line *line, t_var *lst_var, t_pipe *child)
 		i++;
 		free_line_struct(line, 0);
 	}
+	free_line_struct(line, 0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -112,7 +113,7 @@ int	main(int argc, char **argv, char **envp)
 		if (!line->line)
 			free_before_exit(line, lst_var);
 		ex_block_process(line, lst_var, &child);
-		free_double_tab(line->ex_block);
+		line->ex_block = free_double_tab(line->ex_block);
 		line->prev_sig = line->sig;
 	}
 	return (0);

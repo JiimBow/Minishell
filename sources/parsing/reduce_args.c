@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reduce_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 13:29:08 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/02/09 19:05:53 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/10 15:12:37 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,6 @@ char	**reduce_args_without_redirection(t_line *line, t_var *lst_var)
 			new_args[len++] = ft_strdup(line->args[i++]);
 	}
 	new_args[len] = NULL;
-	free_double_tab(line->args);
+	line->args = free_double_tab(line->args);
 	return (new_args);
 }

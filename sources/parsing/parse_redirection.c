@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 13:46:37 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/02/02 13:33:40 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/10 15:12:30 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	parse_redirection(t_line *line, t_var *lst_var, int pipe_error_block)
 	{
 		line->args = split_spaces(line, lst_var, line->block[i]);
 		separate_redirection(line, lst_var, i);
-		free_double_tab(line->args);
+		line->args = free_double_tab(line->args);
 		line->args = NULL;
 		i++;
 	}
