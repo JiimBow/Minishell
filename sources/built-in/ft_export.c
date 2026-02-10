@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 10:10:11 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 11:49:44 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/10 17:53:10 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*content_cat(t_var **lst_var, char *name, char *content)
 	{
 		if (ft_strncmp(tmp->name, name, ft_strlen(name) + 1) == 0)
 		{
-			new_content = ft_strjoin(tmp->content, content);
+			new_content = gnl_strjoin(tmp->content, content);
 			free(content);
 			return (new_content);
 		}
@@ -100,7 +100,7 @@ int	ft_export(t_line *line, t_var **lst_var, char **args)
 		{
 			name = get_env_name(args[i]);
 			if (!parse_export(name, args[i]))
-				return (1);
+				line->sig = 1;
 			add_var(lst_var, args[i++], name);
 			free(name);
 		}
