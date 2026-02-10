@@ -1,15 +1,15 @@
 *This project has been created as part of the 42 curriculum by jodone & mgarnier.*
 
 
-#MINISHELL
+# MINISHELL
 
-##Description
+## Description
 
 The purpose of this project is to re-create a shell in a simplificate form.
 Instead -n for echo, no option are allowed for built-in commands.
 The special characters with their fonctionnalities allowed are `|`, `<`, `>`, `<<`, `>>` and `$`.
 
-##Instructions
+## Instructions
 
 Do a: `make`
 Then: `./minishell`
@@ -19,7 +19,7 @@ Use the pipe or redirection like: `echo "Hello world" | cat -e > out`.
 `exit` or CTRL-D to exit the shell.
 
 
-##Resources
+## Resources
 
 The linux manual and ChatGPT are used for the explanation of each new external function that we never used.
 Our project pipex for the pipe process in minishell.
