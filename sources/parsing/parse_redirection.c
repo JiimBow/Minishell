@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_redirection.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/28 13:46:37 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/02/10 15:12:30 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/10 18:38:55 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@ static void	separate_redirection(t_line *line, t_var *lst_var, int index)
 	{
 		if (is_redirection(line->args[i++]))
 		{
-			line->quote = is_quote_in_tab(line->args[i]);
 			new = crea_node_red(line, lst_var, index, i);
 			if (ft_strncmp(line->args[i - 1], "<", 2) == 0)
 				new->rank = REDIR_IN;
 			else if (ft_strncmp(line->args[i - 1], "<<", 3) == 0)
+			{
+				line->quote = is_quote_in_tab(line->args[i]);
 				new->rank = REDIR_HEREDOC;
+			}
 			else if (ft_strncmp(line->args[i - 1], ">", 2) == 0)
 				new->rank = REDIR_OUT;
 			else if (ft_strncmp(line->args[i - 1], ">>", 3) == 0)
