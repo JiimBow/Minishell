@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:44:39 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 17:37:20 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/10 17:41:51 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,11 @@ static char	*get_path(t_line *line, t_var *lst_var)
 
 	path = NULL;
 	if (!line->args[1])
+	{
 		path = get_env_path(lst_var, "HOME");
+		if (!path)
+			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+	}
 	else if (ft_strncmp(line->args[1], "~", 1) == 0)
 	{
 		path = ft_strdup(line->home);
