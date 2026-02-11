@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 18:31:36 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/11 15:42:54 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var)
 		}
 	}
 	close_fd(child->pipefd[0]);
-	assignement(line, lst_var, 1);
+	assignement(line, &lst_var, 1);
 	exit_sig = line->sig;
 	free_all(line, lst_var);
 	exit(exit_sig);
@@ -82,7 +82,7 @@ static void	fork_process(t_line *line, t_var *lst_var, t_pipe *child, int pid)
 	}
 }
 
-pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child)
+pid_t	pipe_process(t_line *line, t_var **lst_var, t_pipe *child)
 {
 	pid_t	pid;
 
@@ -107,6 +107,6 @@ pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child)
 		line->sig = 1;
 		return (1);
 	}
-	fork_process(line, lst_var, child, pid);
+	fork_process(line, *lst_var, child, pid);
 	return (pid);
 }
