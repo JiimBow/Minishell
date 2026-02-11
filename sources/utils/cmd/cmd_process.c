@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/11 10:57:22 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/11 11:02:34 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	exec_process(t_line *line, t_var *lst_var)
 
 	paths = NULL;
 	full_path = NULL;
-	path_cmd = find_cmd_path(line, paths, 0, full_path);
+	path_cmd = find_cmd_path(line, paths, full_path);
 	if (!path_cmd || execve(path_cmd, line->args, line->env) == -1
 		|| line->is_dir == 1)
 	{

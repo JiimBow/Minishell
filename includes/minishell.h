@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/11 10:25:51 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/11 11:02:14 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ char	*get_name(const char *s);
 char	*get_content(char **env, char *tab);
 int		get_parsed_line_lenght(char *line);
 int		get_size_with_variable(t_line *line, const char *s, int count, int i);
-char	*find_cmd_path(t_line *line, char **paths, int i, char *full_path);
+char	*find_cmd_path(t_line *line, char **paths, char *full_path);
 
 // UTILITIES
 char	*get_env_name(char *line);
