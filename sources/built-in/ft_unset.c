@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 17:06:53 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/11 15:23:13 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/11 16:06:09 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	remove_first_node(t_var **lst_var)
 {
 	t_var	*supp;
-	
+
 	if (!lst_var || !*lst_var)
 		return ;
 	supp = *lst_var;

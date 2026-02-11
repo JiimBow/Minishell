@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+         #
+#    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/02/11 10:26:25 by jodone           ###   ########.fr        #
+#    Updated: 2026/02/11 15:53:37 by mgarnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,8 @@ SRC			= $(DIR)main.c \
 			$(UTILS)struct_init.c \
 			$(UTILS)ft_atoll.c \
 			$(UTILS)signal_management.c \
-			$(UTILS)error_management.c
+			$(UTILS)error_management.c \
+			$(UTILS)get_last_status.c
 
 OBJ			= $(SRC:%.c=$(OBJ_DIR)/%.o)
 

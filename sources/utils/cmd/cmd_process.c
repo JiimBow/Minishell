@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/11 15:38:26 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/11 16:00:39 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void	exec_process(t_line *line, t_var *lst_var)
 
 	paths = NULL;
 	full_path = NULL;
+	signal(SIGQUIT, SIG_DFL);
 	path_cmd = find_cmd_path(line, paths, full_path);
 	if (!path_cmd || execve(path_cmd, line->args, line->env) == -1
 		|| line->is_dir == 1)
@@ -87,6 +88,7 @@ static int	process(t_line *line, t_var *lst_var, int is_fork, int status)
 		else
 		{
 			signal(SIGINT, handle_sig_cmd);
+			signal(SIGQUIT, handle_sig_quit);
 			waitpid(-1, &status, 0);
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_management.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/26 15:08:01 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/28 18:01:00 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/11 16:03:47 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	handle_sig_cmd(int signal)
 {
 	g_sig = signal;
 	if (g_sig == SIGINT)
-		ft_printf("\n");
+		ft_putstr_fd("\n", 2);
 }
 
 void	handle_sign_here_d(int signal)
@@ -24,7 +24,7 @@ void	handle_sign_here_d(int signal)
 	g_sig = signal;
 	if (signal == SIGINT)
 	{
-		ft_printf("\n");
+		ft_putstr_fd("\n", 2);
 		close(0);
 	}
 }
@@ -43,21 +43,16 @@ void	handle_sigint(int signal)
 	{
 		rl_replace_line("", 0);
 		rl_on_new_line();
-		ft_printf("\n");
+		ft_putstr_fd("\n", 2);
 		rl_redisplay();
 	}
 }
 
-void	get_last_status(__pid_t pid, __pid_t last_pid, t_line *line)
+void	handle_sig_quit(int signal)
 {
-	int	last_status;
-	int	status;
-
-	while (pid > 0)
+	g_sig = signal;
+	if (g_sig == SIGQUIT)
 	{
-		if (pid == last_pid)
-			last_status = status;
-		pid = wait(&status);
+		ft_putstr_fd("Quit\n", 2);
 	}
-	line->sig = return_value(last_status);
 }
