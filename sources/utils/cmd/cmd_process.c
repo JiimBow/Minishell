@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_process.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 16:54:09 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/11 10:55:32 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static void	exec_error(t_line *line, char *path_cmd)
 	else
 		write_error(line->args[0], 2);
 	free_line_struct(line, 1);
-	free(path_cmd);
+	if (path_cmd)
+		free(path_cmd);
 	exit(127);
 }
 
