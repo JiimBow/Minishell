@@ -6,7 +6,7 @@
 #    By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/08 19:50:28 by mgarnier          #+#    #+#              #
-#    Updated: 2026/02/11 15:53:37 by mgarnier         ###   ########.fr        #
+#    Updated: 2026/02/11 21:57:41 by mgarnier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror -g
 
 # COLOR
-GREEN		:= \033[32m
-RESET		:= \033[0m
+RED     := \033[31m
+GREEN   := \033[38;5;46m
+RESET   := \033[0m
 
 # DIR
 DIR			= sources/
@@ -84,16 +85,34 @@ LIBFT= ./Great_Libft/g_libft.a
 
 all :		$(NAME)
 
-$(NAME):	$(OBJ) $(LIBFT)
+$(NAME): $(OBJ) $(LIBFT)
 			@$(CC) $(CFLAGS) $(HEADER) $(OBJ) $(LIBFT) -lreadline -o $(NAME)
-			@echo "${GREEN}====   $(NAME)   ==== : >>>>>SUCCESS<<<<<${RESET}"
+			@printf "${GREEN}\r[▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬] SUCCESS 100%%${RESET}\n"
 
 $(LIBFT):
 		@$(MAKE) -C Great_Libft --no-print-directory
 
+TOTAL		:= $(words $(SRC))
+COUNT		:= 0
+
 $(OBJ_DIR)/%.o: %.c
 			@mkdir -p $(dir $@)
 			@$(CC) -c $(CFLAGS) $(HEADER) $< -o $@
+			@$(eval COUNT=$(shell echo $$(($(COUNT)+1))))
+			@PERCENT=$$(($(COUNT)*99/$(TOTAL))) ; \
+			BAR=$$(($(COUNT)*39/$(TOTAL))) ; \
+			if [ $$PERCENT -lt 33 ]; then \
+				COLOR_CODE=196; \
+			elif [ $$PERCENT -lt 66 ]; then \
+				COLOR_CODE=208; \
+			else \
+				COLOR_CODE=226; \
+			fi ; \
+			printf "\033[38;5;%sm\r[" $$COLOR_CODE ; \
+			i=1; while [ $$i -le $$BAR ]; do printf "▬"; i=$$((i+1)); done ; \
+			while [ $$i -le 40 ]; do printf " "; i=$$((i+1)); done ; \
+			printf "] LOADING %3d%%\033[0m" $$PERCENT
+
 
 clean:
 			@if ls $(OBJ) >/dev/null 2>&1; then \
