@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/11 15:41:49 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/11 16:40:00 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ static pid_t	line_block_process(t_line *line, t_var **lst_var, t_pipe *child)
 		replace_variables(line, *lst_var);
 		if (line->redirec)
 			line->sig = open_file(line, *lst_var, child, i);
-		if (line->sig != 1)
-			last_pid = pipe_process(line, lst_var, child);
+		last_pid = pipe_process(line, lst_var, child);
 		line->args = free_double_tab(line->args);
 		line->args = NULL;
 		i++;
