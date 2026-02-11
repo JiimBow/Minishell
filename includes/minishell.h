@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 19:55:02 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/11 10:25:51 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,8 +177,5 @@ void	handle_sig_cmd(int signal);
 void	global_handle(t_line *line);
 void	handle_sign_here_d(int signal);
 void	get_last_status(__pid_t pid, __pid_t last_pid, t_line *line);
-
-// CONCA_SPLIT
-int		ft_count_args(char **args);
 
 #endif
