@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/11 10:55:32 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/11 10:57:22 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	exec_process(t_line *line, t_var *lst_var)
 	}
 }
 
-int	verif_if_first_argument_is_dir(t_line *line)
+static int	verif_if_first_argument_is_dir(t_line *line)
 {
 	struct stat	verif;
 
