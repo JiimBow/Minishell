@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:44:39 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 17:41:51 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/11 16:16:25 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,16 @@ static void	update_path(t_var *lst_var, int is_old)
 {
 	char	curr_path[PATH_MAX];
 
-	getcwd(curr_path, sizeof(curr_path));
+	if (!getcwd(curr_path, sizeof(curr_path)))
+	{
+		if (is_old == 1)
+		{
+			ft_putstr_fd(": error retrieving current directory: getcwd:", 2);
+			ft_putstr_fd(" cannot access parent directories: ", 2);
+			ft_putstr_fd("No such file or directory\n", 2);
+		}
+		return ;
+	}
 	if (is_old == 1)
 		replace_content(lst_var, "OLDPWD", curr_path);
 	else
