@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 13:04:05 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/29 18:08:23 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/11 11:22:10 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	r_here_doc(t_line *line, t_var *lst_var, t_var *redirec)
 	return (return_value(status));
 }
 
-char	*loop_readline(char *content, int empty_line)
+static char	*loop_readline(char *content, int empty_line)
 {
 	char	*until_lim;
 
