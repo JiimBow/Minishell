@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/11 11:27:16 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/11 11:28:49 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	r_append(t_pipe *child, char *content)
 	return (0);
 }
 
-int	write_in_prev_fd(t_var *tmp, t_pipe *child)
+static int	write_in_prev_fd(t_var *tmp, t_pipe *child)
 {
 	int		fd[2];
 
