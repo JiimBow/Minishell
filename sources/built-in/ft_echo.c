@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 15:20:54 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/23 12:59:11 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/11 13:54:46 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	skip_option(char **args, int i)
 	int	j;
 	int	is_option;
 
-	while (ft_strncmp("-n", args[i], 2) == 0)
+	while (args[i] && ft_strncmp("-n", args[i], 2) == 0)
 	{
 		is_option = 0;
 		j = 1;
@@ -39,7 +39,7 @@ static int	skip_option(char **args, int i)
 
 static void	write_args(char **args, int i)
 {
-	while (args[i])
+	while (args && args[i])
 	{
 		ft_printf("%s", args[i++]);
 		if (args[i])
