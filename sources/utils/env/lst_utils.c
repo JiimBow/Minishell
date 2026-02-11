@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:30:58 by jodone            #+#    #+#             */
-/*   Updated: 2026/01/27 18:17:09 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/11 15:18:08 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 
 int	ft_lstsize_var(t_var *lst)
 {
-	int	count;
+	int		count;
+	t_var	*tmp;
 
 	count = 0;
-	if (lst)
+	tmp = lst;
+	if (tmp)
 	{
-		while (lst)
+		while (tmp)
 		{
 			count++;
-			lst = lst->next;
+			tmp = tmp->next;
 		}
 	}
 	return (count);

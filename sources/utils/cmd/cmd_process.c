@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:24:09 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/11 11:02:34 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/11 15:38:26 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,14 @@ static int	process(t_line *line, t_var *lst_var, int is_fork, int status)
 	return (return_value(status));
 }
 
-void	assignement(t_line *line, t_var *lst_var, int is_fork)
+void	assignement(t_line *line, t_var **lst_var, int is_fork)
 {
 	if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "cd", 3) == 0)
-		line->sig = ft_cd(line, lst_var);
+		line->sig = ft_cd(line, *lst_var);
 	else if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "pwd", 4) == 0)
-		line->sig = ft_pwd(lst_var);
+		line->sig = ft_pwd(*lst_var);
 	else if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "env", 4) == 0)
 		line->sig = ft_env(line->env, line->args);
@@ -111,13 +111,13 @@ void	assignement(t_line *line, t_var *lst_var, int is_fork)
 		line->sig = ft_echo(line->args);
 	else if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "unset", 6) == 0)
-		line->sig = ft_unset(line, &lst_var);
+		line->sig = ft_unset(line, lst_var);
 	else if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "exit", 5) == 0)
-		line->sig = free_before_exit(line, lst_var);
+		line->sig = free_before_exit(line, *lst_var);
 	else if (line->args && line->args[0]
 		&& ft_strncmp(line->args[0], "export", 7) == 0)
-		line->sig = ft_export(line, &lst_var, line->args);
+		line->sig = ft_export(line, lst_var, line->args);
 	else if (line->args)
-		line->sig = process(line, lst_var, is_fork, 0);
+		line->sig = process(line, *lst_var, is_fork, 0);
 }

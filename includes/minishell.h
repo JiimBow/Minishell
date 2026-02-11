@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/11 11:02:14 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/11 15:41:43 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ t_pipe	pipe_init(void);
 t_var	*get_var(char **envp);
 t_line	*creation_line(t_var *lst_var);
 char	**ft_copy_env(t_var **lst_var);
-void	ex_block_process(t_line *line, t_var *lst_var, t_pipe *child);
 void	reinitialization(t_line *line, t_var *lst_var, t_pipe *child);
 
 // PARSING
@@ -143,7 +142,7 @@ char	**ft_free_tab(char **tab, int line);
 int		ft_cd(t_line *line, t_var *lst_var);
 int		ft_unset(t_line *line, t_var **lst_var);
 int		ft_export(t_line *line, t_var **lst_var, char **args);
-void	assignement(t_line *line, t_var *lst_var, int is_fork);
+void	assignement(t_line *line, t_var **lst_var, int is_fork);
 
 // MEMORY MANAGEMENT
 char	**free_double_tab(char **tab);
@@ -157,7 +156,7 @@ int		close_fd(int fd);
 int		return_value(int status);
 int		dup_and_close(int fd, int redirect);
 void	close_file(t_pipe *child, char *message);
-pid_t	pipe_process(t_line *line, t_var *lst_var, t_pipe *child);
+pid_t	pipe_process(t_line *line, t_var **lst_var, t_pipe *child);
 
 // REDIRECTION
 int		r_here_doc(t_line *line, t_var *lst_var, t_var *redirec);

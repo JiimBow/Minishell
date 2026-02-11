@@ -6,7 +6,7 @@
 /*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 11:33:43 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 11:29:00 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/11 15:19:47 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	rank_var(t_var **lst_var)
 	int		lst_size;
 	char	*low_name;
 
-	lst_size = ft_lstsize_var(*lst_var);
+	tmp = *lst_var;
+	lst_size = ft_lstsize_var(tmp);
 	reset_rank(lst_var);
 	rank = 0;
 	while (rank < lst_size)
