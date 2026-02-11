@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   substr_var.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:36:00 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/02/11 11:06:37 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/11 15:36:00 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	fill_tab(char **env, const char *s, char *tab, int *j)
 	char	*content;
 	int		n;
 
-	if (!env || !*env || !tab)
+	if (!tab)
 		return (0);
 	name = get_name(s);
 	if (!name)
