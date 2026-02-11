@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   replace_variables.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 16:46:45 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/02/10 19:53:06 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/11 10:42:48 by jodone           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**create_copy(t_line *line, t_var *lst_var)
+static char	**create_copy(t_line *line, t_var *lst_var)
 {
 	char	**copy;
 	int		i;
