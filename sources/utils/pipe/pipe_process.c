@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:41:57 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/11 16:39:25 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/11 17:25:10 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,9 @@ void	child_process(t_pipe *child, t_line *line, t_var *lst_var)
 		}
 	}
 	close_fd(child->pipefd[0]);
-	if (line->sig == 1)
-		free_before_exit(line, lst_var);
-	assignement(line, &lst_var, 1);
 	exit_sig = line->sig;
+	if (line->sig != 1)
+		assignement(line, &lst_var, 1);
 	free_all(line, lst_var);
 	exit(exit_sig);
 }
