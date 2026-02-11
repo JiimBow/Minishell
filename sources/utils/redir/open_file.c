@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 10:13:04 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 18:10:01 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/11 11:27:16 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	r_out(t_pipe *child, char *content)
 {
 	if (child->fdout != -1)
 		close(child->fdout);
-	child->fdout = open(content, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+	child->fdout = open(content, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (child->fdout < 0)
 	{
 		write(2, "minishell: ", 11);
@@ -54,7 +54,7 @@ static int	r_append(t_pipe *child, char *content)
 {
 	if (child->fdout != -1)
 		close(child->fdout);
-	child->fdout = open(content, O_CREAT | O_WRONLY | O_APPEND, 0666);
+	child->fdout = open(content, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	if (child->fdout < 0)
 	{
 		write(2, "minishell: ", 11);
