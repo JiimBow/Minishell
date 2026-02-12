@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:36:41 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/29 14:05:27 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/12 13:03:50 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	get_size_with_variable(t_line *line, const char *s, int count, int i)
 		{
 			quote = s[i++];
 			count += 2;
-			while (s[i] != quote)
+			while (s[i] && s[i] != quote)
 			{
 				if (quote == '"' && s[i] == '$' && s[i + 1])
 					count += variable_size(line, s, &i);
@@ -125,7 +125,8 @@ int	get_size_with_variable(t_line *line, const char *s, int count, int i)
 			count += variable_size(line, s, &i);
 		else
 			count++;
-		i++;
+		if (s[i])
+			i++;
 	}
 	return (count);
 }

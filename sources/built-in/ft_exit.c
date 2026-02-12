@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:53:51 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/10 16:03:44 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/12 13:05:05 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	free_before_exit(t_line *line, t_var *lst_var)
 		write(2, "minishell: exit: too many arguments\n", 37);
 		return (1);
 	}
-	if (line->args && !line->prev_sig)
+	if (line->line && line->args && line->args[1])
 	{
 		line->prev_sig = ft_atoll(line->args[1], &overflow);
 		if (overflow == -1)

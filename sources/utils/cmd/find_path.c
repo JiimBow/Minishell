@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_path.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 10:53:10 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/11 11:01:48 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/12 10:37:12 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*find_cmd_path(t_line *line, char **paths, char *full_path)
 		return (full_path);
 	}
 	i = find_envp(line->env);
-	if (line->env && line->env[i] && line->args[0])
+	if (line->env && line->env[i] && line->args[0] && line->args[0][0])
 	{
 		paths = ft_split(line->env[i] + 5, ':');
 		i = 0;
@@ -77,7 +77,5 @@ char	*find_cmd_path(t_line *line, char **paths, char *full_path)
 		}
 		paths = free_double_tab(paths);
 	}
-	else
-		full_path = ft_strdup("fail");
 	return (full_path);
 }
