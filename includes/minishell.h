@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 16:50:13 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/11 15:54:29 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/13 10:59:25 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include <signal.h>
 # include <stddef.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -50,7 +49,7 @@ typedef struct s_line
 {
 	t_var	*redirec;
 	char	*line;
-	char	*new;
+	char	*new_ln;
 	char	**ex_block;
 	char	**block;
 	char	**args;

@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:24:04 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/02/10 16:19:32 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/13 10:58:59 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,25 +122,25 @@ int	parse_pipe(t_line *line, char quote, int *pipe_error_block)
 	int	i;
 
 	i = 0;
-	i = skip_spaces(line->new, i);
-	if (line->new[i] && line->new[i] == '|')
+	i = skip_spaces(line->new_ln, i);
+	if (line->new_ln[i] && line->new_ln[i] == '|')
 		return (1);
-	while (line->new && line->new[i])
+	while (line->new_ln && line->new_ln[i])
 	{
-		if (is_quote(line->new[i]))
+		if (is_quote(line->new_ln[i]))
 		{
-			quote = line->new[i++];
-			while (line->new[i] && line->new[i] != quote)
+			quote = line->new_ln[i++];
+			while (line->new_ln[i] && line->new_ln[i] != quote)
 				i++;
 		}
-		else if (line->new[i] == '|')
+		else if (line->new_ln[i] == '|')
 		{
 			(*pipe_error_block)++;
-			i = skip_spaces(line->new, i + 1);
-			if ((line->new[i] && line->new[i] == '|') || !line->new[i])
+			i = skip_spaces(line->new_ln, i + 1);
+			if ((line->new_ln[i] && line->new_ln[i] == '|') || !line->new_ln[i])
 				return (1);
 		}
-		if (line->new[i])
+		if (line->new_ln[i])
 			i++;
 	}
 	return (0);

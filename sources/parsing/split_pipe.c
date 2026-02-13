@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/19 15:16:08 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/01/30 16:37:37 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/13 10:58:59 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,21 @@ void	split_pipe(t_line *line, t_var *lst_var)
 
 	i = 0;
 	line->row = 0;
-	if (!line->new)
+	if (!line->new_ln)
 		return ;
-	while (line->new[i])
+	while (line->new_ln[i])
 	{
-		i = skip_spaces(line->new, i);
+		i = skip_spaces(line->new_ln, i);
 		save_i = i;
-		i = parse_word_pipe(line->new, i);
-		if (i > save_i || line->new[i] == '|')
+		i = parse_word_pipe(line->new_ln, i);
+		if (i > save_i || line->new_ln[i] == '|')
 			line->row++;
-		if (line->new[i])
+		if (line->new_ln[i])
 			i++;
 	}
 	line->block = (char **)malloc(sizeof(char *) * (line->row + 1));
 	if (!line->block)
 		error_memory_failed(line, lst_var);
 	line->block[line->row] = NULL;
-	line->block = ft_add_lines(line->block, line->new, 0, 0);
+	line->block = ft_add_lines(line->block, line->new_ln, 0, 0);
 }

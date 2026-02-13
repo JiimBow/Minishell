@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_variables.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jodone <jodone@student.42angouleme.fr>     +#+  +:+       +#+        */
+/*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 16:46:45 by mgarnier          #+#    #+#             */
-/*   Updated: 2026/02/11 10:42:48 by jodone           ###   ########.fr       */
+/*   Updated: 2026/02/13 10:47:14 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,8 @@ static char	**create_copy(t_line *line, t_var *lst_var)
 static int	split_situational(t_line *line, t_var *lst_var, char *word, int *i)
 {
 	char	**var;
-	int		x;
 	int		y;
 
-	x = 0;
 	if (ft_strlen(ft_strchr(word, '='))
 		< ft_strlen(ft_strchr(word, ' ')))
 		var = split_spaces_unquote(line, lst_var, word);

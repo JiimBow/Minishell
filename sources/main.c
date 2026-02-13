@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 11:52:55 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/11 17:12:35 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/13 10:58:59 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ static void	minishell(t_line *line, t_var **lst_var, t_pipe *child, int index)
 	int		pipe_error_block;
 
 	pipe_error_block = 0;
-	line->new = ft_calloc(sizeof(char),
+	line->new_ln = ft_calloc(sizeof(char),
 			get_parsed_line_lenght(line->ex_block[index]) + 1);
-	if (!line->new)
+	if (!line->new_ln)
 		error_memory_failed(line, *lst_var);
-	line->new = set_parsed_line(line->ex_block[index], line->new, 0, 0);
+	line->new_ln = set_parsed_line(line->ex_block[index], line->new_ln, 0, 0);
 	if (parse_pipe(line, 'q', &pipe_error_block) == 1)
 	{
 		write(2, "minishell: syntax error near unexpected token `|'\n", 50);

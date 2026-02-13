@@ -6,7 +6,7 @@
 /*   By: mgarnier <mgarnier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 11:09:31 by jodone            #+#    #+#             */
-/*   Updated: 2026/02/11 13:47:18 by mgarnier         ###   ########.fr       */
+/*   Updated: 2026/02/13 10:58:59 by mgarnier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_line	*creation_line(t_var *lst_var)
 	if (!line)
 		error_memory_failed(NULL, lst_var);
 	line->home = get_env_path(lst_var, "HOME");
-	line->new = NULL;
+	line->new_ln = NULL;
 	line->block = NULL;
 	line->ex_block = NULL;
 	line->sig = 0;
